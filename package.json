@@ -19,7 +19,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:api": "cd api && npm install",
-    "db:migrate": "npx sequelize-cli db:migrate",
+    "db:migrate": "cd api && node createDB.js && npx sequelize-cli db:migrate",
     "db:seed": "npx sequelize-cli db:seed:all",
     "postinstall": "npm run install:api && npm run db:migrate && docker-compose up -d"
   },
