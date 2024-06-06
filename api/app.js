@@ -1,7 +1,8 @@
+require("module-alias/register");
+require("dotenv").config({ path: ".env" });
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-require("dotenv").config({ path: ".env" });
 const { Sequelize, DataTypes } = require("sequelize");
 
 const databaseName = process.env.DB_NAME;
