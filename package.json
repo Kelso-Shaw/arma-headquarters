@@ -22,7 +22,7 @@
     "eject": "react-scripts eject",
     "install:api": "cd api && npm install && docker-compose up -d",
     "db:migrate": "cd api && node createDB.js && npx sequelize-cli db:migrate",
-    "db:seed": "npx sequelize-cli db:seed:all",
+    "db:seed": "cd api && npx sequelize-cli db:seed:all",
     "postinstall": "npm run install:api && npm run db:migrate"
   },
   "eslintConfig": {
