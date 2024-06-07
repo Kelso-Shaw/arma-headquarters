@@ -5,27 +5,28 @@ import {
   Avatar,
   Typography,
   TextField,
-  Button,
-  CssBaseline,
   Grid,
   Link,
+  CssBaseline,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useAuth } from "./AuthContext";
 import { FormButton } from "./buttons/FormButton";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const result = await login(email, password);
     if (!result.success) {
-      setError(result.message);
+      return;
     }
+    navigate("/dashboard");
   };
 
   return (
@@ -45,11 +46,6 @@ const Home = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        {error && (
-          <Typography color="error" variant="body2">
-            {error}
-          </Typography>
-        )}
         <Box component="form" noValidate sx={{ mt: 1 }} onSubmit={handleSubmit}>
           <TextField
             margin="normal"

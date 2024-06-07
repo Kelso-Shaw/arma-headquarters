@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     isAuthenticated: false,
     token: null,
+    loading: true,
   });
 
   useEffect(() => {
@@ -21,11 +22,23 @@ export const AuthProvider = ({ children }) => {
         setAuth({
           isAuthenticated: true,
           token,
+          loading: false,
         });
       } else {
         localStorage.removeItem("token");
         localStorage.removeItem("tokenExpiration");
+        setAuth({
+          isAuthenticated: false,
+          token: null,
+          loading: false,
+        });
       }
+    } else {
+      setAuth({
+        isAuthenticated: false,
+        token: null,
+        loading: false,
+      });
     }
   }, []);
 
@@ -50,6 +63,7 @@ export const AuthProvider = ({ children }) => {
           setAuth({
             isAuthenticated: true,
             token: data.accessToken,
+            loading: false,
           });
           localStorage.setItem("token", data.accessToken);
           localStorage.setItem("tokenExpiration", expirationTime);
@@ -71,6 +85,7 @@ export const AuthProvider = ({ children }) => {
     setAuth({
       isAuthenticated: false,
       token: null,
+      loading: false,
     });
     localStorage.removeItem("token");
     localStorage.removeItem("tokenExpiration");

@@ -6,13 +6,12 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ThemeButton from "./buttons/ThemeButton";
-import { Button } from "@mui/material";
 
 import { useAuth } from "./AuthContext";
 import Logout from "./buttons/Logout";
 
 function Nav({ name }) {
-  const { auth, logout } = useAuth();
+  const { auth } = useAuth();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
