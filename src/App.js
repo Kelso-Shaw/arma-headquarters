@@ -8,35 +8,35 @@ import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./components/AuthContext";
 
 const App = () => {
-  const clanName = process.env.REACT_APP_CLAN_NAME;
+	const clanName = process.env.REACT_APP_CLAN_NAME;
 
-  return (
-    <ThemeToggleProvider>
-      <AuthProvider>
-        <Router>
-          <Nav name={clanName} />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
-              flex: 1,
-              padding: 10,
-            }}
-          >
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route element={<PrivateRoute />}>
-                <Route path="/dashboard" element={<Dashboard />} />
-              </Route>
-            </Routes>
-          </div>
-        </Router>
-      </AuthProvider>
-    </ThemeToggleProvider>
-  );
+	return (
+		<ThemeToggleProvider>
+			<AuthProvider>
+				<Router>
+					<Nav name={clanName} />
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "center",
+							alignItems: "center",
+							width: "100%",
+							flex: 1,
+							padding: 10,
+						}}
+					>
+						<Routes>
+							<Route path="/" element={<Home />} />
+							<Route element={<PrivateRoute />}>
+								<Route path="/dashboard" element={<Dashboard />} />
+							</Route>
+						</Routes>
+					</div>
+				</Router>
+			</AuthProvider>
+		</ThemeToggleProvider>
+	);
 };
 
 export default App;

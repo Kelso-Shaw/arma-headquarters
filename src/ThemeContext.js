@@ -1,9 +1,9 @@
 import React, {
-  createContext,
-  useState,
-  useMemo,
-  useContext,
-  useEffect,
+	createContext,
+	useState,
+	useMemo,
+	useContext,
+	useEffect,
 } from "react";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { lightTheme, darkTheme } from "./theme";
@@ -11,29 +11,29 @@ import { lightTheme, darkTheme } from "./theme";
 const ThemeToggleContext = createContext();
 
 export const ThemeToggleProvider = ({ children }) => {
-  const [isDark, setIsDark] = useState(() => {
-    const savedTheme = localStorage.getItem("theme");
-    return savedTheme ? JSON.parse(savedTheme) : false;
-  });
+	const [isDark, setIsDark] = useState(() => {
+		const savedTheme = localStorage.getItem("theme");
+		return savedTheme ? JSON.parse(savedTheme) : false;
+	});
 
-  useEffect(() => {
-    localStorage.setItem("theme", JSON.stringify(isDark));
-  }, [isDark]);
+	useEffect(() => {
+		localStorage.setItem("theme", JSON.stringify(isDark));
+	}, [isDark]);
 
-  const toggleTheme = () => {
-    setIsDark((prevIsDark) => !prevIsDark);
-  };
+	const toggleTheme = () => {
+		setIsDark((prevIsDark) => !prevIsDark);
+	};
 
-  const theme = useMemo(() => (isDark ? darkTheme : lightTheme), [isDark]);
+	const theme = useMemo(() => (isDark ? darkTheme : lightTheme), [isDark]);
 
-  return (
-    <ThemeToggleContext.Provider value={{ isDark, toggleTheme }}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {children}
-      </ThemeProvider>
-    </ThemeToggleContext.Provider>
-  );
+	return (
+		<ThemeToggleContext.Provider value={{ isDark, toggleTheme }}>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				{children}
+			</ThemeProvider>
+		</ThemeToggleContext.Provider>
+	);
 };
 
 export const useThemeToggle = () => useContext(ThemeToggleContext);
