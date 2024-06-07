@@ -24,3 +24,9 @@
 
 ```npm lint:write```
 : lints and formats all files
+
+# Coding Standards
+All JS must be formatted to biomejs standards, you can use above scripts to do this for you.
+You can also use the vscode extension to format as you save.
+
+https://biomejs.dev/
