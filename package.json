@@ -30,9 +30,7 @@
 		"db:migrate": "dotenv -e .env -- sh -c 'cd api && node createDB.js && npx sequelize-cli db:migrate'",
 		"db:seed": "dotenv -e .env -- sh -c 'cd api && npx sequelize-cli db:seed:all'",
 		"lint:write": "npx @biomejs/biome check --write --unsafe *",
-		"lint:check": "npx @biomejs/biome check *",
-		"preinstall": "npm run install:api",
-		"postinstall": "npm run db:migrate"
+		"lint:check": "npx @biomejs/biome check *"
 	},
 	"eslintConfig": {
 		"extends": ["react-app", "react-app/jest"]
