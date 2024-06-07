@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const path = require("path");
+const path = require("node:path");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
 		return queryInterface.bulkInsert("Users", [
 			{
 				username: "Administrator",
-				email: "admin@" + process.env.EMAIL_HOST,
+				email: `admin@${process.env.EMAIL_HOST}`,
 				password: hashedPassword,
 				name: "Administrator",
 				role: "admin",
