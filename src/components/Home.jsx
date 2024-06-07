@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
-	Container,
-	Box,
 	Avatar,
-	Typography,
-	TextField,
+	Box,
+	Container,
+	CssBaseline,
 	Grid,
 	Link,
-	CssBaseline,
+	TextField,
+	Typography,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { FormButton } from "./buttons/FormButton";
-import { useNavigate } from "react-router-dom";
 
 const Home = () => {
 	const { login } = useAuth();

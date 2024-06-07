@@ -1,3 +1,4 @@
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import React, {
 	createContext,
 	useState,
@@ -5,8 +6,7 @@ import React, {
 	useContext,
 	useEffect,
 } from "react";
-import { ThemeProvider, CssBaseline } from "@mui/material";
-import { lightTheme, darkTheme } from "./theme";
+import { darkTheme, lightTheme } from "./theme";
 
 const ThemeToggleContext = createContext();
 

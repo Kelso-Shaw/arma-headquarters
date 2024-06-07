@@ -1,5 +1,5 @@
+import { blue, grey } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
-import { grey, blue } from "@mui/material/colors";
 
 const primaryColor = blue[700];
 const secondaryColor = blue[500];

@@ -1,7 +1,7 @@
-import React from "react";
 import { Button } from "@mui/material";
-import { useAuth } from "../AuthContext";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 const Logout = () => {
 	const { logout } = useAuth();

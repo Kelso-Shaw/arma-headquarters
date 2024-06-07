@@ -1,11 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Nav from "./components/Nav";
-import Home from "./components/Home";
-import Dashboard from "./components/Dashboard";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { ThemeToggleProvider } from "./ThemeContext";
-import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./components/AuthContext";
+import Dashboard from "./components/Dashboard";
+import Home from "./components/Home";
+import Nav from "./components/Nav";
+import PrivateRoute from "./components/PrivateRoute";
 
 const App = () => {
 	const clanName = process.env.REACT_APP_CLAN_NAME;
