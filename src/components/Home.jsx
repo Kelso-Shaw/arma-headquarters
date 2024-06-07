@@ -60,14 +60,9 @@ const Home = () => {
             Sign In
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
+            <Grid item xs sx={{ display: "flex", justifyContent: "center" }}>
+              <Link variant="body2" style={{ justifyContent: "center" }}>
                 Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
           </Grid>
