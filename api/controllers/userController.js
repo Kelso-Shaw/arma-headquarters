@@ -22,10 +22,10 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const user = await Users.findOne({ where: { username } });
+    const { email, password } = req.body;
+    const user = await Users.findOne({ where: { email } });
     if (user == null) {
-      return res.status(400).send("Cannot find user");
+      return res.status(400).json({ Success: false });
     }
 
     if (await bcrypt.compare(password, user.password)) {
@@ -33,9 +33,9 @@ exports.login = async (req, res) => {
         { username: user.username, role: user.role },
         process.env.ACCESS_TOKEN_SECRET
       );
-      res.json({ accessToken });
+      res.json({ Success: true, accessToken });
     } else {
-      res.status(403).send("Not Allowed");
+      res.status(403).send.json({ Success: false });
     }
   } catch (error) {
     console.error("Error logging in user:", error);
@@ -51,7 +51,7 @@ exports.getAllUsers = async (req, res) => {
     res.json(users);
   } catch (error) {
     console.error("Error fetching users:", error);
-    res.status(500).send(error.message);
+    res.status(500).send.json({ Success: false });
   }
 };
 
@@ -61,6 +61,6 @@ exports.addUser = async (req, res) => {
     res.status(201).json(user);
   } catch (error) {
     console.error("Error adding user:", error);
-    res.status(500).send(error.message);
+    res.status(500).json({ Success: false });
   }
 };

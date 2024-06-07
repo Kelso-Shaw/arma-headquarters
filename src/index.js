@@ -3,12 +3,15 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import CssBaseline from "@mui/material/CssBaseline";
+import { AuthProvider } from "./components/AuthContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <CssBaseline />
-    <App />
+    <AuthProvider>
+      <CssBaseline />
+      <App />
+    </AuthProvider>
   </React.StrictMode>
 );
 
