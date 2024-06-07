@@ -6,6 +6,7 @@ import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
 import Nav from "./components/Nav";
 import PrivateRoute from "./components/PrivateRoute";
+import UserManager from "./components/usermanager/UserManager";
 
 const App = () => {
 	const clanName = process.env.REACT_APP_CLAN_NAME;
@@ -30,6 +31,13 @@ const App = () => {
 							<Route path="/" element={<Home />} />
 							<Route element={<PrivateRoute />}>
 								<Route path="/dashboard" element={<Dashboard />} />
+							</Route>
+
+							<Route element={<PrivateRoute />}>
+								<Route
+									path="/dashboard/user-manager"
+									element={<UserManager />}
+								/>
 							</Route>
 						</Routes>
 					</div>

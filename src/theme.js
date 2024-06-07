@@ -1,41 +1,41 @@
 import { createTheme } from "@mui/material/styles";
 
 /* Color Palette for Lightmode:
-	Accent: "#E3B23C"
-	Primary: "#3C7C50"
-	Secondary: "#222E50"
-	Background: "#fafafa"
-	Text Primary: "#FAFAFA"
-	Text Secondary: "#9EA3B0"
-	https://coolors.co/E3B23C-3c7c50-222e50-fafafa-9EA3B0
+	Accent: "#FF6F61"
+	Primary: "#00A1E4"
+	Secondary: "#3A3D40"
+	Background: "#FFFFFF"
+	Text Primary: "#3A3D40"
+	Text Secondary: "#73777B"
+	https://coolors.co/ff6f61-00a1e4-3a3d40-ffffff-73777b
 */
 
-const backgroundDefaultLight = "#fafafa";
-const primaryColorLight = "#3C7C50";
-const secondaryColorLight = "#222E50";
-const textPrimaryLight = "#FAFAFA";
-const textSecondaryLight = "#9EA3B0";
-const backgroundPaperLight = primaryColorLight;
+const backgroundDefaultLight = "#FFFFFF";
+const primaryColorLight = "#00A1E4";
+const secondaryColorLight = "#3A3D40";
+const textPrimaryLight = "#3A3D40";
+const textSecondaryLight = "#73777B";
+const backgroundPaperLight = "#F5F5F5";
 
 /* Color Palette for Darkmode
-	Accent: "#E3B23C"
-	Primary: "#2A2A72"
-	Secondary: "#232528"
-	Background: "#232528"
-	Text Primary: "#FAFAFA"
-	Text Secondary: "#9EA3B0"
-	https://coolors.co/E3B23C-2A2A72-232528-FAFAFA-9EA3B0
-
+	Accent: "#FF6F61"
+	Primary: "#00A1E4"
+	Secondary: "#121212"
+	Background: "#1C1C1E"
+	Text Primary: "#FFFFFF"
+	Text Secondary: "#73777B"
+	https://coolors.co/ff6f61-00a1e4-121212-1c1c1e-73777b
 */
 
-const primaryColorDark = "#2A2A72";
-const secondaryColorDark = "#232528";
-const textPrimaryDark = "#FAFAFA";
-const textSecondaryDark = "#9EA3B0";
-const backgroundDefaultDark = "#232528";
-const backgroundPaperDark = primaryColorDark;
+const primaryColorDark = "#00A1E4";
+const secondaryColorDark = "#121212";
+const textPrimaryDark = "#FFFFFF";
+const textSecondaryDark = "#73777B";
+const backgroundDefaultDark = "#1C1C1E";
+const backgroundPaperDark = "#2C2C2E";
 
 const primaryAccent = "#E3B23C";
+const textTitle = "#FFFFFF";
 
 export const lightTheme = createTheme({
 	palette: {
@@ -54,6 +54,7 @@ export const lightTheme = createTheme({
 		text: {
 			primary: textPrimaryLight,
 			secondary: textSecondaryLight,
+			title: textTitle,
 		},
 	},
 });
@@ -75,6 +76,7 @@ export const darkTheme = createTheme({
 		text: {
 			primary: textPrimaryDark,
 			secondary: textSecondaryDark,
+			title: textTitle,
 		},
 	},
 });

@@ -10,13 +10,13 @@ export const FormButton = () => {
 			sx={{
 				mt: 3,
 				mb: 2,
-				bgcolor: "secondary.main",
+				bgcolor: "primary",
 				"&:hover": {
 					bgcolor: "primary.accent",
 				},
 			}}
 		>
-			<Typography>Sign in</Typography>
+			<Typography>Sign In</Typography>
 		</Button>
 	);
 };
