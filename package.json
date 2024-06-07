@@ -29,6 +29,8 @@
 		"install:api": "dotenv -e .env -- sh -c 'cd api && npm install && docker-compose up -d'",
 		"db:migrate": "dotenv -e .env -- sh -c 'cd api && node createDB.js && npx sequelize-cli db:migrate'",
 		"db:seed": "dotenv -e .env -- sh -c 'cd api && npx sequelize-cli db:seed:all'",
+		"lint:write": "npx @biomejs/biome check --write --unsafe *",
+		"lint:check": "npx @biomejs/biome check *",
 		"postinstall": "npm run install:api && npm run db:migrate"
 	},
 	"eslintConfig": {
