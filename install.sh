@@ -1,5 +1,25 @@
 #!/bin/bash
 
+DEBUG=1 # Force debug on until we are happy, this should be false
+
+if [ "$1" == "--debug" ]; then
+  DEBUG=1
+fi
+
+debug() {
+  if [ $DEBUG -eq 1 ]; then
+    echo "DEBUG: $1"
+  fi
+}
+
+run_command() {
+  if [ $DEBUG -eq 1 ]; then
+    $@
+  else
+    $@ > /dev/null 2>&1
+  fi
+}
+
 generate_password() {
   openssl rand -base64 12
 }
@@ -32,8 +52,8 @@ fi
 
 if [[ "$setup_env" == "yes" ]]; then
   echo "Copying environmental parameters..."
-  rm -rf .env
-  cp .env.example .env
+  run_command rm -rf .env
+  run_command cp .env.example .env
 
   read -p "Do you want to set custom database information? (yes/no): " set_custom_db
 
@@ -46,7 +66,7 @@ if [[ "$setup_env" == "yes" ]]; then
     read -p "Enter user password (default: generated password): " db_pass
     if [[ -z "$db_pass" ]]; then
       db_pass=$(generate_password)
-      echo "Generated user password: $db_pass"
+      run_command Generated user password: $db_pass
     fi
 
     read -p "Enter database host (default: localhost): " db_host
@@ -69,11 +89,11 @@ if [[ "$setup_env" == "yes" ]]; then
   fi
 
   echo "Configuring environment settings..."
-  sed_inplace "s/^DB_NAME=.*/DB_NAME=$db_name/" .env
-  sed_inplace "s/^DB_USER=.*/DB_USER=$db_user/" .env
-  sed_inplace "s/^DB_PASS=.*/DB_PASS=$db_pass/" .env
-  sed_inplace "s/^DB_HOST=.*/DB_HOST=$db_host/" .env
-  sed_inplace "s/^ACCESS_TOKEN_SECRET=.*/ACCESS_TOKEN_SECRET=$ACCESS_TOKEN/" .env
+  run_command sed_inplace "s/^DB_NAME=.*/DB_NAME=$db_name/" .env
+  run_command sed_inplace "s/^DB_USER=.*/DB_USER=$db_user/" .env
+  run_command sed_inplace "s/^DB_PASS=.*/DB_PASS=$db_pass/" .env
+  run_command sed_inplace "s/^DB_HOST=.*/DB_HOST=$db_host/" .env
+  run_command sed_inplace "s/^ACCESS_TOKEN_SECRET=.*/ACCESS_TOKEN_SECRET=$ACCESS_TOKEN/" .env
 
   echo "Environmental setup complete. Proceeding to the next objective..."
 else
@@ -86,21 +106,24 @@ else
 fi
 
 echo "Neutralizing any existing docker containers..."
-docker ps -a | grep 'arma-headquarters' | awk '{print $1}' | xargs -r docker rm -f
+docker ps -a | grep 'arma-headquarters' | awk '{print $1}' | xargs -r docker rm -f > /dev/null 2>&1
 
 echo "Reinforcing dependencies..."
-npm install && npm run install:api
+run_command npm install
+run_command npm run install:api
 
 echo "Preparing database for deployment..."
 wait_for_db $db_host 3306
 
 echo "Commencing database operation..."
-npm run db:migrate
+run_command npm run db:migrate
 
 echo "Seeding database with critical intel..."
-npm run db:seed
+run_command npm run db:seed
 
 echo "Deployment complete! ARMA HQ is operational."
+
+echo "Launching ARMA HQ..."
 
 echo '
        d8888 8888888b.  888b     d888        d8888      888    888  .d88888b.
@@ -111,8 +134,5 @@ echo '
   d88P   888 888 T88b   888  Y8P  888   d88P   888      888    888 888 Y8b 888
  d8888888888 888  T88b  888   "   888  d8888888888      888    888 Y88b.Y8b88P
 d88P     888 888   T88b 888       888 d88P     888      888    888  "Y888888"
-                                                                          Y8b
-'
-
-echo "Launching ARMA HQ..."
+                                                                          Y8b'
 npm run start
