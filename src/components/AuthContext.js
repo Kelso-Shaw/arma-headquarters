@@ -14,26 +14,17 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const expiration = localStorage.getItem("tokenExpiration");
+    const isExpired = expiration && new Date().getTime() > Number(expiration);
 
-    if (token && expiration) {
-      const isExpired = new Date().getTime() > Number(expiration);
-
-      if (!isExpired) {
-        setAuth({
-          isAuthenticated: true,
-          token,
-          loading: false,
-        });
-      } else {
-        localStorage.removeItem("token");
-        localStorage.removeItem("tokenExpiration");
-        setAuth({
-          isAuthenticated: false,
-          token: null,
-          loading: false,
-        });
-      }
+    if (token && !isExpired) {
+      setAuth({
+        isAuthenticated: true,
+        token,
+        loading: false,
+      });
     } else {
+      localStorage.removeItem("token");
+      localStorage.removeItem("tokenExpiration");
       setAuth({
         isAuthenticated: false,
         token: null,
@@ -55,27 +46,27 @@ export const AuthProvider = ({ children }) => {
         }
       );
 
-      if (response.ok) {
-        const data = await response.json();
-        if (data.Success) {
-          const expirationTime = new Date().getTime() + TOKEN_EXPIRATION_TIME;
-
-          setAuth({
-            isAuthenticated: true,
-            token: data.accessToken,
-            loading: false,
-          });
-          localStorage.setItem("token", data.accessToken);
-          localStorage.setItem("tokenExpiration", expirationTime);
-
-          return { success: true };
-        } else {
-          return { success: false, message: "Login failed" };
-        }
-      } else {
+      if (!response.ok) {
         const error = await response.json();
         return { success: false, message: error.error || "Login failed" };
       }
+
+      const data = await response.json();
+      if (!data.Success) {
+        return { success: false, message: "Login failed" };
+      }
+
+      const expirationTime = new Date().getTime() + TOKEN_EXPIRATION_TIME;
+
+      setAuth({
+        isAuthenticated: true,
+        token: data.accessToken,
+        loading: false,
+      });
+      localStorage.setItem("token", data.accessToken);
+      localStorage.setItem("tokenExpiration", expirationTime);
+
+      return { success: true };
     } catch (error) {
       return { success: false, message: error.message };
     }
