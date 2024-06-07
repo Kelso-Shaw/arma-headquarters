@@ -12,7 +12,17 @@ const Logout = () => {
 	};
 
 	return (
-		<Button variant="contained" color="secondary" onClick={handleLogout}>
+		<Button
+			variant="contained"
+			color="primary"
+			onClick={handleLogout}
+			sx={{
+				bgcolor: "primary.accent",
+				"&:hover": {
+					bgcolor: "primary.accent",
+				},
+			}}
+		>
 			Logout
 		</Button>
 	);

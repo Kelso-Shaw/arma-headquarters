@@ -25,7 +25,12 @@ function Nav({ name }) {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+					<Typography
+						variant="h6"
+						component="div"
+						color="text.primary"
+						sx={{ flexGrow: 1 }}
+					>
 						{name}
 					</Typography>
 					{auth.isAuthenticated ? <Logout /> : ""}
