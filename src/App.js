@@ -1,25 +1,34 @@
-import logo from "./logo.svg";
-import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Nav from "./components/Nav";
+import Home from "./components/Home";
+import { ThemeToggleProvider } from "./ThemeContext";
 
-function App() {
+const App = () => {
+  const clanName = process.env.REACT_APP_CLAN_NAME;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <ThemeToggleProvider>
+      <Router>
+        <Nav name={clanName} />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            flex: 1,
+            padding: 10,
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </div>
+      </Router>
+    </ThemeToggleProvider>
   );
-}
+};
 
 export default App;

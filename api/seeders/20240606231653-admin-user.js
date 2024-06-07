@@ -9,7 +9,7 @@ module.exports = {
     return queryInterface.bulkInsert("Users", [
       {
         username: "Administrator",
-        email: "admin@" + process.env.HOST,
+        email: "admin@" + process.env.EMAIL_HOST,
         password: hashedPassword,
         name: "Administrator",
         role: "admin",
