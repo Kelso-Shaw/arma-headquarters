@@ -17,7 +17,7 @@ const Logout = () => {
 			color="primary"
 			onClick={handleLogout}
 			sx={{
-				bgcolor: "primary.accent",
+				bgcolor: "secondary.main",
 				"&:hover": {
 					bgcolor: "primary.accent",
 				},

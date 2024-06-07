@@ -10,7 +10,7 @@ export const FormButton = () => {
 			sx={{
 				mt: 3,
 				mb: 2,
-				bgcolor: "primary.accent",
+				bgcolor: "secondary.main",
 				"&:hover": {
 					bgcolor: "primary.accent",
 				},
