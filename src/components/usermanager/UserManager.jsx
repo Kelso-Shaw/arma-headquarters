@@ -19,6 +19,7 @@ import {
 	TextField,
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
+import { apiRequest } from "../funcs/common";
 
 const UserManager = () => {
 	const [users, setUsers] = useState([]);
@@ -50,7 +51,7 @@ const UserManager = () => {
 	return (
 		<Container>
 			<Typography variant="h4" gutterBottom>
-				Admin User Manager
+				User Manager
 			</Typography>
 			<Button variant="contained" color="primary" onClick={() => handleOpen()}>
 				Add New User
