@@ -6,8 +6,8 @@ import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
 import Nav from "./components/Nav";
 import PrivateRoute from "./components/PrivateRoute";
-import UserManager from "./components/usermanager/UserManager";
 import Panelsettings from "./components/panelsettings/PanelSettings";
+import UserManager from "./components/usermanager/UserManager";
 
 const App = () => {
 	const clanName = process.env.REACT_APP_CLAN_NAME;
