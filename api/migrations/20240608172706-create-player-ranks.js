@@ -10,6 +10,7 @@ module.exports = {
 			},
 			rank: {
 				type: Sequelize.STRING,
+				unique: true,
 			},
 			order: {
 				type: Sequelize.INTEGER,
