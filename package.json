@@ -29,6 +29,7 @@
 		"eject": "react-scripts eject",
 		"install:api": "dotenv -e .env -- sh -c 'cd api && npm install && docker-compose up -d'",
 		"db:migrate": "dotenv -e .env -- sh -c 'cd api && node createDB.js && npx sequelize-cli db:migrate'",
+		"db:migrate:undo": "dotenv -e .env -- sh -c 'cd api && npx sequelize-cli db:migrate:undo'",
 		"db:seed": "dotenv -e .env -- sh -c 'cd api && npx sequelize-cli db:seed:all'",
 		"lint:write": "npx @biomejs/biome check --write --unsafe *",
 		"lint:check": "npx @biomejs/biome check *",
@@ -36,17 +37,10 @@
 		"postinstall": "npm run db:migrate"
 	},
 	"eslintConfig": {
-		"extends": [
-			"react-app",
-			"react-app/jest"
-		]
+		"extends": ["react-app", "react-app/jest"]
 	},
 	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
+		"production": [">0.2%", "not dead", "not op_mini all"],
 		"development": [
 			"last 1 chrome version",
 			"last 1 firefox version",

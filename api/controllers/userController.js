@@ -13,10 +13,10 @@ exports.register = async (req, res) => {
 			name,
 			role,
 		});
-		res.status(201).json(user);
+		res.status(201).json({ Success: true, user });
 	} catch (error) {
 		console.error("Error registering user:", error);
-		res.status(500).send(error.message);
+		res.status(500).send({ Success: false });
 	}
 };
 
@@ -39,7 +39,7 @@ exports.login = async (req, res) => {
 		}
 	} catch (error) {
 		console.error("Error logging in user:", error);
-		res.status(500).send(error.message);
+		res.status(500).send({ Success: false });
 	}
 };
 
@@ -48,7 +48,7 @@ exports.getAllUsers = async (req, res) => {
 		const users = await Users.findAll({
 			attributes: { exclude: ["password", "createdAt", "updatedAt"] },
 		});
-		res.json(users);
+		res.json({ Success: true, users });
 	} catch (error) {
 		console.error("Error fetching users:", error);
 		res.status(500).send.json({ Success: false });
@@ -57,10 +57,71 @@ exports.getAllUsers = async (req, res) => {
 
 exports.addUser = async (req, res) => {
 	try {
-		const user = await Users.create(req.body);
-		res.status(201).json(user);
+		const { password, ...otherDetails } = req.body;
+
+		const plainPassword = password || "password123";
+
+		const hashedPassword = await bcrypt.hash(plainPassword, 10);
+
+		const user = await Users.create({
+			...otherDetails,
+			password: hashedPassword,
+		});
+		res.status(201).json({ Success: true, user });
 	} catch (error) {
 		console.error("Error adding user:", error);
 		res.status(500).json({ Success: false });
+	}
+};
+
+exports.deleteUser = async (req, res) => {
+	try {
+		const userId = req.params.id;
+		const deletedUser = await Users.destroy({
+			where: { id: userId },
+		});
+
+		if (deletedUser) {
+			res
+				.status(200)
+				.json({ Success: true, message: "User deleted successfully" });
+		} else {
+			res.status(404).json({ Success: false, message: "User not found" });
+		}
+	} catch (error) {
+		console.error("Error deleting user:", error);
+		res.status(500).json({ Success: false, message: "Internal server error" });
+	}
+};
+
+exports.updateUser = async (req, res) => {
+	try {
+		const userId = req.params.id;
+		const { name, email, password, role } = req.body;
+
+		const [updated] = await Users.update(
+			{
+				name: name,
+				email: email,
+				password: password,
+				role: role,
+			},
+			{
+				where: { id: userId },
+			},
+		);
+
+		if (!updated) {
+			res.status(404).json({ Success: false, message: "User not found" });
+		}
+		const updatedUser = await Users.findOne({ where: { id: userId } });
+		res.status(200).json({
+			Success: true,
+			message: "User updated successfully",
+			user: updatedUser,
+		});
+	} catch (error) {
+		console.error("Error updating user:", error);
+		res.status(500).json({ Success: false, message: "Internal server error" });
 	}
 };

@@ -15,7 +15,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import { useAuth } from "./AuthContext";
 import ThemeButton from "./buttons/ThemeButton";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Nav({ name }) {
 	const { auth } = useAuth();

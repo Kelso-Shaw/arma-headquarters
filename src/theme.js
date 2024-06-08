@@ -36,6 +36,7 @@ const backgroundPaperDark = "#2C2C2E";
 
 const primaryAccent = "#E3B23C";
 const textTitle = "#FFFFFF";
+const error = "#BF1A2F";
 
 export const lightTheme = createTheme({
 	palette: {
@@ -43,6 +44,7 @@ export const lightTheme = createTheme({
 		primary: {
 			main: primaryColorLight,
 			accent: primaryAccent,
+			error: error,
 		},
 		secondary: {
 			main: secondaryColorLight,
@@ -65,6 +67,7 @@ export const darkTheme = createTheme({
 		primary: {
 			main: primaryColorDark,
 			accent: primaryAccent,
+			error: error,
 		},
 		secondary: {
 			main: secondaryColorDark,

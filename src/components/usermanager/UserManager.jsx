@@ -1,52 +1,82 @@
-import React, { useState, useEffect } from "react";
-import {
-	Container,
-	Typography,
-	Button,
-	Table,
-	TableBody,
-	TableCell,
-	TableContainer,
-	TableHead,
-	TableRow,
-	Paper,
-	IconButton,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle,
-	TextField,
-} from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
+import React, { useState, useEffect, useCallback } from "react";
+import { useAuth } from "../AuthContext";
+import { Container, Typography, Button } from "@mui/material";
 import { apiRequest } from "../funcs/common";
+import UserTable from "./assets/UserTable";
+import UserDialog from "./assets/UserDialog";
+import { fetchUsersHelper } from "../funcs/common/fetchUsersHelper";
 
 const UserManager = () => {
 	const [users, setUsers] = useState([]);
 	const [open, setOpen] = useState(false);
 	const [selectedUser, setSelectedUser] = useState(null);
-	const [newUser, setNewUser] = useState({ name: "", email: "" });
+	const [newUser, setUser] = useState({ name: "", email: "", role: "" });
+	const { auth } = useAuth();
 
-	useEffect(() => {}, []);
+	const fetchUsers = useCallback(async () => {
+		try {
+			const usersData = await fetchUsersHelper(auth.token);
+			setUsers(usersData);
+		} catch (error) {
+			console.error("Error fetching users:", error);
+		}
+	}, [auth.token]);
+
+	useEffect(() => {
+		fetchUsers();
+	}, [fetchUsers]);
 
 	const handleOpen = (user = null) => {
 		setSelectedUser(user);
+		if (user) {
+			setUser({ name: user.name, email: user.email, role: user.role });
+		} else {
+			setUser({ name: "", email: "", role: "User" });
+		}
 		setOpen(true);
 	};
 
 	const handleClose = () => {
 		setOpen(false);
 		setSelectedUser(null);
+		setUser({ name: "", email: "" });
 	};
 
-	const handleSave = () => {
-		if (selectedUser) {
-		} else {
+	const handleSave = async () => {
+		try {
+			const method = selectedUser ? "POST" : "PUT";
+			const url = selectedUser ? `users/${selectedUser.id}` : "users";
+
+			await apiRequest(
+				url,
+				method,
+				{ name: newUser.name, email: newUser.email, role: newUser.role },
+				auth.token || null,
+			);
+
+			await fetchUsers();
+			handleClose();
+		} catch (error) {
+			console.error("Error saving user:", error);
 		}
-		handleClose();
 	};
 
-	const handleDelete = (userId) => {};
+	const handleDelete = async (userId) => {
+		try {
+			const response = await apiRequest(
+				`users/${userId}`,
+				"DELETE",
+				"",
+				auth.token || null,
+			);
+			if (!response.Success) {
+				throw new Error(response.message);
+			}
+			await fetchUsers();
+		} catch (error) {
+			console.error("Error deleting user:", error);
+		}
+	};
 
 	return (
 		<Container>
@@ -56,80 +86,19 @@ const UserManager = () => {
 			<Button variant="contained" color="primary" onClick={() => handleOpen()}>
 				Add New User
 			</Button>
-			<TableContainer component={Paper} style={{ marginTop: 20 }}>
-				<Table>
-					<TableHead>
-						<TableRow>
-							<TableCell>Name</TableCell>
-							<TableCell>Email</TableCell>
-							<TableCell align="right">Actions</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{users.map((user) => (
-							<TableRow key={user.id}>
-								<TableCell>{user.name}</TableCell>
-								<TableCell>{user.email}</TableCell>
-								<TableCell align="right">
-									<IconButton color="primary" onClick={() => handleOpen(user)}>
-										<Edit />
-									</IconButton>
-									<IconButton
-										color="secondary"
-										onClick={() => handleDelete(user.id)}
-									>
-										<Delete />
-									</IconButton>
-								</TableCell>
-							</TableRow>
-						))}
-					</TableBody>
-				</Table>
-			</TableContainer>
-
-			<Dialog open={open} onClose={handleClose}>
-				<DialogTitle>{selectedUser ? "Edit User" : "Add New User"}</DialogTitle>
-				<DialogContent>
-					<DialogContentText>
-						{selectedUser
-							? "Edit the details of the user."
-							: "Enter details of the new user."}
-					</DialogContentText>
-					<TextField
-						autoFocus
-						margin="dense"
-						label="Name"
-						type="text"
-						fullWidth
-						value={selectedUser ? selectedUser.name : newUser.name}
-						onChange={(e) =>
-							selectedUser
-								? setSelectedUser({ ...selectedUser, name: e.target.value })
-								: setNewUser({ ...newUser, name: e.target.value })
-						}
-					/>
-					<TextField
-						margin="dense"
-						label="Email"
-						type="email"
-						fullWidth
-						value={selectedUser ? selectedUser.email : newUser.email}
-						onChange={(e) =>
-							selectedUser
-								? setSelectedUser({ ...selectedUser, email: e.target.value })
-								: setNewUser({ ...newUser, email: e.target.value })
-						}
-					/>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={handleClose} color="primary">
-						Cancel
-					</Button>
-					<Button onClick={handleSave} color="primary">
-						Save
-					</Button>
-				</DialogActions>
-			</Dialog>
+			<UserTable
+				users={users}
+				handleOpen={handleOpen}
+				handleDelete={handleDelete}
+			/>
+			<UserDialog
+				open={open}
+				handleClose={handleClose}
+				selectedUser={selectedUser}
+				user={newUser}
+				setUser={setUser}
+				handleSave={handleSave}
+			/>
 		</Container>
 	);
 };

@@ -12,6 +12,7 @@ const middleware = require("./middleware");
 app.use(cors());
 app.use(bodyParser.json());
 app.use(middleware.appendApiPrefix);
+middleware.jsonErrorHandler(app);
 
 // Import userRoutes
 const userRoutes = require("./routes/userRoutes");

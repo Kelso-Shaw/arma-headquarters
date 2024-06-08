@@ -1,36 +1,34 @@
 import axios from "axios";
 
-export const apiRequest = async (endpoint, method = "GET", payload = null) => {
+export const apiRequest = async (
+	endpoint,
+	method = "GET",
+	payload = null,
+	token = null,
+) => {
 	try {
 		const options = {
 			method,
 			url: `${process.env.REACT_APP_API_URL}/api/${endpoint}`,
 			headers: {
 				"Content-Type": "application/json",
+				...(token && { Authorization: `Bearer ${token}` }),
 			},
-			data:
-				payload &&
-				(method === "POST" ||
-					method === "PUT" ||
-					method === "PATCH" ||
-					method === "DELETE")
-					? payload
-					: null,
 		};
+
+		if (payload && ["POST", "PUT", "PATCH", "DELETE"].includes(method)) {
+			options.data = payload;
+		}
 
 		const response = await axios(options);
 
-		if (response.status !== 200) {
-			throw new Error(`HTTP error! status: ${response.status}`);
+		if (response.status >= 200 && response.status < 300) {
+			if (response.data.Success !== true) {
+				throw new Error(response.data.message || "Something went wrong");
+			}
+			return response.data;
 		}
-
-		const data = response.data;
-
-		if (data.status !== "success") {
-			throw new Error(data.message || "Something went wrong");
-		}
-
-		return data;
+		throw new Error(`HTTP error! status: ${response.status}`);
 	} catch (error) {
 		console.error("Failed to fetch data:", error);
 		throw error;
