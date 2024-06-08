@@ -38,12 +38,12 @@ export const AuthProvider = ({ children }) => {
 		}
 	}, []);
 
-	const login = async (name, password) => {
+	const login = async (username, password) => {
 		try {
 			const response = await apiRequest(
 				"users/login",
 				"POST",
-				{ name, password },
+				{ username, password },
 				null,
 			);
 

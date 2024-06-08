@@ -34,7 +34,7 @@ const PlayerDialog = ({
 			<TextField
 				autoFocus
 				margin="dense"
-				label="Name"
+				label="Username"
 				type="text"
 				fullWidth
 				value={player.username}

@@ -32,7 +32,7 @@ const UserDialog = ({
 			<TextField
 				autoFocus
 				margin="dense"
-				label="Name"
+				label="Username"
 				type="text"
 				fullWidth
 				value={user.username}

@@ -17,7 +17,7 @@ import { FormButton } from "./buttons/FormButton";
 
 const Home = () => {
 	const { auth, login } = useAuth();
-	const [name, setName] = useState("");
+	const [username, setName] = useState("");
 	const [password, setPassword] = useState("");
 	const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ const Home = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		const result = await login(name, password);
+		const result = await login(username, password);
 		if (!result.success) {
 			return;
 		}
@@ -79,7 +79,7 @@ const Home = () => {
 							name="username"
 							label="Username"
 							autoComplete="username"
-							value={name}
+							value={username}
 							onChange={(e) => setName(e.target.value)}
 						/>
 						<TextField
