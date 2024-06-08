@@ -17,7 +17,7 @@ import { FormButton } from "./buttons/FormButton";
 
 const Home = () => {
 	const { auth, login } = useAuth();
-	const [email, setEmail] = useState("");
+	const [username, setName] = useState("");
 	const [password, setPassword] = useState("");
 	const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ const Home = () => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		const result = await login(email, password);
+		const result = await login(username, password);
 		if (!result.success) {
 			return;
 		}
@@ -63,7 +63,7 @@ const Home = () => {
 						<LockOutlinedIcon />
 					</Avatar>
 					<Typography component="h1" variant="h5">
-						Sign in
+						Sign In
 					</Typography>
 					<Box
 						component="form"
@@ -75,11 +75,12 @@ const Home = () => {
 							margin="normal"
 							required
 							fullWidth
-							id="email"
-							name="email"
-							autoComplete="email"
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
+							id="username"
+							name="username"
+							label="Username"
+							autoComplete="username"
+							value={username}
+							onChange={(e) => setName(e.target.value)}
 						/>
 						<TextField
 							margin="normal"
@@ -87,6 +88,7 @@ const Home = () => {
 							fullWidth
 							name="password"
 							type="password"
+							label="Password"
 							id="password"
 							autoComplete="current-password"
 							value={password}

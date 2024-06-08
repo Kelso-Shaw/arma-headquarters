@@ -1,3 +1,5 @@
+import { apiRequest } from "./funcs/common";
+
 import React, { createContext, useState, useContext, useEffect } from "react";
 
 const AuthContext = createContext();
@@ -8,63 +10,53 @@ export const AuthProvider = ({ children }) => {
 	const [auth, setAuth] = useState({
 		isAuthenticated: false,
 		token: null,
-		loading: true,
+		role: null,
 	});
 
 	useEffect(() => {
 		const token = localStorage.getItem("token");
 		const expiration = localStorage.getItem("tokenExpiration");
-		const isExpired = expiration && new Date().getTime() > Number(expiration);
+		const role = localStorage.getItem("role");
+		const isTokenExpired =
+			expiration && new Date().getTime() > Number(expiration);
 
-		if (token && !isExpired) {
+		if (token && !isTokenExpired) {
 			setAuth({
 				isAuthenticated: true,
 				token,
-				loading: false,
+				role,
 			});
 		} else {
 			localStorage.removeItem("token");
 			localStorage.removeItem("tokenExpiration");
+			localStorage.removeItem("role");
 			setAuth({
 				isAuthenticated: false,
 				token: null,
-				loading: false,
+				role: null,
 			});
 		}
 	}, []);
 
-	const login = async (email, password) => {
+	const login = async (username, password) => {
 		try {
-			const response = await fetch(
-				`${process.env.REACT_APP_API_URL}/api/users/login`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({ email, password }),
-				},
+			const response = await apiRequest(
+				"users/login",
+				"POST",
+				{ username, password },
+				null,
 			);
-
-			if (!response.ok) {
-				const error = await response.json();
-				return { success: false, message: error.error || "Login failed" };
-			}
-
-			const data = await response.json();
-			if (!data.Success) {
-				return { success: false, message: "Login failed" };
-			}
 
 			const expirationTime = new Date().getTime() + TOKEN_EXPIRATION_TIME;
 
 			setAuth({
 				isAuthenticated: true,
-				token: data.accessToken,
-				loading: false,
+				token: response.accessToken,
+				role: response.role,
 			});
-			localStorage.setItem("token", data.accessToken);
+			localStorage.setItem("token", response.accessToken);
 			localStorage.setItem("tokenExpiration", expirationTime);
+			localStorage.setItem("role", response.role);
 
 			return { success: true };
 		} catch (error) {
@@ -76,10 +68,10 @@ export const AuthProvider = ({ children }) => {
 		setAuth({
 			isAuthenticated: false,
 			token: null,
-			loading: false,
 		});
 		localStorage.removeItem("token");
 		localStorage.removeItem("tokenExpiration");
+		localStorage.removeItem("role");
 	};
 
 	return (

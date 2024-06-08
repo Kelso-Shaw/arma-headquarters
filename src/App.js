@@ -6,6 +6,9 @@ import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
 import Nav from "./components/Nav";
 import PrivateRoute from "./components/PrivateRoute";
+import Panelsettings from "./components/panelsettings/PanelSettings";
+import PlayerManager from "./components/playermanager/PlayerManager";
+import UserManager from "./components/usermanager/UserManager";
 
 const App = () => {
 	const clanName = process.env.REACT_APP_CLAN_NAME;
@@ -30,6 +33,18 @@ const App = () => {
 							<Route path="/" element={<Home />} />
 							<Route element={<PrivateRoute />}>
 								<Route path="/dashboard" element={<Dashboard />} />
+								<Route
+									path="/dashboard/user-manager"
+									element={<UserManager />}
+								/>
+								<Route
+									path="/dashboard/panel-settings"
+									element={<Panelsettings />}
+								/>
+								<Route
+									path="/dashboard/player-manager"
+									element={<PlayerManager />}
+								/>
 							</Route>
 						</Routes>
 					</div>
