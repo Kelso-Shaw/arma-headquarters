@@ -46,31 +46,29 @@ function Nav({ name }) {
 			onKeyDown={toggleDrawer(false)}
 		>
 			<List>
-				<ListItemButton onClick={() => navigate("dashboard")}>
+				<ListItemButton onClick={() => navigate("/")}>
 					<ListItemIcon>
 						<HomeIcon />
 					</ListItemIcon>
 					<ListItemText primary="Home" />
 				</ListItemButton>
-				<ListItemButton onClick={() => navigate("dashboard/panel-settings")}>
-					<ListItemIcon>
-						<SettingsIcon />
-					</ListItemIcon>
-					<ListItemText primary="Settings" />
-				</ListItemButton>
-				<ListItemButton onClick={() => navigate("dashboard/user-manager")}>
-					<ListItemIcon>
-						<SettingsIcon />
-					</ListItemIcon>
-					<ListItemText primary="User Manager" />
-				</ListItemButton>
 				{auth.isAuthenticated ? (
-					<ListItemButton onClick={handleLogout}>
-						<ListItemIcon>
-							<LogoutIcon />
-						</ListItemIcon>
-						<ListItemText primary="Logout" />
-					</ListItemButton>
+					<>
+						<ListItemButton
+							onClick={() => navigate("dashboard/panel-settings")}
+						>
+							<ListItemIcon>
+								<SettingsIcon />
+							</ListItemIcon>
+							<ListItemText primary="Settings" />
+						</ListItemButton>
+						<ListItemButton onClick={handleLogout}>
+							<ListItemIcon>
+								<LogoutIcon />
+							</ListItemIcon>
+							<ListItemText primary="Logout" />
+						</ListItemButton>
+					</>
 				) : (
 					""
 				)}

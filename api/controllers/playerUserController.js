@@ -1,13 +1,14 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { Users } = require("../models");
+const { PlayerUsers } = require("../models");
 
 exports.register = async (req, res) => {
 	try {
-		const { username, password, name, role } = req.body;
+		const { username, email, password, name, role } = req.body;
 		const hashedPassword = await bcrypt.hash(password, 10);
-		const user = await Users.create({
+		const user = await PlayerUsers.create({
 			username,
+			email,
 			password: hashedPassword,
 			name,
 			role,
@@ -21,8 +22,8 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
 	try {
-		const { name, password } = req.body;
-		const user = await Users.findOne({ where: { name } });
+		const { email, password } = req.body;
+		const user = await PlayerUsers.findOne({ where: { email } });
 		if (user == null) {
 			return res
 				.status(400)
@@ -31,10 +32,10 @@ exports.login = async (req, res) => {
 
 		if (await bcrypt.compare(password, user.password)) {
 			const accessToken = jwt.sign(
-				{ name: user.name, role: user.role },
+				{ username: user.username, role: user.role },
 				process.env.ACCESS_TOKEN_SECRET,
 			);
-			res.json({ Success: true, accessToken, role: user.role });
+			res.json({ Success: true, accessToken });
 		} else {
 			res.status(403).send.json({
 				Success: false,
@@ -49,28 +50,13 @@ exports.login = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
 	try {
-		const users = await Users.findAll({
+		const users = await PlayerUsers.findAll({
 			attributes: { exclude: ["password", "createdAt", "updatedAt"] },
 		});
 		res.json({ Success: true, users });
 	} catch (error) {
 		console.error("Error fetching users:", error);
 		res.status(500).send.json({ Success: false });
-	}
-};
-
-exports.getUser = async (req, res) => {
-	try {
-		const id = req.params.id;
-		const user = await Users.findOne({
-			where: { id },
-			attributes: { exclude: ["password", "createdAt", "updatedAt"] },
-		});
-
-		res.json({ Success: true, user });
-	} catch (error) {
-		console.error("Error getting user:", error);
-		res.status(500).json({ Success: false });
 	}
 };
 
@@ -82,7 +68,7 @@ exports.addUser = async (req, res) => {
 
 		const hashedPassword = await bcrypt.hash(plainPassword, 10);
 
-		const user = await Users.create({
+		const user = await PlayerUsers.create({
 			...otherDetails,
 			password: hashedPassword,
 		});
@@ -96,7 +82,7 @@ exports.addUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
 	try {
 		const userId = req.params.id;
-		const deletedUser = await Users.destroy({
+		const deletedUser = await PlayerUsers.destroy({
 			where: { id: userId },
 		});
 
@@ -116,25 +102,24 @@ exports.deleteUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
 	try {
 		const userId = req.params.id;
-		const { name, password, role } = req.body;
-		const body = {
-			name: name,
-			role: role,
-		};
+		const { name, email, password, role } = req.body;
 
-		if (password) {
-			const hashedPassword = await bcrypt.hash(password, 10);
-			body.password = hashedPassword;
-		}
-
-		const [updated] = await Users.update(body, {
-			where: { id: userId },
-		});
+		const [updated] = await PlayerUsers.update(
+			{
+				name: name,
+				email: email,
+				password: password,
+				role: role,
+			},
+			{
+				where: { id: userId },
+			},
+		);
 
 		if (!updated) {
 			res.status(404).json({ Success: false, message: "User not found" });
 		}
-		const updatedUser = await Users.findOne({ where: { id: userId } });
+		const updatedUser = await PlayerUsers.findOne({ where: { id: userId } });
 		res.status(200).json({
 			Success: true,
 			message: "User updated successfully",

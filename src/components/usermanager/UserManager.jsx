@@ -10,7 +10,11 @@ const UserManager = () => {
 	const [users, setUsers] = useState([]);
 	const [open, setOpen] = useState(false);
 	const [selectedUser, setSelectedUser] = useState(null);
-	const [newUser, setUser] = useState({ name: "", email: "", role: "" });
+	const [newUser, setUser] = useState({
+		name: "",
+		role: "",
+		password: null,
+	});
 	const { auth } = useAuth();
 
 	const fetchUsers = useCallback(async () => {
@@ -29,9 +33,9 @@ const UserManager = () => {
 	const handleOpen = (user = null) => {
 		setSelectedUser(user);
 		if (user) {
-			setUser({ name: user.name, email: user.email, role: user.role });
+			setUser({ name: user.name, role: user.role });
 		} else {
-			setUser({ name: "", email: "", role: "User" });
+			setUser({ name: "", role: "" });
 		}
 		setOpen(true);
 	};
@@ -41,18 +45,23 @@ const UserManager = () => {
 		setSelectedUser(null);
 		setUser({ name: "", email: "" });
 	};
-
+	if (auth.role < 2) {
+		return "You are not supposed to be here";
+	}
 	const handleSave = async () => {
 		try {
 			const method = selectedUser ? "POST" : "PUT";
 			const url = selectedUser ? `users/${selectedUser.id}` : "users";
+			const requestBody = {
+				name: newUser.name,
+				role: newUser.role,
+			};
 
-			await apiRequest(
-				url,
-				method,
-				{ name: newUser.name, email: newUser.email, role: newUser.role },
-				auth.token || null,
-			);
+			if (newUser.password) {
+				requestBody.password = newUser.password;
+			}
+
+			await apiRequest(url, method, requestBody, auth.token || null);
 
 			await fetchUsers();
 			handleClose();

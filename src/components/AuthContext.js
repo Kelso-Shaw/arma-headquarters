@@ -10,34 +10,40 @@ export const AuthProvider = ({ children }) => {
 	const [auth, setAuth] = useState({
 		isAuthenticated: false,
 		token: null,
+		role: null,
 	});
 
 	useEffect(() => {
 		const token = localStorage.getItem("token");
 		const expiration = localStorage.getItem("tokenExpiration");
-		const isExpired = expiration && new Date().getTime() > Number(expiration);
+		const role = localStorage.getItem("role");
+		const isTokenExpired =
+			expiration && new Date().getTime() > Number(expiration);
 
-		if (token && !isExpired) {
+		if (token && !isTokenExpired) {
 			setAuth({
 				isAuthenticated: true,
 				token,
+				role,
 			});
 		} else {
 			localStorage.removeItem("token");
 			localStorage.removeItem("tokenExpiration");
+			localStorage.removeItem("role");
 			setAuth({
 				isAuthenticated: false,
 				token: null,
+				role: null,
 			});
 		}
 	}, []);
 
-	const login = async (email, password) => {
+	const login = async (name, password) => {
 		try {
 			const response = await apiRequest(
 				"users/login",
 				"POST",
-				{ email, password },
+				{ name, password },
 				null,
 			);
 
@@ -46,9 +52,11 @@ export const AuthProvider = ({ children }) => {
 			setAuth({
 				isAuthenticated: true,
 				token: response.accessToken,
+				role: response.role,
 			});
 			localStorage.setItem("token", response.accessToken);
 			localStorage.setItem("tokenExpiration", expirationTime);
+			localStorage.setItem("role", response.role);
 
 			return { success: true };
 		} catch (error) {
@@ -63,6 +71,7 @@ export const AuthProvider = ({ children }) => {
 		});
 		localStorage.removeItem("token");
 		localStorage.removeItem("tokenExpiration");
+		localStorage.removeItem("role");
 	};
 
 	return (

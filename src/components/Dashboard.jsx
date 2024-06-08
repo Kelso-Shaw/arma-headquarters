@@ -1,31 +1,49 @@
-import { Grid, Paper, Typography } from "@mui/material";
+import { Grid, Paper, Typography, Box, Button } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 const Dashboard = () => {
+	const navigate = useNavigate();
+	const { auth } = useAuth();
+	console.log(auth);
 	return (
-		<Grid container spacing={3}>
+		<Grid container spacing={3} justifyContent="center">
+			{auth.role > 1 ? (
+				<Grid item xs={12} sm={6} md={4}>
+					<Paper
+						sx={{
+							padding: 2,
+							display: "flex",
+							flexDirection: "column",
+						}}
+					>
+						<Typography variant="h6" gutterBottom textAlign="center">
+							Admin Settings
+						</Typography>
+						<Button onClick={() => navigate("/dashboard/user-manager")}>
+							User Manager
+						</Button>
+						<Button onClick={() => navigate("/dashboard/panel-settings")}>
+							Panel Settings
+						</Button>
+					</Paper>
+				</Grid>
+			) : (
+				""
+			)}
 			<Grid item xs={12} sm={6} md={4}>
-				<Paper sx={{ padding: 2 }}>
-					<Typography variant="h6" gutterBottom>
-						Widget 1
+				<Paper
+					sx={{
+						padding: 2,
+						display: "flex",
+						flexDirection: "column",
+					}}
+				>
+					<Typography variant="h6" gutterBottom textAlign="center">
+						Mission Editor
 					</Typography>
-					<Typography>Content for Widget 1</Typography>
-				</Paper>
-			</Grid>
-			<Grid item xs={12} sm={6} md={4}>
-				<Paper sx={{ padding: 2 }}>
-					<Typography variant="h6" gutterBottom>
-						Widget 2
-					</Typography>
-					<Typography>Content for Widget 2</Typography>
-				</Paper>
-			</Grid>
-			<Grid item xs={12} sm={6} md={4}>
-				<Paper sx={{ padding: 2 }}>
-					<Typography variant="h6" gutterBottom>
-						Widget 3
-					</Typography>
-					<Typography>Content for Widget 3</Typography>
+					<Button>Events</Button>
 				</Paper>
 			</Grid>
 		</Grid>

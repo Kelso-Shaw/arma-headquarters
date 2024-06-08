@@ -14,10 +14,8 @@ import React from "react";
 const getRoleName = (role) => {
 	switch (Number(role)) {
 		case 1:
-			return "User";
-		case 2:
 			return "Editor";
-		case 3:
+		case 2:
 			return "Admin";
 		default:
 			return "Unknown";
@@ -30,8 +28,7 @@ const UserTable = ({ users, handleOpen, handleDelete }) => (
 			<TableHead>
 				<TableRow>
 					<TableCell>Name</TableCell>
-					<TableCell>Email</TableCell>
-					<TableCell>Role</TableCell>
+					<TableCell align="right">Role</TableCell>
 					<TableCell align="right">Actions</TableCell>
 				</TableRow>
 			</TableHead>
@@ -39,8 +36,7 @@ const UserTable = ({ users, handleOpen, handleDelete }) => (
 				{users.map((user) => (
 					<TableRow key={user.id}>
 						<TableCell>{user.name}</TableCell>
-						<TableCell>{user.email}</TableCell>
-						<TableCell>{getRoleName(user.role)}</TableCell>
+						<TableCell align="right">{getRoleName(user.role)}</TableCell>
 						<TableCell align="right">
 							<IconButton color="primary" onClick={() => handleOpen(user)}>
 								<Edit />

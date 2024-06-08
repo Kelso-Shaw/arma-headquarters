@@ -1,4 +1,4 @@
-import { Button, Container, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../AuthContext";
 import { apiRequest } from "../funcs/common";
@@ -38,6 +38,10 @@ const UserManager = () => {
 	useEffect(() => {
 		fetchSettings();
 	}, [fetchSettings]);
+
+	if (auth.role < 2) {
+		return "You are not supposed to be here";
+	}
 
 	return (
 		<Container>

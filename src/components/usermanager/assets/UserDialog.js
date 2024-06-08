@@ -39,12 +39,13 @@ const UserDialog = ({
 				onChange={(e) => setUser({ ...user, name: e.target.value })}
 			/>
 			<TextField
+				autoFocus
 				margin="dense"
-				label="Email"
-				type="email"
+				label="Password"
+				type="password"
 				fullWidth
-				value={user.email}
-				onChange={(e) => setUser({ ...user, email: e.target.value })}
+				value={user.password}
+				onChange={(e) => setUser({ ...user, password: e.target.value })}
 			/>
 			<FormControl fullWidth margin="dense" sx={{ width: 120 }}>
 				<InputLabel>Role</InputLabel>
@@ -56,9 +57,8 @@ const UserDialog = ({
 					<MenuItem value="" disabled>
 						Select Role
 					</MenuItem>
-					<MenuItem value="1">User</MenuItem>
-					<MenuItem value="2">Editor</MenuItem>
-					<MenuItem value="3">Admin</MenuItem>
+					<MenuItem value="1">Editor</MenuItem>
+					<MenuItem value="2">Admin</MenuItem>
 				</Select>
 			</FormControl>
 		</DialogContent>
