@@ -11,18 +11,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const getRoleName = (role) => {
-	switch (Number(role)) {
-		case 1:
-			return "Editor";
-		case 2:
-			return "Admin";
-		default:
-			return "Unknown";
-	}
-};
-
-const UserTable = ({ users, handleOpen, handleDelete }) => (
+const PlayerTable = ({ players, handleOpen, handleDelete }) => (
 	<TableContainer component={Paper} style={{ marginTop: 20 }}>
 		<Table>
 			<TableHead>
@@ -33,15 +22,15 @@ const UserTable = ({ users, handleOpen, handleDelete }) => (
 				</TableRow>
 			</TableHead>
 			<TableBody>
-				{users.map((user) => (
-					<TableRow key={user.id}>
-						<TableCell>{user.username}</TableCell>
-						<TableCell align="right">{getRoleName(user.role)}</TableCell>
+				{players.map((player) => (
+					<TableRow key={player.id}>
+						<TableCell>{player.username}</TableCell>
+						<TableCell align="right">{player.role}</TableCell>
 						<TableCell align="right">
-							<IconButton color="primary" onClick={() => handleOpen(user)}>
+							<IconButton color="primary" onClick={() => handleOpen(player)}>
 								<Edit />
 							</IconButton>
-							<IconButton color="error" onClick={() => handleDelete(user.id)}>
+							<IconButton color="error" onClick={() => handleDelete(player.id)}>
 								<Delete />
 							</IconButton>
 						</TableCell>
@@ -52,4 +41,4 @@ const UserTable = ({ users, handleOpen, handleDelete }) => (
 	</TableContainer>
 );
 
-export default UserTable;
+export default PlayerTable;

@@ -13,21 +13,23 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const UserDialog = ({
+const PlayerDialog = ({
 	open,
 	handleClose,
-	selectedUser,
-	user,
-	setUser,
+	selectedPlayer,
+	player,
+	setPlayer,
 	handleSave,
 }) => (
 	<Dialog open={open} onClose={handleClose}>
-		<DialogTitle>{selectedUser ? "Edit User" : "Add New User"}</DialogTitle>
+		<DialogTitle>
+			{selectedPlayer ? "Edit Player" : "Add New Player"}
+		</DialogTitle>
 		<DialogContent>
 			<DialogContentText>
-				{selectedUser
-					? "Edit the details of the user."
-					: "Enter details of the new user."}
+				{selectedPlayer
+					? "Edit the details of the player."
+					: "Enter details of the new player."}
 			</DialogContentText>
 			<TextField
 				autoFocus
@@ -35,8 +37,8 @@ const UserDialog = ({
 				label="Name"
 				type="text"
 				fullWidth
-				value={user.username}
-				onChange={(e) => setUser({ ...user, username: e.target.value })}
+				value={player.username}
+				onChange={(e) => setPlayer({ ...player, username: e.target.value })}
 			/>
 			<TextField
 				autoFocus
@@ -44,21 +46,21 @@ const UserDialog = ({
 				label="Password"
 				type="password"
 				fullWidth
-				value={user.password}
-				onChange={(e) => setUser({ ...user, password: e.target.value })}
+				value={player.password}
+				onChange={(e) => setPlayer({ ...player, password: e.target.value })}
 			/>
 			<FormControl fullWidth margin="dense" sx={{ width: 120 }}>
 				<InputLabel>Role</InputLabel>
 				<Select
-					value={user.role || ""}
-					onChange={(e) => setUser({ ...user, role: e.target.value })}
+					value={player.role || ""}
+					onChange={(e) => setPlayer({ ...player, role: e.target.value })}
 					label="Role"
 				>
 					<MenuItem value="" disabled>
 						Select Role
 					</MenuItem>
-					<MenuItem value="1">Editor</MenuItem>
-					<MenuItem value="2">Admin</MenuItem>
+					<MenuItem value="Private">Private</MenuItem>
+					<MenuItem value="Corporal">Corporal</MenuItem>
 				</Select>
 			</FormControl>
 		</DialogContent>
@@ -73,4 +75,4 @@ const UserDialog = ({
 	</Dialog>
 );
 
-export default UserDialog;
+export default PlayerDialog;

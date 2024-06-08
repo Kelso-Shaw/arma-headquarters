@@ -16,12 +16,28 @@ useEffect(() => {
 
 import { apiRequest } from "./apiRequest";
 
-export const fetchUsersHelper = async (token) => {
-	try {
-		const data = await apiRequest("users", "GET", "", token ? token : null);
-		return data.users;
-	} catch (error) {
-		console.error("Error fetching users:", error);
-		throw error;
+export const fetchUsersHelper = async (token, user) => {
+	switch (user) {
+		case "users":
+			try {
+				const data = await apiRequest("users", "GET", "", token ? token : null);
+				return data.users;
+			} catch (error) {
+				console.error("Error fetching users:", error);
+				throw error;
+			}
+		case "players":
+			try {
+				const data = await apiRequest(
+					"players",
+					"GET",
+					"",
+					token ? token : null,
+				);
+				return data.users;
+			} catch (error) {
+				console.error("Error fetching users:", error);
+				throw error;
+			}
 	}
 };

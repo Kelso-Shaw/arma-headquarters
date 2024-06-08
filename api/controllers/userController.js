@@ -89,7 +89,7 @@ exports.addUser = async (req, res) => {
 		res.status(201).json({ Success: true, user });
 	} catch (error) {
 		console.error("Error adding user:", error);
-		res.status(500).json({ Success: false });
+		res.status(500).json({ Success: false, Message: error.errors[0].message });
 	}
 };
 

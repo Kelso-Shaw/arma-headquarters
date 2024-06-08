@@ -3,11 +3,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../AuthContext";
 import { apiRequest } from "../funcs/common";
 import { fetchUsersHelper } from "../funcs/common/fetchUsersHelper";
-import UserDialog from "./assets/UserDialog";
-import UserTable from "./assets/UserTable";
+import PlayerDialog from "./assets/PlayerDialog";
+import PlayerTable from "./assets/PlayerTable";
 
-const UserManager = () => {
-	const [users, setUsers] = useState([]);
+const PlayerManager = () => {
+	const [players, setPlayers] = useState([]);
 	const [open, setOpen] = useState(false);
 	const [selectedEntity, setSelectedEntity] = useState(null);
 
@@ -19,18 +19,18 @@ const UserManager = () => {
 
 	const { auth } = useAuth();
 
-	const fetchUsers = useCallback(async () => {
+	const fetchPlayers = useCallback(async () => {
 		try {
-			const usersData = await fetchUsersHelper(auth.token, "users");
-			setUsers(usersData);
+			const playersData = await fetchUsersHelper(auth.token, "players");
+			setPlayers(playersData);
 		} catch (error) {
-			console.error("Error fetching users:", error);
+			console.error("Error fetching players:", error);
 		}
 	}, [auth.token]);
 
 	useEffect(() => {
-		fetchUsers();
-	}, [fetchUsers]);
+		fetchPlayers();
+	}, [fetchPlayers]);
 
 	const handleOpen = (entity = null) => {
 		setSelectedEntity(entity);
@@ -51,7 +51,7 @@ const UserManager = () => {
 	const handleSave = async () => {
 		try {
 			const method = selectedEntity ? "POST" : "PUT";
-			const url = selectedEntity ? `users/${selectedEntity.id}` : "users";
+			const url = selectedEntity ? `players/${selectedEntity.id}` : "players";
 			const requestBody = {
 				username: newEntity.username,
 				role: newEntity.role,
@@ -62,17 +62,17 @@ const UserManager = () => {
 			}
 
 			await apiRequest(url, method, requestBody, auth.token || null);
-			await fetchUsers();
+			await fetchPlayers();
 			handleClose();
 		} catch (error) {
-			console.error("Error saving user:", error);
+			console.error("Error saving player:", error);
 		}
 	};
 
 	const handleDelete = async (entityId) => {
 		try {
 			const response = await apiRequest(
-				`users/${entityId}`,
+				`players/${entityId}`,
 				"DELETE",
 				"",
 				auth.token || null,
@@ -80,9 +80,9 @@ const UserManager = () => {
 			if (!response.Success) {
 				throw new Error(response.message);
 			}
-			await fetchUsers();
+			await fetchPlayers();
 		} catch (error) {
-			console.error("Error deleting user:", error);
+			console.error("Error deleting player:", error);
 		}
 	};
 
@@ -93,30 +93,30 @@ const UserManager = () => {
 	return (
 		<Container>
 			<Typography variant="h4" gutterBottom>
-				User Manager
+				Player Manager
 			</Typography>
 			<Button
 				variant="contained"
 				color="primary"
 				onClick={() => handleOpen(null)}
 			>
-				Add New User
+				Add New Player
 			</Button>
-			<UserTable
-				users={users}
-				handleOpen={(user) => handleOpen(user)}
+			<PlayerTable
+				players={players}
+				handleOpen={(player) => handleOpen(player)}
 				handleDelete={(id) => handleDelete(id)}
 			/>
-			<UserDialog
+			<PlayerDialog
 				open={open}
 				handleClose={handleClose}
-				selectedUser={selectedEntity}
-				user={newEntity}
-				setUser={setNewEntity}
+				selectedPlayer={selectedEntity}
+				player={newEntity}
+				setPlayer={setNewEntity}
 				handleSave={handleSave}
 			/>
 		</Container>
 	);
 };
 
-export default UserManager;
+export default PlayerManager;

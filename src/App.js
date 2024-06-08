@@ -7,6 +7,7 @@ import Home from "./components/Home";
 import Nav from "./components/Nav";
 import PrivateRoute from "./components/PrivateRoute";
 import Panelsettings from "./components/panelsettings/PanelSettings";
+import PlayerManager from "./components/playermanager/PlayerManager";
 import UserManager from "./components/usermanager/UserManager";
 
 const App = () => {
@@ -39,6 +40,10 @@ const App = () => {
 								<Route
 									path="/dashboard/panel-settings"
 									element={<Panelsettings />}
+								/>
+								<Route
+									path="/dashboard/player-manager"
+									element={<PlayerManager />}
 								/>
 							</Route>
 						</Routes>
