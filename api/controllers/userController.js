@@ -31,7 +31,7 @@ exports.login = async (req, res) => {
 
 		if (await bcrypt.compare(password, user.password)) {
 			const accessToken = jwt.sign(
-				{ name: user.name, role: user.role },
+				{ username: user.username, role: user.role },
 				process.env.ACCESS_TOKEN_SECRET,
 			);
 			res.json({ Success: true, accessToken, role: user.role });
@@ -116,9 +116,9 @@ exports.deleteUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
 	try {
 		const userId = req.params.id;
-		const { name, password, role } = req.body;
+		const { username, password, role } = req.body;
 		const body = {
-			name: name,
+			username: username,
 			role: role,
 		};
 
