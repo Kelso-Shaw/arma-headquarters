@@ -1,15 +1,15 @@
-import React from "react";
+import { Delete, Edit } from "@mui/icons-material";
 import {
+	IconButton,
+	Paper,
 	Table,
 	TableBody,
 	TableCell,
 	TableContainer,
 	TableHead,
 	TableRow,
-	Paper,
-	IconButton,
 } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
+import React from "react";
 
 const getRoleName = (role) => {
 	switch (Number(role)) {

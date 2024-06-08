@@ -11,7 +11,7 @@ module.exports = {
 				email: `admin@${process.env.EMAIL_HOST}`,
 				password: hashedPassword,
 				name: "Administrator",
-				role: "admin",
+				role: "3",
 				createdAt: new Date(),
 				updatedAt: new Date(),
 			},

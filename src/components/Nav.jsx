@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import HomeIcon from "@mui/icons-material/Home";
+import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
+import SettingsIcon from "@mui/icons-material/Settings";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import HomeIcon from "@mui/icons-material/Home";
-import SettingsIcon from "@mui/icons-material/Settings";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import ThemeButton from "./buttons/ThemeButton";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { useNavigate } from "react-router-dom";
 
 function Nav({ name }) {
 	const { auth } = useAuth();
@@ -46,13 +46,13 @@ function Nav({ name }) {
 			onKeyDown={toggleDrawer(false)}
 		>
 			<List>
-				<ListItemButton>
+				<ListItemButton onClick={() => navigate("dashboard")}>
 					<ListItemIcon>
 						<HomeIcon />
 					</ListItemIcon>
 					<ListItemText primary="Home" />
 				</ListItemButton>
-				<ListItemButton>
+				<ListItemButton onClick={() => navigate("dashboard/panel-settings")}>
 					<ListItemIcon>
 						<SettingsIcon />
 					</ListItemIcon>

@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { Users } = require("../models");
+const { Users, PlayerUsers } = require("../models");
 
 exports.register = async (req, res) => {
 	try {
@@ -25,7 +25,9 @@ exports.login = async (req, res) => {
 		const { email, password } = req.body;
 		const user = await Users.findOne({ where: { email } });
 		if (user == null) {
-			return res.status(400).json({ Success: false });
+			return res
+				.status(400)
+				.json({ Success: false, Message: "Username or Password is incorrect" });
 		}
 
 		if (await bcrypt.compare(password, user.password)) {
@@ -35,7 +37,10 @@ exports.login = async (req, res) => {
 			);
 			res.json({ Success: true, accessToken });
 		} else {
-			res.status(403).send.json({ Success: false });
+			res.status(403).send.json({
+				Success: false,
+				Message: "Username or Password is incorrect",
+			});
 		}
 	} catch (error) {
 		console.error("Error logging in user:", error);

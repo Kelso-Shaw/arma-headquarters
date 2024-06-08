@@ -1,10 +1,10 @@
+import { Button, Container, Typography } from "@mui/material";
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../AuthContext";
-import { Container, Typography, Button } from "@mui/material";
 import { apiRequest } from "../funcs/common";
-import UserTable from "./assets/UserTable";
-import UserDialog from "./assets/UserDialog";
 import { fetchUsersHelper } from "../funcs/common/fetchUsersHelper";
+import UserDialog from "./assets/UserDialog";
+import UserTable from "./assets/UserTable";
 
 const UserManager = () => {
 	const [users, setUsers] = useState([]);

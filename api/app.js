@@ -16,9 +16,12 @@ middleware.jsonErrorHandler(app);
 
 // Import userRoutes
 const userRoutes = require("./routes/userRoutes");
+const panelRoutes = require("./routes/panelRoutes");
+const panelsettings = require("./models/panelsettings");
 
 // Use the user routes with /api prefix
 app.use("/api/users", userRoutes);
+app.use("/api/panel", panelRoutes);
 
 // Start the server
 app.listen(port, () => {

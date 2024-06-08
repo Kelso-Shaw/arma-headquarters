@@ -1,17 +1,17 @@
-import React from "react";
 import {
+	Button,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
-	TextField,
-	Button,
-	Select,
-	MenuItem,
 	FormControl,
 	InputLabel,
+	MenuItem,
+	Select,
+	TextField,
 } from "@mui/material";
+import React from "react";
 
 const UserDialog = ({
 	open,

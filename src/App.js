@@ -7,6 +7,7 @@ import Home from "./components/Home";
 import Nav from "./components/Nav";
 import PrivateRoute from "./components/PrivateRoute";
 import UserManager from "./components/usermanager/UserManager";
+import Panelsettings from "./components/panelsettings/PanelSettings";
 
 const App = () => {
 	const clanName = process.env.REACT_APP_CLAN_NAME;
@@ -34,6 +35,10 @@ const App = () => {
 								<Route
 									path="/dashboard/user-manager"
 									element={<UserManager />}
+								/>
+								<Route
+									path="/dashboard/panel-settings"
+									element={<Panelsettings />}
 								/>
 							</Route>
 						</Routes>
