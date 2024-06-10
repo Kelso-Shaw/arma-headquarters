@@ -3,12 +3,14 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../AuthContext";
 import { AddButtonTable } from "../buttons/AddButtonTable";
 import { apiRequest } from "../funcs/common";
-import { fetchUsersHelper } from "../funcs/common/fetchUsersHelper";
+import { fetchHelper } from "../funcs/common/fetchHelper";
+import Layout from "../layouts/Layout";
 import PlayerDialog from "./assets/PlayerDialog";
 import PlayerTable from "./assets/PlayerTable";
 
 const PlayerManager = () => {
 	const [players, setPlayers] = useState([]);
+	const [ranks, setRanks] = useState([]);
 	const [open, setOpen] = useState(false);
 	const [selectedEntity, setSelectedEntity] = useState(null);
 
@@ -22,16 +24,26 @@ const PlayerManager = () => {
 
 	const fetchPlayers = useCallback(async () => {
 		try {
-			const playersData = await fetchUsersHelper(auth.token, "players");
+			const playersData = await fetchHelper(auth.token, "players");
 			setPlayers(playersData);
 		} catch (error) {
 			console.error("Error fetching players:", error);
 		}
 	}, [auth.token]);
 
+	const fetchRanks = useCallback(async () => {
+		try {
+			const rankData = await fetchHelper(auth.token, "ranks");
+			setRanks(rankData);
+		} catch (error) {
+			console.error(error);
+		}
+	}, [auth.token]);
+
 	useEffect(() => {
 		fetchPlayers();
-	}, [fetchPlayers]);
+		fetchRanks();
+	}, [fetchPlayers, fetchRanks]);
 
 	const handleOpen = (entity = null) => {
 		setSelectedEntity(entity);
@@ -92,20 +104,11 @@ const PlayerManager = () => {
 	}
 
 	return (
-		<Container
-			sx={{
-				display: "flex",
-				flexDirection: "column",
-				alignItems: "flex-start",
-			}}
+		<Layout
+			title="Player Manager"
+			buttonName="Add New Player"
+			buttonOnClick={() => handleOpen()}
 		>
-			<Typography variant="h4" gutterBottom>
-				Player Manager
-			</Typography>
-			<AddButtonTable
-				text={"Add New Player"}
-				onClick={() => handleOpen(null)}
-			/>
 			<PlayerTable
 				players={players}
 				handleOpen={(player) => handleOpen(player)}
@@ -118,8 +121,9 @@ const PlayerManager = () => {
 				player={newEntity}
 				setPlayer={setNewEntity}
 				handleSave={handleSave}
+				ranks={ranks}
 			/>
-		</Container>
+		</Layout>
 	);
 };
 

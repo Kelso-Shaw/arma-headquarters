@@ -4,6 +4,7 @@ exports.getRanks = async (req, res) => {
 	try {
 		const ranks = await PlayerRanks.findAll({
 			attributes: { exclude: ["password", "createdAt", "updatedAt"] },
+			order: [["order", "ASC"]],
 		});
 		res.status(200).json({ Success: true, ranks });
 	} catch (error) {

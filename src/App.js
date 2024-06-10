@@ -8,6 +8,7 @@ import Nav from "./components/Nav";
 import PrivateRoute from "./components/PrivateRoute";
 import Panelsettings from "./components/panelsettings/PanelSettings";
 import PlayerManager from "./components/playermanager/PlayerManager";
+import RankManager from "./components/rankmanager/RankManager";
 import UserManager from "./components/usermanager/UserManager";
 
 const App = () => {
@@ -44,6 +45,10 @@ const App = () => {
 								<Route
 									path="/dashboard/player-manager"
 									element={<PlayerManager />}
+								/>
+								<Route
+									path="/dashboard/rank-manager"
+									element={<RankManager />}
 								/>
 							</Route>
 						</Routes>

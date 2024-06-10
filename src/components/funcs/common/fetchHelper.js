@@ -2,7 +2,7 @@
 const { auth } = useAuth();
 const fetchUsers = useCallback(async () => {
     try {
-        const usersData = await fetchUsersHelper(auth.token);
+        const usersData = await fetchHelper(auth.token);
         setUsers(usersData);
     } catch (error) {
         console.error("Error fetching users:", error);
@@ -16,7 +16,7 @@ useEffect(() => {
 
 import { apiRequest } from "./apiRequest";
 
-export const fetchUsersHelper = async (token, user) => {
+export const fetchHelper = async (token, user) => {
 	switch (user) {
 		case "users":
 			try {
@@ -38,6 +38,13 @@ export const fetchUsersHelper = async (token, user) => {
 			} catch (error) {
 				console.error("Error fetching users:", error);
 				throw error;
+			}
+		case "ranks":
+			try {
+				const data = await apiRequest("ranks", "GET", "", token ? token : null);
+				return data.ranks;
+			} catch (error) {
+				console.error("Error fetching ranks", error);
 			}
 	}
 };

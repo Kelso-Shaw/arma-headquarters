@@ -20,6 +20,7 @@ const PlayerDialog = ({
 	player,
 	setPlayer,
 	handleSave,
+	ranks,
 }) => (
 	<Dialog open={open} onClose={handleClose}>
 		<DialogTitle>
@@ -50,17 +51,17 @@ const PlayerDialog = ({
 				onChange={(e) => setPlayer({ ...player, password: e.target.value })}
 			/>
 			<FormControl fullWidth margin="dense" sx={{ width: 120 }}>
-				<InputLabel>Role</InputLabel>
+				<InputLabel>Rank</InputLabel>
 				<Select
 					value={player.role || ""}
 					onChange={(e) => setPlayer({ ...player, role: e.target.value })}
-					label="Role"
+					label="Rank"
 				>
-					<MenuItem value="" disabled>
-						Select Role
-					</MenuItem>
-					<MenuItem value="Private">Private</MenuItem>
-					<MenuItem value="Corporal">Corporal</MenuItem>
+					{ranks.map((r) => (
+						<MenuItem key={r.id} value={r.rank}>
+							{r.rank}
+						</MenuItem>
+					))}
 				</Select>
 			</FormControl>
 		</DialogContent>

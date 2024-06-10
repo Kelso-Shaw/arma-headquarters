@@ -6,7 +6,6 @@ import { useAuth } from "./AuthContext";
 const Dashboard = () => {
 	const navigate = useNavigate();
 	const { auth } = useAuth();
-	console.log(auth);
 	return (
 		<Grid container spacing={3} justifyContent="center">
 			{auth.role > 1 ? (
@@ -27,8 +26,8 @@ const Dashboard = () => {
 						<Button onClick={() => navigate("/dashboard/player-manager")}>
 							Player Manager
 						</Button>
-						<Button onClick={() => navigate("/dashboard/panel-settings")}>
-							Panel Settings
+						<Button onClick={() => navigate("/dashboard/rank-manager")}>
+							Rank Manager
 						</Button>
 					</Paper>
 				</Grid>

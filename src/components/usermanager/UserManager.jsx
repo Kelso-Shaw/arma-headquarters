@@ -3,7 +3,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../AuthContext";
 import { AddButtonTable } from "../buttons/AddButtonTable";
 import { apiRequest } from "../funcs/common";
-import { fetchUsersHelper } from "../funcs/common/fetchUsersHelper";
+import { fetchHelper } from "../funcs/common/fetchHelper";
+import Layout from "../layouts/Layout";
 import UserDialog from "./assets/UserDialog";
 import UserTable from "./assets/UserTable";
 
@@ -22,7 +23,7 @@ const UserManager = () => {
 
 	const fetchUsers = useCallback(async () => {
 		try {
-			const usersData = await fetchUsersHelper(auth.token, "users");
+			const usersData = await fetchHelper(auth.token, "users");
 			setUsers(usersData);
 		} catch (error) {
 			console.error("Error fetching users:", error);
@@ -92,17 +93,11 @@ const UserManager = () => {
 	}
 
 	return (
-		<Container
-			sx={{
-				display: "flex",
-				flexDirection: "column",
-				alignItems: "flex-start",
-			}}
+		<Layout
+			title="User Manager"
+			buttonName="Add New User"
+			buttonOnClick={() => handleOpen()}
 		>
-			<Typography variant="h4" gutterBottom>
-				User Manager
-			</Typography>
-			<AddButtonTable text={"Add New User"} onClick={() => handleOpen(null)} />
 			<UserTable
 				users={users}
 				handleOpen={(user) => handleOpen(user)}
@@ -116,7 +111,7 @@ const UserManager = () => {
 				setUser={setNewEntity}
 				handleSave={handleSave}
 			/>
-		</Container>
+		</Layout>
 	);
 };
 
