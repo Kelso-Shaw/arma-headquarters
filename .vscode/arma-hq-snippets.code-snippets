@@ -1,6 +1,6 @@
 {
     "ArmaHQ Auth and MUI": {
-        "scope": "javascript,typescript",
+        "scope": "javascript,typescript,javascriptreact,typescriptreact",
         "prefix": "ahq-auth-mui",
         "body": [
             "import React, { useState, useEffect, useCallback } from 'react';",
