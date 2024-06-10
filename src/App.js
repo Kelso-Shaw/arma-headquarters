@@ -8,8 +8,8 @@ import Nav from "./components/Nav";
 import PrivateRoute from "./components/PrivateRoute";
 import Panelsettings from "./components/panelsettings/PanelSettings";
 import PlayerManager from "./components/playermanager/PlayerManager";
-import UserManager from "./components/usermanager/UserManager";
 import RankManager from "./components/rankmanager/RankManager";
+import UserManager from "./components/usermanager/UserManager";
 
 const App = () => {
 	const clanName = process.env.REACT_APP_CLAN_NAME;

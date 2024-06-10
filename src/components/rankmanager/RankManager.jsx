@@ -1,11 +1,11 @@
 import { Container, Typography } from "@mui/material";
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../AuthContext";
-import { fetchHelper } from "../funcs/common/fetchHelper";
-import { apiRequest } from "../funcs/common";
-import RankTable from "./assets/RankTable";
-import RankDialog from "./assets/RankDialog"; // Assuming you create a similar component
 import { AddButtonTable } from "../buttons/AddButtonTable";
+import { apiRequest } from "../funcs/common";
+import { fetchHelper } from "../funcs/common/fetchHelper";
+import RankDialog from "./assets/RankDialog"; // Assuming you create a similar component
+import RankTable from "./assets/RankTable";
 
 const RankManager = () => {
 	const { auth } = useAuth();

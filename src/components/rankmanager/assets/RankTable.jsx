@@ -1,15 +1,15 @@
 import { Delete } from "@mui/icons-material";
 import {
 	IconButton,
+	MenuItem,
 	Paper,
+	Select,
 	Table,
 	TableBody,
 	TableCell,
 	TableContainer,
 	TableHead,
 	TableRow,
-	Select,
-	MenuItem,
 } from "@mui/material";
 import React from "react";
 
