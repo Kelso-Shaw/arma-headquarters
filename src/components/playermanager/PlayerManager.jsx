@@ -4,6 +4,7 @@ import { useAuth } from "../AuthContext";
 import { AddButtonTable } from "../buttons/AddButtonTable";
 import { apiRequest } from "../funcs/common";
 import { fetchHelper } from "../funcs/common/fetchHelper";
+import Layout from "../layouts/Layout";
 import PlayerDialog from "./assets/PlayerDialog";
 import PlayerTable from "./assets/PlayerTable";
 
@@ -103,20 +104,11 @@ const PlayerManager = () => {
 	}
 
 	return (
-		<Container
-			sx={{
-				display: "flex",
-				flexDirection: "column",
-				alignItems: "flex-start",
-			}}
+		<Layout
+			title="Player Manager"
+			buttonName="Add New Player"
+			buttonOnClick={() => handleOpen()}
 		>
-			<Typography variant="h4" gutterBottom>
-				Player Manager
-			</Typography>
-			<AddButtonTable
-				text={"Add New Player"}
-				onClick={() => handleOpen(null)}
-			/>
 			<PlayerTable
 				players={players}
 				handleOpen={(player) => handleOpen(player)}
@@ -131,7 +123,7 @@ const PlayerManager = () => {
 				handleSave={handleSave}
 				ranks={ranks}
 			/>
-		</Container>
+		</Layout>
 	);
 };
 

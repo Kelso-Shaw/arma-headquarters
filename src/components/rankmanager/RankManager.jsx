@@ -4,6 +4,7 @@ import { useAuth } from "../AuthContext";
 import { AddButtonTable } from "../buttons/AddButtonTable";
 import { apiRequest } from "../funcs/common";
 import { fetchHelper } from "../funcs/common/fetchHelper";
+import Layout from "../layouts/Layout";
 import RankDialog from "./assets/RankDialog"; // Assuming you create a similar component
 import RankTable from "./assets/RankTable";
 
@@ -113,17 +114,11 @@ const RankManager = () => {
 	};
 
 	return (
-		<Container
-			sx={{
-				display: "flex",
-				flexDirection: "column",
-				alignItems: "flex-start",
-			}}
+		<Layout
+			title="Rank Manager"
+			buttonName="Add New Rank"
+			buttonOnClick={() => handleOpen()}
 		>
-			<Typography variant="h4" gutterBottom>
-				Rank Manager
-			</Typography>
-			<AddButtonTable text={"Add New Rank"} onClick={() => handleOpen()} />
 			<RankTable
 				ranks={ranks}
 				handleDelete={handleDelete}
@@ -138,7 +133,7 @@ const RankManager = () => {
 					handleSave={handleSave}
 				/>
 			)}
-		</Container>
+		</Layout>
 	);
 };
 
