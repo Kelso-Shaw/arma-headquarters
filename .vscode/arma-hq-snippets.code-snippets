@@ -1,0 +1,24 @@
+{
+    "ArmaHQ Auth and MUI": {
+        "scope": "javascript,typescript",
+        "prefix": "ahq-auth-mui",
+        "body": [
+            "import React, { useState, useEffect, useCallback } from 'react';",
+            "import { useAuth } from '../AuthContext';",
+            "import { Container, Typography } from '@mui/material';",
+            "",
+            "const ${1:${TM_FILENAME_BASE}} = () => {",
+            "\tconst { auth } = useAuth();",
+            "",
+            "\treturn (",
+            "\t\t<Container>",
+            "\t\t\t<Typography gutterBottom>${1:${TM_FILENAME_BASE}}</Typography>",
+            "\t\t</Container>",
+            "\t);",
+            "};",
+            "",
+            "export default ${1:${TM_FILENAME_BASE}};"
+        ],
+        "description": "Creates a React functional component with authentication and Material-UI, dynamically naming it based on the file name."
+    }
+}
