@@ -12,7 +12,7 @@
             "",
             "\treturn (",
             "\t\t<Container>",
-            "\t\t\t<Typography gutterBottom>${1:${TM_FILENAME_BASE}}</Typography>",
+            "\t\t\t<Typography variant='h4' gutterBottom>${1:${TM_FILENAME_BASE}}</Typography>",
             "\t\t</Container>",
             "\t);",
             "};",

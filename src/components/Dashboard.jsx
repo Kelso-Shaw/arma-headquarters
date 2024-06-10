@@ -27,6 +27,9 @@ const Dashboard = () => {
 						<Button onClick={() => navigate("/dashboard/player-manager")}>
 							Player Manager
 						</Button>
+						<Button onClick={() => navigate("/dashboard/rank-manager")}>
+							Rank Manager
+						</Button>
 						<Button onClick={() => navigate("/dashboard/panel-settings")}>
 							Panel Settings
 						</Button>

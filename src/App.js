@@ -9,6 +9,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Panelsettings from "./components/panelsettings/PanelSettings";
 import PlayerManager from "./components/playermanager/PlayerManager";
 import UserManager from "./components/usermanager/UserManager";
+import RankManager from "./components/rankmanager/RankManager";
 
 const App = () => {
 	const clanName = process.env.REACT_APP_CLAN_NAME;
@@ -44,6 +45,10 @@ const App = () => {
 								<Route
 									path="/dashboard/player-manager"
 									element={<PlayerManager />}
+								/>
+								<Route
+									path="/dashboard/rank-manager"
+									element={<RankManager />}
 								/>
 							</Route>
 						</Routes>

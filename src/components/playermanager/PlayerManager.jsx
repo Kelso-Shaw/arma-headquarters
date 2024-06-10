@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../AuthContext";
 import { AddButtonTable } from "../buttons/AddButtonTable";
 import { apiRequest } from "../funcs/common";
-import { fetchUsersHelper } from "../funcs/common/fetchUsersHelper";
+import { fetchHelper } from "../funcs/common/fetchHelper";
 import PlayerDialog from "./assets/PlayerDialog";
 import PlayerTable from "./assets/PlayerTable";
 
@@ -22,7 +22,7 @@ const PlayerManager = () => {
 
 	const fetchPlayers = useCallback(async () => {
 		try {
-			const playersData = await fetchUsersHelper(auth.token, "players");
+			const playersData = await fetchHelper(auth.token, "players");
 			setPlayers(playersData);
 		} catch (error) {
 			console.error("Error fetching players:", error);

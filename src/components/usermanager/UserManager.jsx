@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../AuthContext";
 import { AddButtonTable } from "../buttons/AddButtonTable";
 import { apiRequest } from "../funcs/common";
-import { fetchUsersHelper } from "../funcs/common/fetchUsersHelper";
+import { fetchHelper } from "../funcs/common/fetchHelper";
 import UserDialog from "./assets/UserDialog";
 import UserTable from "./assets/UserTable";
 
@@ -22,7 +22,7 @@ const UserManager = () => {
 
 	const fetchUsers = useCallback(async () => {
 		try {
-			const usersData = await fetchUsersHelper(auth.token, "users");
+			const usersData = await fetchHelper(auth.token, "users");
 			setUsers(usersData);
 		} catch (error) {
 			console.error("Error fetching users:", error);
