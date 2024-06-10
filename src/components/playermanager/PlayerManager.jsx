@@ -1,6 +1,7 @@
-import { Button, Container, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../AuthContext";
+import { AddButtonTable } from "../buttons/AddButtonTable";
 import { apiRequest } from "../funcs/common";
 import { fetchUsersHelper } from "../funcs/common/fetchUsersHelper";
 import PlayerDialog from "./assets/PlayerDialog";
@@ -91,17 +92,20 @@ const PlayerManager = () => {
 	}
 
 	return (
-		<Container>
+		<Container
+			sx={{
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "flex-start",
+			}}
+		>
 			<Typography variant="h4" gutterBottom>
 				Player Manager
 			</Typography>
-			<Button
-				variant="contained"
-				color="primary"
+			<AddButtonTable
+				text={"Add New Player"}
 				onClick={() => handleOpen(null)}
-			>
-				Add New Player
-			</Button>
+			/>
 			<PlayerTable
 				players={players}
 				handleOpen={(player) => handleOpen(player)}

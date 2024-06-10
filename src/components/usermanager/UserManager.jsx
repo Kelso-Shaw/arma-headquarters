@@ -1,6 +1,7 @@
 import { Button, Container, Typography } from "@mui/material";
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../AuthContext";
+import { AddButtonTable } from "../buttons/AddButtonTable";
 import { apiRequest } from "../funcs/common";
 import { fetchUsersHelper } from "../funcs/common/fetchUsersHelper";
 import UserDialog from "./assets/UserDialog";
@@ -91,17 +92,17 @@ const UserManager = () => {
 	}
 
 	return (
-		<Container>
+		<Container
+			sx={{
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "flex-start",
+			}}
+		>
 			<Typography variant="h4" gutterBottom>
 				User Manager
 			</Typography>
-			<Button
-				variant="contained"
-				color="primary"
-				onClick={() => handleOpen(null)}
-			>
-				Add New User
-			</Button>
+			<AddButtonTable text={"Add New User"} onClick={() => handleOpen(null)} />
 			<UserTable
 				users={users}
 				handleOpen={(user) => handleOpen(user)}
