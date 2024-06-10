@@ -9,6 +9,7 @@ import PlayerTable from "./assets/PlayerTable";
 
 const PlayerManager = () => {
 	const [players, setPlayers] = useState([]);
+	const [ranks, setRanks] = useState([]);
 	const [open, setOpen] = useState(false);
 	const [selectedEntity, setSelectedEntity] = useState(null);
 
@@ -29,9 +30,19 @@ const PlayerManager = () => {
 		}
 	}, [auth.token]);
 
+	const fetchRanks = useCallback(async () => {
+		try {
+			const rankData = await fetchHelper(auth.token, "ranks");
+			setRanks(rankData);
+		} catch (error) {
+			console.error(error);
+		}
+	}, [auth.token]);
+
 	useEffect(() => {
 		fetchPlayers();
-	}, [fetchPlayers]);
+		fetchRanks();
+	}, [fetchPlayers, fetchRanks]);
 
 	const handleOpen = (entity = null) => {
 		setSelectedEntity(entity);
@@ -118,6 +129,7 @@ const PlayerManager = () => {
 				player={newEntity}
 				setPlayer={setNewEntity}
 				handleSave={handleSave}
+				ranks={ranks}
 			/>
 		</Container>
 	);

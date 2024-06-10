@@ -36,7 +36,7 @@ const PlayerTable = ({ players, handleOpen, handleDelete }) => {
 				<TableHead>
 					<TableRow>
 						<TableCell>Username</TableCell>
-						<TableCell align="right">Role</TableCell>
+						<TableCell align="right">Rank</TableCell>
 						<TableCell align="right">Actions</TableCell>
 					</TableRow>
 				</TableHead>
