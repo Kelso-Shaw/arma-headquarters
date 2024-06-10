@@ -6,7 +6,6 @@ import { useAuth } from "./AuthContext";
 const Dashboard = () => {
 	const navigate = useNavigate();
 	const { auth } = useAuth();
-	console.log(auth);
 	return (
 		<Grid container spacing={3} justifyContent="center">
 			{auth.role > 1 ? (
