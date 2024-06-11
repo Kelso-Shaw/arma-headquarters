@@ -1,14 +1,13 @@
 import {
 	Button,
+	Checkbox,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
 	FormControl,
-	InputLabel,
-	MenuItem,
-	Select,
+	FormControlLabel,
 	TextField,
 } from "@mui/material";
 import React from "react";
@@ -48,18 +47,19 @@ const UserDialog = ({
 				onChange={(e) => setUser({ ...user, password: e.target.value })}
 			/>
 			<FormControl fullWidth margin="dense" sx={{ width: 120 }}>
-				<InputLabel>Role</InputLabel>
-				<Select
-					value={user.role || ""}
-					onChange={(e) => setUser({ ...user, role: e.target.value })}
-					label="Role"
-				>
-					<MenuItem value="" disabled>
-						Select Role
-					</MenuItem>
-					<MenuItem value="1">Editor</MenuItem>
-					<MenuItem value="2">Admin</MenuItem>
-				</Select>
+				<FormControlLabel
+					control={
+						<Checkbox
+							checked={user.role === 1}
+							onChange={(e) =>
+								setUser({ ...user, role: e.target.checked ? 1 : 0 })
+							}
+							name="role"
+							color="primary"
+						/>
+					}
+					label="Admin"
+				/>
 			</FormControl>
 		</DialogContent>
 		<DialogActions>

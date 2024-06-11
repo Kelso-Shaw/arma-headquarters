@@ -28,7 +28,6 @@ exports.register = async (req, res) => {
 			role,
 		});
 
-		// Add default permissions
 		await addDefaultPermissions(user.id);
 
 		res.status(201).json({ Success: true, user });

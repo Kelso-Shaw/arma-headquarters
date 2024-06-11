@@ -1,4 +1,4 @@
-const { sequelize, Pages } = require("./models");
+const { sequelize, Pages } = require("../models");
 
 const existingPages = [
 	{ name: "Home", url: "/" },

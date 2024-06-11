@@ -14,6 +14,12 @@ const PrivateRoute = ({ children, pageUrl }) => {
 				return;
 			}
 
+			if (auth.role === "1") {
+				console.log(auth.role);
+				setHasPermission(true);
+				return;
+			}
+
 			try {
 				const response = await apiRequest(
 					"permissions/check",

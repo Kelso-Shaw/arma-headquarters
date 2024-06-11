@@ -15,11 +15,9 @@ import React, { useState } from "react";
 const getRoleName = (role) => {
 	switch (Number(role)) {
 		case 1:
-			return "Editor";
-		case 2:
 			return "Admin";
 		default:
-			return "Unknown";
+			return "User";
 	}
 };
 
