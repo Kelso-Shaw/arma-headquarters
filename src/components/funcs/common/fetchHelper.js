@@ -45,6 +45,20 @@ export const fetchHelper = async (token, user) => {
 				return data.ranks;
 			} catch (error) {
 				console.error("Error fetching ranks", error);
+				throw error;
+			}
+		case "attributes":
+			try {
+				const data = await apiRequest(
+					"attributes",
+					"GET",
+					"",
+					token ? token : null,
+				);
+				return data.attributes;
+			} catch (error) {
+				console.error("Error fetching Attributes", error);
+				throw error;
 			}
 	}
 };

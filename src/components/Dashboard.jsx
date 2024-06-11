@@ -29,6 +29,9 @@ const Dashboard = () => {
 						<Button onClick={() => navigate("/dashboard/rank-manager")}>
 							Rank Manager
 						</Button>
+						<Button onClick={() => navigate("/dashboard/player-attributes")}>
+							Player Attributes
+						</Button>
 					</Paper>
 				</Grid>
 			) : (
