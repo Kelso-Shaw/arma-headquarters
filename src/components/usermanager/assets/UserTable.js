@@ -69,7 +69,7 @@ const UserTable = ({
 									<Delete />
 								</IconButton>
 								<IconButton
-									color="secondary"
+									color="success"
 									onClick={() => handlePermissionOpen(user)}
 								>
 									<Security />
