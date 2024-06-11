@@ -1,14 +1,14 @@
-import React from "react";
 import {
+	Button,
+	Checkbox,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
 	FormControlLabel,
-	Checkbox,
-	Button,
 } from "@mui/material";
+import React from "react";
 
 const PermissionDialog = ({
 	open,

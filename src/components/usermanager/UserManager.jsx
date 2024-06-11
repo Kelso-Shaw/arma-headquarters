@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../AuthContext";
+import { apiRequest } from "../funcs/common";
 import { fetchHelper } from "../funcs/common/fetchHelper";
 import Layout from "../layouts/Layout";
+import PermissionDialog from "./assets/PermissionDialog";
 import UserDialog from "./assets/UserDialog";
 import UserTable from "./assets/UserTable";
-import PermissionDialog from "./assets/PermissionDialog";
-import { apiRequest } from "../funcs/common";
 
 const UserManager = () => {
 	const [users, setUsers] = useState([]);
