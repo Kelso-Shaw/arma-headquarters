@@ -3,8 +3,20 @@
 2. run npm install
 3. npm start
 
+Before making a PR, ensure that you run
+```npm run lint:write```
+To maintain coding standard
+
+Snippets are slowly being added as and when the need comes up.
+
+# Coding Standards
+All JS must be formatted to biomejs standards, you can use above scripts to do this for you.
+You can also use the vscode extension to format as you save.
+
+https://biomejs.dev/
+
 # Done:
-1. Basic panel
+1. Basic panel setup
 2. Authentication
 3. Panel User manager (admin, mission editor)
 4. Rank manager
@@ -14,12 +26,14 @@
 # To Do:
 1. Player Attribute assigning (Can be used to block specific roles from players without certain attributes)
 2. More granular permissions for Panel Users (page level)
-3. ORBAT Creator
-4. Mission Maker
-5. Main Website (Fully customisable)
-6. Role Selector for Main Website
-7. Various panel settings (Things like disabling/enabling registering on both the panel and the main website)
-8. Some better branding
+3. Profile settings (passwords, discord linking etc)
+4. ORBAT Creator
+5. Mission Maker
+6. Main Website (Fully customisable)
+7. Role Selector for Main Website
+8. Integrate discord roles/tagging for role selector
+9. Various panel settings (Things like disabling/enabling registering on both the panel and the main website)
+10. Some better branding
 
 # npm scripts
 ```npm run start-api``` 
@@ -42,9 +56,3 @@
 
 ```npm lint:write```
 : lints and formats all files
-
-# Coding Standards
-All JS must be formatted to biomejs standards, you can use above scripts to do this for you.
-You can also use the vscode extension to format as you save.
-
-https://biomejs.dev/
