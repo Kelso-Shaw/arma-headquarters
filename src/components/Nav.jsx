@@ -16,6 +16,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import ThemeButton from "./buttons/ThemeButton";
+import { Container } from "@mui/material";
 
 function Nav({ name }) {
 	const { auth } = useAuth();
@@ -94,10 +95,12 @@ function Nav({ name }) {
 						variant="h6"
 						component="div"
 						color="text.title"
-						sx={{ flexGrow: 1 }}
+						sx={{ cursor: "pointer" }}
+						onClick={() => navigate("/")}
 					>
 						{name}
 					</Typography>
+					<Container sx={{ flexGrow: 1 }} />
 					<ThemeButton />
 				</Toolbar>
 			</AppBar>
