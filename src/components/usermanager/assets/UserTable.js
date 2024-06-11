@@ -1,4 +1,4 @@
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete, Edit, Security } from "@mui/icons-material";
 import {
 	IconButton,
 	Paper,
@@ -23,7 +23,12 @@ const getRoleName = (role) => {
 	}
 };
 
-const UserTable = ({ users, handleOpen, handleDelete }) => {
+const UserTable = ({
+	users,
+	handleOpen,
+	handleDelete,
+	handlePermissionOpen,
+}) => {
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -62,6 +67,12 @@ const UserTable = ({ users, handleOpen, handleDelete }) => {
 								</IconButton>
 								<IconButton color="error" onClick={() => handleDelete(user.id)}>
 									<Delete />
+								</IconButton>
+								<IconButton
+									color="secondary"
+									onClick={() => handlePermissionOpen(user)}
+								>
+									<Security />
 								</IconButton>
 							</TableCell>
 						</TableRow>

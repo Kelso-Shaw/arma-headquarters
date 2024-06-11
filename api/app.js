@@ -19,7 +19,9 @@ const userRoutes = require("./routes/userRoutes");
 const panelRoutes = require("./routes/panelRoutes");
 const playerUserRotues = require("./routes/playerUserRoutes");
 const rankRoutes = require("./routes/rankRoutes");
-const playerAttributes = require("./routes/playerAttributeRoutes");
+const playerAttributesRoutes = require("./routes/playerAttributeRoutes");
+const permissionsRoutes = require("./routes/permissionRoutes");
+const pageRoutes = require("./routes/pagesRoutes");
 
 const { sequelize } = require("./models");
 
@@ -28,7 +30,9 @@ app.use("/api/users", userRoutes);
 app.use("/api/panel", panelRoutes);
 app.use("/api/players", playerUserRotues);
 app.use("/api/ranks", rankRoutes);
-app.use("/api/attributes", playerAttributes);
+app.use("/api/attributes", playerAttributesRoutes);
+app.use("/api/permissions", permissionsRoutes);
+app.use("/api/pages", pageRoutes);
 
 // Start the server
 app.listen(port, () => {
