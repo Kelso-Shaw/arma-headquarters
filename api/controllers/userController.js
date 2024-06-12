@@ -79,7 +79,7 @@ exports.login = async (req, res) => {
 				accessToken,
 				role: user.role,
 				user: {
-					id: user.id,
+					id: Number.parseInt(user.id),
 				},
 			});
 		} else {

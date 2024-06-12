@@ -33,7 +33,7 @@ const SettingsTable = ({ settings, onStatusChange }) => {
 							<TableCell>{setting.description}</TableCell>
 							<TableCell>
 								<Checkbox
-									checked={setting.status}
+									checked={!!setting.status}
 									onChange={() =>
 										handleStatusChange(setting.id, setting.status)
 									}

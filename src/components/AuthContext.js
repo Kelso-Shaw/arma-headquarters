@@ -16,8 +16,8 @@ export const AuthProvider = ({ children }) => {
 	useEffect(() => {
 		const token = localStorage.getItem("token");
 		const expiration = localStorage.getItem("tokenExpiration");
-		const role = localStorage.getItem("role");
-		const id = localStorage.getItem("id");
+		const role = +localStorage.getItem("role");
+		const id = +localStorage.getItem("id");
 		const isTokenExpired =
 			expiration && new Date().getTime() > Number(expiration);
 

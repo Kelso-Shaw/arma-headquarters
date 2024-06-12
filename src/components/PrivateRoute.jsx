@@ -14,8 +14,7 @@ const PrivateRoute = ({ children, pageUrl }) => {
 				return;
 			}
 
-			if (auth.role === "1") {
-				console.log(auth.role);
+			if (Number.parseInt(auth.role) === 1) {
 				setHasPermission(true);
 				return;
 			}
@@ -40,7 +39,7 @@ const PrivateRoute = ({ children, pageUrl }) => {
 		checkPermission();
 	}, [auth, pageUrl]);
 
-	if (auth.loading || hasPermission === null) {
+	if (hasPermission === null) {
 		return <div>Loading...</div>;
 	}
 
@@ -49,7 +48,7 @@ const PrivateRoute = ({ children, pageUrl }) => {
 	}
 
 	if (!hasPermission) {
-		return <Navigate to="/access-denied" />;
+		return <Navigate to="/" />;
 	}
 
 	return children ? children : <Outlet />;

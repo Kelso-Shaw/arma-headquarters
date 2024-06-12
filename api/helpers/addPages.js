@@ -1,13 +1,45 @@
 const { sequelize, Pages } = require("../models");
 
 const existingPages = [
-	{ name: "Home", url: "/" },
-	{ name: "User-Manager", url: "/dashboard/user-manager" },
-	{ name: "PanelSettings", url: "/dashboard/panel-settings" },
-	{ name: "Player-Manager", url: "/dashboard/player-manager" },
-	{ name: "Rank-Manager", url: "/dashboard/rank-manager" },
-	{ name: "Player-Attributes", url: "/dashboard/player-attributes" },
-	{ name: "Dashboard", url: "/dashboard" },
+	// Home Pages
+	{
+		name: "Home",
+		url: "/",
+		category: "Home",
+	},
+	{
+		name: "Dashboard",
+		url: "/dashboard",
+		category: "Home",
+	},
+	// Admin Settings
+	{
+		name: "User Manager",
+		url: "/dashboard/user-manager",
+		category: "Admin",
+	},
+	{
+		name: "Panel Settings",
+		url: "/dashboard/panel-settings",
+		category: "Admin",
+	},
+	{
+		name: "Player Manager",
+		url: "/dashboard/player-manager",
+		category: "Admin",
+	},
+	{
+		name: "Rank Manager",
+		url: "/dashboard/rank-manager",
+		category: "Admin",
+	},
+	{
+		name: "Player Attributes",
+		url: "/dashboard/player-attributes",
+		category: "Admin",
+	},
+	// Mission Editor Settings
+	// TO DO
 ];
 
 const addPages = async () => {

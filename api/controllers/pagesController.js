@@ -14,9 +14,9 @@ exports.getPages = async (req, res) => {
 
 exports.addPage = async (req, res) => {
 	try {
-		const { name, url } = req.body;
+		const { name, url, category } = req.body;
 
-		const newPage = await Pages.create({ name, url });
+		const newPage = await Pages.create({ name, url, category });
 
 		res.json({ Success: true, page: newPage });
 	} catch (error) {
@@ -28,9 +28,12 @@ exports.addPage = async (req, res) => {
 exports.updatePage = async (req, res) => {
 	try {
 		const { id } = req.params;
-		const { name, url } = req.body;
+		const { name, url, category } = req.body;
 
-		const [updated] = await Pages.update({ name, url }, { where: { id } });
+		const [updated] = await Pages.update(
+			{ name, url, category },
+			{ where: { id } },
+		);
 
 		if (!updated) {
 			return res

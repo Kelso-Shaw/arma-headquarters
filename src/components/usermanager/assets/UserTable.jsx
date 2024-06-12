@@ -50,7 +50,9 @@ const UserTable = ({
 				<TableHead>
 					<TableRow>
 						<TableCell>Username</TableCell>
-						<TableCell align="right">Role</TableCell>
+						<TableCell align="right" sx={{ textAlign: "center" }}>
+							Role
+						</TableCell>
 						<TableCell align="right">Actions</TableCell>
 					</TableRow>
 				</TableHead>
@@ -58,7 +60,9 @@ const UserTable = ({
 					{paginatedUsers.map((user) => (
 						<TableRow key={user.id}>
 							<TableCell>{user.username}</TableCell>
-							<TableCell align="right">{getRoleName(user.role)}</TableCell>
+							<TableCell align="right" sx={{ textAlign: "center" }}>
+								{getRoleName(user.role)}
+							</TableCell>
 							<TableCell align="right">
 								<IconButton color="primary" onClick={() => handleOpen(user)}>
 									<Edit />

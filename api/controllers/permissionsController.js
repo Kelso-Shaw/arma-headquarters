@@ -11,7 +11,7 @@ exports.getPermissions = async (req, res) => {
 				},
 				{
 					model: Pages,
-					attributes: ["id", "name", "url"],
+					attributes: ["id", "name", "url", "category"],
 				},
 			],
 		});
@@ -30,7 +30,7 @@ exports.getUserPermissions = async (req, res) => {
 			include: [
 				{
 					model: Pages,
-					attributes: ["id", "name", "url"],
+					attributes: ["id", "name", "url", "category"],
 				},
 			],
 		});
@@ -46,34 +46,21 @@ exports.setPermission = async (req, res) => {
 		const { userId, pageId } = req.params;
 		const { canAccess } = req.body;
 
-		const [updated] = await Permissions.update(
-			{ can_access: canAccess },
-			{ where: { user_id: userId, page_id: pageId } },
-		);
+		const [permission, created] = await Permissions.findOrCreate({
+			where: { user_id: userId, page_id: pageId },
+			defaults: { can_access: canAccess },
+		});
 
-		if (!updated) {
-			return res
-				.status(404)
-				.json({ Success: false, message: "Permission not found" });
+		if (!created) {
+			// Permission existed, so we need to update it
+			permission.can_access = canAccess;
+			await permission.save();
 		}
 
 		res.json({ Success: true });
 	} catch (error) {
 		console.error("Error setting permission:", error);
 		res.status(500).json({ Success: false });
-	}
-};
-
-exports.addPage = async (req, res) => {
-	try {
-		const { name, url } = req.body;
-
-		const newPage = await Pages.create({ name, url });
-
-		res.json({ Success: true, page: newPage });
-	} catch (error) {
-		console.error("Error adding new page:", error);
-		res.status(500).json({ Success: false, error: error.message });
 	}
 };
 

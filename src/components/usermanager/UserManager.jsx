@@ -165,6 +165,7 @@ const UserManager = () => {
 				pages={pages}
 				permissions={permissions}
 				handlePermissionChange={handlePermissionChange}
+				selectedEntity={selectedEntity}
 			/>
 		</Layout>
 	);
