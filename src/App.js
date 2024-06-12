@@ -1,12 +1,18 @@
 import React from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import {
+	Outlet,
+	Route,
+	BrowserRouter as Router,
+	Routes,
+} from "react-router-dom";
 import { ThemeToggleProvider } from "./ThemeContext";
 import { AuthProvider } from "./components/AuthContext";
 import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
 import Nav from "./components/Nav";
 import PrivateRoute from "./components/PrivateRoute";
-import Panelsettings from "./components/panelsettings/PanelSettings";
+import PanelSettings from "./components/panelsettings/PanelSettings";
+import PlayerAttributes from "./components/playerattributes/PlayerAttributes";
 import PlayerManager from "./components/playermanager/PlayerManager";
 import RankManager from "./components/rankmanager/RankManager";
 import UserManager from "./components/usermanager/UserManager";
@@ -32,23 +38,55 @@ const App = () => {
 					>
 						<Routes>
 							<Route path="/" element={<Home />} />
-							<Route element={<PrivateRoute />}>
-								<Route path="/dashboard" element={<Dashboard />} />
+							<Route path="/access-denied" element={<>Access Denied</>} />
+							<Route
+								path="/dashboard"
+								element={
+									<PrivateRoute pageUrl="/dashboard">
+										<Outlet />
+									</PrivateRoute>
+								}
+							>
+								<Route path="" element={<Dashboard />} />
 								<Route
-									path="/dashboard/user-manager"
-									element={<UserManager />}
+									path="user-manager"
+									element={
+										<PrivateRoute pageUrl="/dashboard/user-manager">
+											<UserManager />
+										</PrivateRoute>
+									}
 								/>
 								<Route
-									path="/dashboard/panel-settings"
-									element={<Panelsettings />}
+									path="panel-settings"
+									element={
+										<PrivateRoute pageUrl="/dashboard/panel-settings">
+											<PanelSettings />
+										</PrivateRoute>
+									}
 								/>
 								<Route
-									path="/dashboard/player-manager"
-									element={<PlayerManager />}
+									path="player-manager"
+									element={
+										<PrivateRoute pageUrl="/dashboard/player-manager">
+											<PlayerManager />
+										</PrivateRoute>
+									}
 								/>
 								<Route
-									path="/dashboard/rank-manager"
-									element={<RankManager />}
+									path="rank-manager"
+									element={
+										<PrivateRoute pageUrl="/dashboard/rank-manager">
+											<RankManager />
+										</PrivateRoute>
+									}
+								/>
+								<Route
+									path="player-attributes"
+									element={
+										<PrivateRoute pageUrl="/dashboard/player-attributes">
+											<PlayerAttributes />
+										</PrivateRoute>
+									}
 								/>
 							</Route>
 						</Routes>

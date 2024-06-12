@@ -1,11 +1,10 @@
-import { Container, Typography } from "@mui/material";
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../AuthContext";
 import { AddButtonTable } from "../buttons/AddButtonTable";
 import { apiRequest } from "../funcs/common";
 import { fetchHelper } from "../funcs/common/fetchHelper";
 import Layout from "../layouts/Layout";
-import RankDialog from "./assets/RankDialog"; // Assuming you create a similar component
+import RankDialog from "./assets/RankDialog";
 import RankTable from "./assets/RankTable";
 
 const RankManager = () => {
@@ -72,16 +71,13 @@ const RankManager = () => {
 		const originalRank = ranks.find((rank) => rank.id === id);
 		const originalOrder = originalRank.order;
 
-		// Avoid unnecessary API calls if the order is not changed
 		if (originalOrder === newOrder) {
 			return;
 		}
 
-		// Calculate the adjustment direction based on whether the rank is moving up or down
 		const increment = originalOrder > newOrder ? 1 : -1;
 
 		try {
-			// Create an array of promises to update each affected rank
 			const updatePromises = ranks
 				.filter((rank) =>
 					increment > 0

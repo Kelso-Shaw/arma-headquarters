@@ -2,6 +2,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { Container } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -94,10 +95,12 @@ function Nav({ name }) {
 						variant="h6"
 						component="div"
 						color="text.title"
-						sx={{ flexGrow: 1 }}
+						sx={{ cursor: "pointer" }}
+						onClick={() => navigate("/")}
 					>
 						{name}
 					</Typography>
+					<Container sx={{ flexGrow: 1 }} />
 					<ThemeButton />
 				</Toolbar>
 			</AppBar>

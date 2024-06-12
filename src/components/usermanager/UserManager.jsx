@@ -1,17 +1,19 @@
-import { Button, Container, Typography } from "@mui/material";
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../AuthContext";
-import { AddButtonTable } from "../buttons/AddButtonTable";
 import { apiRequest } from "../funcs/common";
 import { fetchHelper } from "../funcs/common/fetchHelper";
 import Layout from "../layouts/Layout";
+import PermissionDialog from "./assets/PermissionDialog";
 import UserDialog from "./assets/UserDialog";
 import UserTable from "./assets/UserTable";
 
 const UserManager = () => {
 	const [users, setUsers] = useState([]);
 	const [open, setOpen] = useState(false);
+	const [permissionOpen, setPermissionOpen] = useState(false);
 	const [selectedEntity, setSelectedEntity] = useState(null);
+	const [permissions, setPermissions] = useState([]);
+	const [pages, setPages] = useState([]);
 
 	const [newEntity, setNewEntity] = useState({
 		username: "",
@@ -26,13 +28,39 @@ const UserManager = () => {
 			const usersData = await fetchHelper(auth.token, "users");
 			setUsers(usersData);
 		} catch (error) {
-			console.error("Error fetching users:", error);
+			console.error(error);
 		}
 	}, [auth.token]);
 
+	const fetchPages = useCallback(async () => {
+		try {
+			const pagesData = await fetchHelper(auth.token, "pages");
+			setPages(pagesData);
+		} catch (error) {
+			console.error(error);
+		}
+	}, [auth.token]);
+
+	const fetchUserPermissions = useCallback(
+		async (userId) => {
+			try {
+				const permissionsData = await fetchHelper(
+					auth.token,
+					"permissions",
+					userId,
+				);
+				setPermissions(permissionsData);
+			} catch (error) {
+				console.error(error);
+			}
+		},
+		[auth.token],
+	);
+
 	useEffect(() => {
 		fetchUsers();
-	}, [fetchUsers]);
+		fetchPages();
+	}, [fetchUsers, fetchPages]);
 
 	const handleOpen = (entity = null) => {
 		setSelectedEntity(entity);
@@ -44,10 +72,22 @@ const UserManager = () => {
 		setOpen(true);
 	};
 
+	const handlePermissionOpen = (user) => {
+		setSelectedEntity(user);
+		fetchUserPermissions(user.id);
+		setPermissionOpen(true);
+	};
+
 	const handleClose = () => {
 		setOpen(false);
 		setSelectedEntity(null);
 		setNewEntity({ username: "", role: "", password: null });
+	};
+
+	const handlePermissionClose = () => {
+		setPermissionOpen(false);
+		setSelectedEntity(null);
+		setPermissions([]);
 	};
 
 	const handleSave = async () => {
@@ -88,9 +128,16 @@ const UserManager = () => {
 		}
 	};
 
-	if (auth.role < 2) {
-		return "You are not supposed to be here";
-	}
+	const handlePermissionChange = async (pageId, canAccess) => {
+		try {
+			const url = `permissions/${selectedEntity.id}/${pageId}`;
+			const requestBody = { canAccess };
+			await apiRequest(url, "POST", requestBody, auth.token || null);
+			fetchUserPermissions(selectedEntity.id);
+		} catch (error) {
+			console.error("Error updating permission:", error);
+		}
+	};
 
 	return (
 		<Layout
@@ -102,6 +149,7 @@ const UserManager = () => {
 				users={users}
 				handleOpen={(user) => handleOpen(user)}
 				handleDelete={(id) => handleDelete(id)}
+				handlePermissionOpen={(user) => handlePermissionOpen(user)}
 			/>
 			<UserDialog
 				open={open}
@@ -110,6 +158,14 @@ const UserManager = () => {
 				user={newEntity}
 				setUser={setNewEntity}
 				handleSave={handleSave}
+			/>
+			<PermissionDialog
+				open={permissionOpen}
+				handleClose={handlePermissionClose}
+				pages={pages}
+				permissions={permissions}
+				handlePermissionChange={handlePermissionChange}
+				selectedEntity={selectedEntity}
 			/>
 		</Layout>
 	);

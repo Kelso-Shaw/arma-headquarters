@@ -1,4 +1,4 @@
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete, Edit, Security } from "@mui/icons-material";
 import {
 	IconButton,
 	Paper,
@@ -15,15 +15,18 @@ import React, { useState } from "react";
 const getRoleName = (role) => {
 	switch (Number(role)) {
 		case 1:
-			return "Editor";
-		case 2:
 			return "Admin";
 		default:
-			return "Unknown";
+			return "User";
 	}
 };
 
-const UserTable = ({ users, handleOpen, handleDelete }) => {
+const UserTable = ({
+	users,
+	handleOpen,
+	handleDelete,
+	handlePermissionOpen,
+}) => {
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -47,7 +50,9 @@ const UserTable = ({ users, handleOpen, handleDelete }) => {
 				<TableHead>
 					<TableRow>
 						<TableCell>Username</TableCell>
-						<TableCell align="right">Role</TableCell>
+						<TableCell align="right" sx={{ textAlign: "center" }}>
+							Role
+						</TableCell>
 						<TableCell align="right">Actions</TableCell>
 					</TableRow>
 				</TableHead>
@@ -55,13 +60,21 @@ const UserTable = ({ users, handleOpen, handleDelete }) => {
 					{paginatedUsers.map((user) => (
 						<TableRow key={user.id}>
 							<TableCell>{user.username}</TableCell>
-							<TableCell align="right">{getRoleName(user.role)}</TableCell>
+							<TableCell align="right" sx={{ textAlign: "center" }}>
+								{getRoleName(user.role)}
+							</TableCell>
 							<TableCell align="right">
 								<IconButton color="primary" onClick={() => handleOpen(user)}>
 									<Edit />
 								</IconButton>
 								<IconButton color="error" onClick={() => handleDelete(user.id)}>
 									<Delete />
+								</IconButton>
+								<IconButton
+									color="success"
+									onClick={() => handlePermissionOpen(user)}
+								>
+									<Security />
 								</IconButton>
 							</TableCell>
 						</TableRow>

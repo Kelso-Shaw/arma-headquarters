@@ -16,7 +16,8 @@ export const AuthProvider = ({ children }) => {
 	useEffect(() => {
 		const token = localStorage.getItem("token");
 		const expiration = localStorage.getItem("tokenExpiration");
-		const role = localStorage.getItem("role");
+		const role = +localStorage.getItem("role");
+		const id = +localStorage.getItem("id");
 		const isTokenExpired =
 			expiration && new Date().getTime() > Number(expiration);
 
@@ -25,11 +26,14 @@ export const AuthProvider = ({ children }) => {
 				isAuthenticated: true,
 				token,
 				role,
+				id,
 			});
 		} else {
 			localStorage.removeItem("token");
 			localStorage.removeItem("tokenExpiration");
 			localStorage.removeItem("role");
+			localStorage.removeItem("id");
+
 			setAuth({
 				isAuthenticated: false,
 				token: null,
@@ -53,10 +57,12 @@ export const AuthProvider = ({ children }) => {
 				isAuthenticated: true,
 				token: response.accessToken,
 				role: response.role,
+				id: response.user.id,
 			});
 			localStorage.setItem("token", response.accessToken);
 			localStorage.setItem("tokenExpiration", expirationTime);
 			localStorage.setItem("role", response.role);
+			localStorage.setItem("id", response.user.id);
 
 			return { success: true };
 		} catch (error) {
@@ -72,6 +78,7 @@ export const AuthProvider = ({ children }) => {
 		localStorage.removeItem("token");
 		localStorage.removeItem("tokenExpiration");
 		localStorage.removeItem("role");
+		localStorage.removeItem("id");
 	};
 
 	return (

@@ -39,10 +39,6 @@ const UserManager = () => {
 		fetchSettings();
 	}, [fetchSettings]);
 
-	if (auth.role < 2) {
-		return "You are not supposed to be here";
-	}
-
 	return (
 		<Container>
 			<Typography variant="h4" gutterBottom>

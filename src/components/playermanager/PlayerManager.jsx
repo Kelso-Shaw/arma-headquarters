@@ -99,10 +99,6 @@ const PlayerManager = () => {
 		}
 	};
 
-	if (auth.role < 2) {
-		return "You are not supposed to be here";
-	}
-
 	return (
 		<Layout
 			title="Player Manager"

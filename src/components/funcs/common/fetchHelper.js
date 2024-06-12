@@ -1,23 +1,7 @@
-/* 	
-const { auth } = useAuth();
-const fetchUsers = useCallback(async () => {
-    try {
-        const usersData = await fetchHelper(auth.token);
-        setUsers(usersData);
-    } catch (error) {
-        console.error("Error fetching users:", error);
-    }
-}, [auth.token]);
-
-useEffect(() => {
-    fetchUsers();
-}, [fetchUsers]);
-*/
-
 import { apiRequest } from "./apiRequest";
 
-export const fetchHelper = async (token, user) => {
-	switch (user) {
+export const fetchHelper = async (token, resource, userId = null) => {
+	switch (resource) {
 		case "users":
 			try {
 				const data = await apiRequest("users", "GET", "", token ? token : null);
@@ -26,25 +10,31 @@ export const fetchHelper = async (token, user) => {
 				console.error("Error fetching users:", error);
 				throw error;
 			}
-		case "players":
+		case "pages":
+			try {
+				const data = await apiRequest("pages", "GET", "", token ? token : null);
+				return data.pages;
+			} catch (error) {
+				console.error("Error fetching pages:", error);
+				throw error;
+			}
+		case "permissions":
+			if (!userId) {
+				throw new Error("userId is required for fetching permissions");
+			}
 			try {
 				const data = await apiRequest(
-					"players",
+					`permissions/user/${userId}`,
 					"GET",
 					"",
 					token ? token : null,
 				);
-				return data.users;
+				return data.permissions;
 			} catch (error) {
-				console.error("Error fetching users:", error);
+				console.error("Error fetching user permissions:", error);
 				throw error;
 			}
-		case "ranks":
-			try {
-				const data = await apiRequest("ranks", "GET", "", token ? token : null);
-				return data.ranks;
-			} catch (error) {
-				console.error("Error fetching ranks", error);
-			}
+		default:
+			throw new Error("Unknown resource type");
 	}
 };

@@ -1,6 +1,21 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { Users } = require("../models");
+const { Users, Pages, Permissions } = require("../models");
+
+const addDefaultPermissions = async (userId) => {
+	try {
+		const pages = await Pages.findAll();
+		const permissions = pages.map((page) => ({
+			user_id: userId,
+			page_id: page.id,
+			can_access: false,
+		}));
+
+		await Permissions.bulkCreate(permissions);
+	} catch (error) {
+		console.error("Error adding default permissions:", error);
+	}
+};
 
 exports.register = async (req, res) => {
 	try {
@@ -12,10 +27,35 @@ exports.register = async (req, res) => {
 			name,
 			role,
 		});
+
+		await addDefaultPermissions(user.id);
+
 		res.status(201).json({ Success: true, user });
 	} catch (error) {
 		console.error("Error registering user:", error);
 		res.status(500).send({ Success: false });
+	}
+};
+
+exports.addUser = async (req, res) => {
+	try {
+		const { password, ...otherDetails } = req.body;
+
+		const plainPassword = password || "password123";
+		const hashedPassword = await bcrypt.hash(plainPassword, 10);
+
+		const user = await Users.create({
+			...otherDetails,
+			password: hashedPassword,
+		});
+
+		// Add default permissions
+		await addDefaultPermissions(user.id);
+
+		res.status(201).json({ Success: true, user });
+	} catch (error) {
+		console.error("Error adding user:", error);
+		res.status(500).json({ Success: false, Message: error.errors[0].message });
 	}
 };
 
@@ -34,7 +74,14 @@ exports.login = async (req, res) => {
 				{ username: user.username, role: user.role },
 				process.env.ACCESS_TOKEN_SECRET,
 			);
-			res.json({ Success: true, accessToken, role: user.role });
+			res.json({
+				Success: true,
+				accessToken,
+				role: user.role,
+				user: {
+					id: Number.parseInt(user.id),
+				},
+			});
 		} else {
 			res.status(403).send.json({
 				Success: false,
@@ -71,25 +118,6 @@ exports.getUser = async (req, res) => {
 	} catch (error) {
 		console.error("Error getting user:", error);
 		res.status(500).json({ Success: false });
-	}
-};
-
-exports.addUser = async (req, res) => {
-	try {
-		const { password, ...otherDetails } = req.body;
-
-		const plainPassword = password || "password123";
-
-		const hashedPassword = await bcrypt.hash(plainPassword, 10);
-
-		const user = await Users.create({
-			...otherDetails,
-			password: hashedPassword,
-		});
-		res.status(201).json({ Success: true, user });
-	} catch (error) {
-		console.error("Error adding user:", error);
-		res.status(500).json({ Success: false, Message: error.errors[0].message });
 	}
 };
 
