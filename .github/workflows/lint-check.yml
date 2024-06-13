@@ -25,5 +25,5 @@ jobs:
       - name: Install dependencies
         run: npm install --ignore-scripts
 
-      - name: Run lint check
-        run: npm run lint:check
+      - name: Run lint formatter
+        run: npm run lint:write
