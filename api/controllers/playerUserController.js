@@ -5,19 +5,19 @@ const { PlayerUser } = require("../models");
 exports.login = async (req, res) => {
 	try {
 		const { username, password } = req.body;
-		const user = await PlayerUser.findOne({ where: { username } });
-		if (user == null) {
+		const player = await PlayerUser.findOne({ where: { username } });
+		if (player == null) {
 			return res
 				.status(400)
 				.json({ Success: false, Message: "Username or Password is incorrect" });
 		}
 
-		if (await bcrypt.compare(password, user.password)) {
+		if (await bcrypt.compare(password, player.password)) {
 			const accessToken = jwt.sign(
-				{ username: user.username, role: user.role },
+				{ username: player.username, role: player.role },
 				process.env.ACCESS_TOKEN_SECRET,
 			);
-			res.json({ Success: true, accessToken, role: user.role });
+			res.json({ Success: true, accessToken, role: player.role });
 		} else {
 			res.status(403).send.json({
 				Success: false,
@@ -25,17 +25,17 @@ exports.login = async (req, res) => {
 			});
 		}
 	} catch (error) {
-		console.error("Error logging in user:", error);
+		console.error("Error logging in player:", error);
 		res.status(500).send({ Success: false });
 	}
 };
 
 exports.getAllUsers = async (req, res) => {
 	try {
-		const users = await PlayerUser.findAll({
+		const players = await PlayerUser.findAll({
 			attributes: { exclude: ["password", "createdAt", "updatedAt"] },
 		});
-		res.json({ Success: true, users });
+		res.json({ Success: true, players });
 	} catch (error) {
 		console.error("Error fetching users:", error);
 		res.status(500).send.json({ Success: false });
@@ -45,14 +45,14 @@ exports.getAllUsers = async (req, res) => {
 exports.getUser = async (req, res) => {
 	try {
 		const id = req.params.id;
-		const user = await PlayerUser.findOne({
+		const player = await PlayerUser.findOne({
 			where: { id },
 			attributes: { exclude: ["password", "createdAt", "updatedAt"] },
 		});
 
-		res.json({ Success: true, user });
+		res.json({ Success: true, player });
 	} catch (error) {
-		console.error("Error getting user:", error);
+		console.error("Error getting player:", error);
 		res.status(500).json({ Success: false });
 	}
 };
@@ -65,13 +65,13 @@ exports.addUser = async (req, res) => {
 
 		const hashedPassword = await bcrypt.hash(plainPassword, 10);
 
-		const user = await PlayerUser.create({
+		const player = await PlayerUser.create({
 			...otherDetails,
 			password: hashedPassword,
 		});
-		res.status(201).json({ Success: true, user });
+		res.status(201).json({ Success: true, player });
 	} catch (error) {
-		console.error("Error adding user:", error);
+		console.error("Error adding player:", error);
 		res.status(500).json({ Success: false });
 	}
 };
@@ -79,11 +79,11 @@ exports.addUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
 	try {
 		const userId = req.params.id;
-		const deletedUser = await PlayerUser.destroy({
+		const deletedPlayer = await PlayerUser.destroy({
 			where: { id: userId },
 		});
 
-		if (deletedUser) {
+		if (deletedPlayer) {
 			res
 				.status(200)
 				.json({ Success: true, message: "User deleted successfully" });
@@ -91,7 +91,7 @@ exports.deleteUser = async (req, res) => {
 			res.status(404).json({ Success: false, message: "User not found" });
 		}
 	} catch (error) {
-		console.error("Error deleting user:", error);
+		console.error("Error deleting player:", error);
 		res.status(500).json({ Success: false, message: "Internal server error" });
 	}
 };
@@ -117,14 +117,14 @@ exports.updateUser = async (req, res) => {
 		if (!updated) {
 			res.status(404).json({ Success: false, message: "User not found" });
 		}
-		const updatedUser = await PlayerUser.findOne({ where: { id: userId } });
+		const updatedPlayer = await PlayerUser.findOne({ where: { id: userId } });
 		res.status(200).json({
 			Success: true,
 			message: "User updated successfully",
-			user: updatedUser,
+			player: updatedPlayer,
 		});
 	} catch (error) {
-		console.error("Error updating user:", error);
+		console.error("Error updating player:", error);
 		res.status(500).json({ Success: false, message: "Internal server error" });
 	}
 };
