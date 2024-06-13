@@ -1,17 +1,8 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-	class PlayerUserAttributes extends Model {
-		/**
-		 * Helper method for defining associations.
-		 * This method is not a part of Sequelize lifecycle.
-		 * The `models/index` file will call this method automatically.
-		 */
-		static associate(models) {
-			// Define association here
-		}
-	}
-	PlayerUserAttributes.init(
+	const PlayerUserAttributes = sequelize.define(
+		"PlayerUserAttributes",
 		{
 			PlayerUserId: {
 				type: DataTypes.INTEGER,
@@ -28,10 +19,7 @@ module.exports = (sequelize, DataTypes) => {
 				},
 			},
 		},
-		{
-			sequelize,
-			modelName: "PlayerUserAttributes",
-		},
+		{},
 	);
 	return PlayerUserAttributes;
 };

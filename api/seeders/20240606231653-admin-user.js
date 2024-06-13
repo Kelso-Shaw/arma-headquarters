@@ -10,7 +10,7 @@ module.exports = {
 				username: "Administrator",
 				password: hashedPassword,
 				name: "Administrator",
-				role: "2",
+				role: 1,
 				createdAt: new Date(),
 				updatedAt: new Date(),
 			},

@@ -23,7 +23,7 @@ export const apiRequest = async (
 		const response = await axios(options);
 
 		if (response.status >= 200 && response.status < 300) {
-			if (response.data.Success !== true) {
+			if (response.data.success !== true) {
 				throw new Error(response.data.message || "Something went wrong");
 			}
 			return response.data;

@@ -58,7 +58,7 @@ const RankManager = () => {
 				"",
 				auth.token || null,
 			);
-			if (!response.Success) {
+			if (!response.success) {
 				throw new Error(response.message);
 			}
 			await fetchRanks();

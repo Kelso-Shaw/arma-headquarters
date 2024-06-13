@@ -6,12 +6,12 @@ exports.getAttributes = async (req, res) => {
 		const attributes = await PlayerAttributes.findAll({
 			attributes: { exclude: ["createdAt", "updatedAt"] },
 		});
-		res.status(200).json({ Success: true, attributes });
+		res.status(200).json({ success: true, attributes });
 	} catch (error) {
 		console.error("Error retrieving attributes:", error);
 		res
 			.status(500)
-			.json({ Success: false, Message: "Failed to retrieve attributes" });
+			.json({ success: false, Message: "Failed to retrieve attributes" });
 	}
 };
 
@@ -24,12 +24,12 @@ exports.addAttribute = async (req, res) => {
 			attribute,
 			description,
 		});
-		res.status(201).json({ Success: true, newAttribute });
+		res.status(201).json({ success: true, newAttribute });
 	} catch (error) {
 		console.error("Error adding attribute:", error);
 		res
 			.status(500)
-			.json({ Success: false, Message: "Failed to add attribute" });
+			.json({ success: false, Message: "Failed to add attribute" });
 	}
 };
 
@@ -42,18 +42,18 @@ exports.deleteAttribute = async (req, res) => {
 		if (!attribute) {
 			return res
 				.status(404)
-				.json({ Success: false, Message: "Attribute not found" });
+				.json({ success: false, Message: "Attribute not found" });
 		}
 
 		await attribute.destroy();
 		res
 			.status(200)
-			.json({ Success: true, Message: "Attribute deleted successfully" });
+			.json({ success: true, Message: "Attribute deleted successfully" });
 	} catch (error) {
 		console.error("Error deleting attribute:", error);
 		res
 			.status(500)
-			.json({ Success: false, Message: "Failed to delete attribute" });
+			.json({ success: false, Message: "Failed to delete attribute" });
 	}
 };
 
@@ -66,7 +66,7 @@ exports.updateAttribute = async (req, res) => {
 		if (!existingAttribute) {
 			return res
 				.status(404)
-				.json({ Success: false, Message: "Attribute not found" });
+				.json({ success: false, Message: "Attribute not found" });
 		}
 
 		existingAttribute.attribute = attribute;
@@ -74,11 +74,11 @@ exports.updateAttribute = async (req, res) => {
 		await existingAttribute.save();
 		res
 			.status(200)
-			.json({ Success: true, updatedAttribute: existingAttribute });
+			.json({ success: true, updatedAttribute: existingAttribute });
 	} catch (error) {
 		console.error("Error updating attribute:", error);
 		res
 			.status(500)
-			.json({ Success: false, Message: "Failed to update attribute" });
+			.json({ success: false, Message: "Failed to update attribute" });
 	}
 };

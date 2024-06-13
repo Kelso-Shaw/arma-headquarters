@@ -18,7 +18,7 @@ module.exports = {
 			name: {
 				type: Sequelize.STRING,
 			},
-			role: {
+			rank: {
 				type: Sequelize.STRING,
 			},
 			createdAt: {

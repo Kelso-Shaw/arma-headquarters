@@ -55,6 +55,19 @@ export const fetchHelper = async (token, resource, userId = null) => {
 				console.error("Error fetching players:", error);
 				throw error;
 			}
+		case "attributes":
+			try {
+				const data = await apiRequest(
+					"attributes",
+					"GET",
+					"",
+					token ? token : null,
+				);
+				return data.attributes;
+			} catch (error) {
+				console.error("Error fetching players:", error);
+				throw error;
+			}
 		default:
 			throw new Error("Unknown resource type");
 	}

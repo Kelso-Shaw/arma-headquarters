@@ -15,10 +15,10 @@ exports.getPermissions = async (req, res) => {
 				},
 			],
 		});
-		res.json({ Success: true, permissions });
+		res.json({ success: true, permissions });
 	} catch (error) {
 		console.error("Error fetching permissions:", error);
-		res.status(500).json({ Success: false });
+		res.status(500).json({ success: false });
 	}
 };
 
@@ -34,10 +34,10 @@ exports.getUserPermissions = async (req, res) => {
 				},
 			],
 		});
-		res.json({ Success: true, permissions });
+		res.json({ success: true, permissions });
 	} catch (error) {
 		console.error("Error fetching user permissions:", error);
-		res.status(500).json({ Success: false });
+		res.status(500).json({ success: false });
 	}
 };
 
@@ -57,10 +57,10 @@ exports.setPermission = async (req, res) => {
 			await permission.save();
 		}
 
-		res.json({ Success: true });
+		res.json({ success: true });
 	} catch (error) {
 		console.error("Error setting permission:", error);
-		res.status(500).json({ Success: false });
+		res.status(500).json({ success: false });
 	}
 };
 
@@ -72,7 +72,7 @@ exports.checkPermission = async (req, res) => {
 		if (!page) {
 			return res
 				.status(404)
-				.json({ Success: false, message: "Page not found" });
+				.json({ success: false, message: "Page not found" });
 		}
 
 		const permission = await Permissions.findOne({
@@ -80,12 +80,12 @@ exports.checkPermission = async (req, res) => {
 		});
 
 		if (permission?.can_access) {
-			res.json({ Success: true });
+			res.json({ success: true });
 		} else {
-			res.status(403).json({ Success: false, message: "Access denied" });
+			res.status(403).json({ success: false, message: "Access denied" });
 		}
 	} catch (error) {
 		console.error("Error checking permission:", error);
-		res.status(500).json({ Success: false });
+		res.status(500).json({ success: false });
 	}
 };

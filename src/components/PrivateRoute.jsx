@@ -29,7 +29,7 @@ const PrivateRoute = ({ children, pageUrl }) => {
 					},
 					auth.token,
 				);
-				setHasPermission(response.Success);
+				setHasPermission(response.success);
 			} catch (error) {
 				console.error(error);
 				setHasPermission(false);

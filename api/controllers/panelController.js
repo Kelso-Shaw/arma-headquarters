@@ -5,10 +5,10 @@ exports.getSettings = async (req, res) => {
 		const settings = await PanelSettings.findAll({
 			attributes: { exclude: ["createdAt", "updatedAt"] },
 		});
-		res.json({ Success: true, settings });
+		res.json({ success: true, settings });
 	} catch (error) {
 		console.error("Error fetching settings:", error);
-		res.status(500).send.json({ Success: false });
+		res.status(500).send.json({ success: false });
 	}
 };
 
@@ -22,12 +22,12 @@ exports.setSetting = async (req, res) => {
 		if (!updated) {
 			return res
 				.status(404)
-				.json({ Success: false, message: "Setting not found" });
+				.json({ success: false, message: "Setting not found" });
 		}
 
-		res.json({ Success: true });
+		res.json({ success: true });
 	} catch (error) {
 		console.error("Error setting settings:", error);
-		res.status(500).json({ Success: false });
+		res.status(500).json({ success: false });
 	}
 };
