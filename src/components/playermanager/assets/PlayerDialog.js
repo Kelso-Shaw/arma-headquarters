@@ -47,7 +47,11 @@ const PlayerDialog = ({
 
 	return (
 		<Dialog open={open} onClose={handleClose} fullWidth>
-			<DialogTitle>{selectedPlayer ? "Edit Player" : "Add Player"}</DialogTitle>
+			<DialogTitle>
+				{selectedPlayer
+					? `Editing Player ${player.username}`
+					: "Add New Player"}
+			</DialogTitle>
 			<DialogContent>
 				<InputLabel>Username</InputLabel>
 				<TextField
@@ -64,6 +68,7 @@ const PlayerDialog = ({
 					fullWidth
 					value={player.password || ""}
 					onChange={(e) => setPlayer({ ...player, password: e.target.value })}
+					autoComplete="new-password"
 				/>
 				<InputLabel>Rank</InputLabel>
 				<Select fullWidth value={player.rank} onChange={handlerankChange}>
