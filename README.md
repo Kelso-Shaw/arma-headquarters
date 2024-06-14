@@ -28,14 +28,15 @@ https://biomejs.dev/
 
 # To Do:
 1. Profile settings (passwords, discord linking etc)
-2. ORBAT Creator
-3. ORBAT Diagram Generator
-4. Mission Maker
-5. Main Website (Fully customisable)
-6. Role Selector for Main Website
-7. Integrate discord roles/tagging for role selector
-8. Various panel settings (Things like disabling/enabling registering on both the panel and the main website)
-9. Some better branding options
+2. Squad Builder
+3. ORBAT Creator
+4. ORBAT Diagram Generator
+5. Mission Maker
+6. Main Website (Fully customisable)
+7. Role Selector for Main Website
+8. Integrate discord roles/tagging for role selector
+9. Various panel settings (Things like disabling/enabling registering on both the panel and the main website)
+10. Some better branding options
 
 # npm scripts
 ```npm run start-api``` 
