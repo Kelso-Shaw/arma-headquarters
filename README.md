@@ -28,12 +28,13 @@ https://biomejs.dev/
 2. More granular permissions for Panel Users (page level)
 3. Profile settings (passwords, discord linking etc)
 4. ORBAT Creator
-5. Mission Maker
-6. Main Website (Fully customisable)
-7. Role Selector for Main Website
-8. Integrate discord roles/tagging for role selector
-9. Various panel settings (Things like disabling/enabling registering on both the panel and the main website)
-10. Some better branding
+5. ORBAT Diagram Generator
+6. Mission Maker
+7. Main Website (Fully customisable)
+8. Role Selector for Main Website
+9. Integrate discord roles/tagging for role selector
+10. Various panel settings (Things like disabling/enabling registering on both the panel and the main website)
+11. Some better branding
 
 # npm scripts
 ```npm run start-api``` 
