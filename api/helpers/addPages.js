@@ -23,20 +23,21 @@ const existingPages = [
 		url: "/dashboard/panel-settings",
 		category: "Admin",
 	},
+	// Platoon Settings
 	{
 		name: "Player Manager",
 		url: "/dashboard/player-manager",
-		category: "Admin",
+		category: "Platoon Settings",
 	},
 	{
 		name: "Rank Manager",
 		url: "/dashboard/rank-manager",
-		category: "Admin",
+		category: "Platoon Settings",
 	},
 	{
 		name: "Player Attributes",
 		url: "/dashboard/player-attributes",
-		category: "Admin",
+		category: "Platoon Settings",
 	},
 	// Mission Editor Settings
 	// TO DO
