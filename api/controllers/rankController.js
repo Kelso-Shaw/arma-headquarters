@@ -3,7 +3,7 @@ const { PlayerRanks } = require("../models");
 exports.getRanks = async (req, res) => {
 	try {
 		const ranks = await PlayerRanks.findAll({
-			attributes: { exclude: ["password", "createdAt", "updatedAt"] },
+			attributes: { exclude: ["createdAt", "updatedAt"] },
 			order: [["order", "ASC"]],
 		});
 		res.status(200).json({ success: true, ranks });
