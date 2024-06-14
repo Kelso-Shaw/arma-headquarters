@@ -44,7 +44,7 @@ const PlayerTable = ({ players, handleOpen, handleDelete }) => {
 					{paginatedPlayers?.map((player) => (
 						<TableRow key={player.id}>
 							<TableCell>{player.username}</TableCell>
-							<TableCell align="right">{player.role}</TableCell>
+							<TableCell align="right">{player.rank}</TableCell>
 							<TableCell align="right">
 								<IconButton color="primary" onClick={() => handleOpen(player)}>
 									<Edit />
