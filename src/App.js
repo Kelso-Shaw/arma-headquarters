@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense, useCallback, useEffect, useState } from "react";
 import {
 	Outlet,
 	Route,
@@ -6,20 +6,30 @@ import {
 	Routes,
 } from "react-router-dom";
 import { ThemeToggleProvider } from "./ThemeContext";
-import { AuthProvider } from "./components/AuthContext";
+import { AuthProvider, useAuth } from "./components/AuthContext";
 import Dashboard from "./components/Dashboard";
 import Home from "./components/Home";
 import Nav from "./components/Nav";
 import PrivateRoute from "./components/PrivateRoute";
-import PanelSettings from "./components/panelsettings/PanelSettings";
-import PlayerAttributes from "./components/playerattributes/PlayerAttributes";
-import PlayerManager from "./components/playermanager/PlayerManager";
-import RankManager from "./components/rankmanager/RankManager";
-import UserManager from "./components/usermanager/UserManager";
-import PageManager from "./components/pagemanager/PageManager";
+import { fetchHelper } from "./components/funcs/common/fetchHelper";
 
 const App = () => {
 	const clanName = process.env.REACT_APP_CLAN_NAME;
+	const [pages, setPages] = useState([]);
+	const { auth } = useAuth();
+
+	const fetchPages = useCallback(async () => {
+		try {
+			const pagesData = await fetchHelper(auth.token, "pages");
+			setPages(pagesData);
+		} catch (error) {
+			console.error("Error fetching pages:", error);
+		}
+	}, [auth.token]);
+
+	useEffect(() => {
+		fetchPages();
+	}, [fetchPages]);
 
 	return (
 		<ThemeToggleProvider>
@@ -49,54 +59,21 @@ const App = () => {
 								}
 							>
 								<Route path="" element={<Dashboard />} />
-								<Route
-									path="user-manager"
-									element={
-										<PrivateRoute pageUrl="/dashboard/user-manager">
-											<UserManager />
-										</PrivateRoute>
-									}
-								/>
-								<Route
-									path="panel-settings"
-									element={
-										<PrivateRoute pageUrl="/dashboard/panel-settings">
-											<PanelSettings />
-										</PrivateRoute>
-									}
-								/>
-								<Route
-									path="page-manager"
-									element={
-										<PrivateRoute pageUrl="/dashboard/page-manager">
-											<PageManager />
-										</PrivateRoute>
-									}
-								/>
-								<Route
-									path="player-manager"
-									element={
-										<PrivateRoute pageUrl="/dashboard/player-manager">
-											<PlayerManager />
-										</PrivateRoute>
-									}
-								/>
-								<Route
-									path="rank-manager"
-									element={
-										<PrivateRoute pageUrl="/dashboard/rank-manager">
-											<RankManager />
-										</PrivateRoute>
-									}
-								/>
-								<Route
-									path="player-attributes"
-									element={
-										<PrivateRoute pageUrl="/dashboard/player-attributes">
-											<PlayerAttributes />
-										</PrivateRoute>
-									}
-								/>
+								{pages.map((page) => (
+									<Route
+										key={page.url}
+										path={page.url.replace("/dashboard/", "")}
+										element={
+											<PrivateRoute pageUrl={page.pageUrl}>
+												<Suspense fallback={<div>Loading...</div>}>
+													<DynamicComponentLoader
+														componentName={page.name.replace(" ", "")}
+													/>
+												</Suspense>
+											</PrivateRoute>
+										}
+									/>
+								))}
 							</Route>
 						</Routes>
 					</div>
@@ -104,6 +81,30 @@ const App = () => {
 			</AuthProvider>
 		</ThemeToggleProvider>
 	);
+};
+
+const DynamicComponentLoader = ({ componentName }) => {
+	const [Component, setComponent] = useState(null);
+
+	useEffect(() => {
+		const loadComponent = async () => {
+			try {
+				const { default: loadedComponent } = await import(
+					`./components/${componentName.toLowerCase()}/${componentName}`
+				);
+				setComponent(() => loadedComponent);
+			} catch (error) {
+				console.error(`Error loading component ${componentName}:`, error);
+			}
+		};
+		loadComponent();
+	}, [componentName]);
+
+	if (!Component) {
+		return <div>Loading...</div>;
+	}
+
+	return <Component />;
 };
 
 export default App;

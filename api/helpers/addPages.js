@@ -1,17 +1,6 @@
 const { sequelize, Pages } = require("../models");
 
 const existingPages = [
-	// Home Pages
-	{
-		name: "Home",
-		url: "/",
-		category: "Home",
-	},
-	{
-		name: "Dashboard",
-		url: "/dashboard",
-		category: "Home",
-	},
 	// Admin Settings
 	{
 		name: "User Manager",
@@ -44,8 +33,23 @@ const existingPages = [
 		url: "/dashboard/player-attributes",
 		category: "Platoon Settings",
 	},
+	{
+		name: "Squad Builder",
+		url: "/dashboard/squad-builder",
+		category: "Platoon Settings",
+	},
+	{
+		name: "ORBAT Builder",
+		url: "/dashboard/orbat-builder",
+		category: "Platoon Settings",
+	},
 	// Mission Editor Settings
 	// TO DO
+	{
+		name: "Mission Creator",
+		url: "/dashboard/squad-builder",
+		category: "Mission Editor",
+	},
 ];
 
 const addPages = async () => {

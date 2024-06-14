@@ -18,7 +18,7 @@ const DashboardGrid = ({ auth }) => {
 				return acc;
 			}, {});
 			setPages(groupedPages);
-			console.log(groupedPages);
+			//console.log(groupedPages);
 		} catch (error) {
 			console.error(error);
 		}
