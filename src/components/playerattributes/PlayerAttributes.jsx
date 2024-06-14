@@ -49,7 +49,7 @@ const PlayerAttributes = () => {
 				selectedAttribute,
 				auth.token,
 			);
-			if (response.Success) {
+			if (response.success) {
 				await fetchAttributes();
 			} else {
 				throw new Error(response.message);
@@ -68,7 +68,7 @@ const PlayerAttributes = () => {
 				"",
 				auth.token,
 			);
-			if (!response.Success) {
+			if (!response.success) {
 				throw new Error(response.message);
 			}
 			await fetchAttributes();

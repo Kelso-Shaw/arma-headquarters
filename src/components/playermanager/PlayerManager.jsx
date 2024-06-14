@@ -1,7 +1,5 @@
-import { Container, Typography } from "@mui/material";
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../AuthContext";
-import { AddButtonTable } from "../buttons/AddButtonTable";
 import { apiRequest } from "../funcs/common";
 import { fetchHelper } from "../funcs/common/fetchHelper";
 import Layout from "../layouts/Layout";
@@ -11,13 +9,15 @@ import PlayerTable from "./assets/PlayerTable";
 const PlayerManager = () => {
 	const [players, setPlayers] = useState([]);
 	const [ranks, setRanks] = useState([]);
+	const [attributes, setAttributes] = useState([]);
 	const [open, setOpen] = useState(false);
 	const [selectedEntity, setSelectedEntity] = useState(null);
 
 	const [newEntity, setNewEntity] = useState({
 		username: "",
-		role: "",
+		rank: "",
 		password: null,
+		attributes: [],
 	});
 
 	const { auth } = useAuth();
@@ -40,17 +40,31 @@ const PlayerManager = () => {
 		}
 	}, [auth.token]);
 
+	const fetchAttributes = useCallback(async () => {
+		try {
+			const attributesData = await fetchHelper(auth.token, "attributes");
+			setAttributes(attributesData);
+		} catch (error) {
+			console.error(error);
+		}
+	}, [auth.token]);
+
 	useEffect(() => {
 		fetchPlayers();
 		fetchRanks();
-	}, [fetchPlayers, fetchRanks]);
+		fetchAttributes();
+	}, [fetchPlayers, fetchRanks, fetchAttributes]);
 
 	const handleOpen = (entity = null) => {
 		setSelectedEntity(entity);
 		if (entity) {
-			setNewEntity({ username: entity.username, role: entity.role });
+			setNewEntity({
+				username: entity.username,
+				rank: entity.rank,
+				attributes: entity.attributes.map((attr) => attr.id),
+			});
 		} else {
-			setNewEntity({ username: "", role: "", password: null });
+			setNewEntity({ username: "", rank: "", password: null, attributes: [] });
 		}
 		setOpen(true);
 	};
@@ -58,7 +72,7 @@ const PlayerManager = () => {
 	const handleClose = () => {
 		setOpen(false);
 		setSelectedEntity(null);
-		setNewEntity({ username: "", role: "", password: null });
+		setNewEntity({ username: "", rank: "", password: null, attributes: [] });
 	};
 
 	const handleSave = async () => {
@@ -66,8 +80,10 @@ const PlayerManager = () => {
 			const method = selectedEntity ? "POST" : "PUT";
 			const url = selectedEntity ? `players/${selectedEntity.id}` : "players";
 			const requestBody = {
+				id: selectedEntity?.id,
 				username: newEntity.username,
-				role: newEntity.role,
+				rank: newEntity.rank,
+				attributes: newEntity.attributes,
 			};
 
 			if (newEntity.password) {
@@ -90,7 +106,7 @@ const PlayerManager = () => {
 				"",
 				auth.token || null,
 			);
-			if (!response.Success) {
+			if (!response.success) {
 				throw new Error(response.message);
 			}
 			await fetchPlayers();
@@ -109,6 +125,7 @@ const PlayerManager = () => {
 				players={players}
 				handleOpen={(player) => handleOpen(player)}
 				handleDelete={(id) => handleDelete(id)}
+				attributes={attributes}
 			/>
 			<PlayerDialog
 				open={open}
@@ -118,6 +135,7 @@ const PlayerManager = () => {
 				setPlayer={setNewEntity}
 				handleSave={handleSave}
 				ranks={ranks}
+				attributes={attributes}
 			/>
 		</Layout>
 	);

@@ -30,10 +30,10 @@ exports.register = async (req, res) => {
 
 		await addDefaultPermissions(user.id);
 
-		res.status(201).json({ Success: true, user });
+		res.status(201).json({ success: true, user });
 	} catch (error) {
 		console.error("Error registering user:", error);
-		res.status(500).send({ Success: false });
+		res.status(500).send({ success: false });
 	}
 };
 
@@ -52,10 +52,10 @@ exports.addUser = async (req, res) => {
 		// Add default permissions
 		await addDefaultPermissions(user.id);
 
-		res.status(201).json({ Success: true, user });
+		res.status(201).json({ success: true, user });
 	} catch (error) {
 		console.error("Error adding user:", error);
-		res.status(500).json({ Success: false, Message: error.errors[0].message });
+		res.status(500).json({ success: false, Message: error.errors[0].message });
 	}
 };
 
@@ -66,7 +66,7 @@ exports.login = async (req, res) => {
 		if (user == null) {
 			return res
 				.status(400)
-				.json({ Success: false, Message: "Username or Password is incorrect" });
+				.json({ success: false, Message: "Username or Password is incorrect" });
 		}
 
 		if (await bcrypt.compare(password, user.password)) {
@@ -75,7 +75,7 @@ exports.login = async (req, res) => {
 				process.env.ACCESS_TOKEN_SECRET,
 			);
 			res.json({
-				Success: true,
+				success: true,
 				accessToken,
 				role: user.role,
 				user: {
@@ -84,13 +84,13 @@ exports.login = async (req, res) => {
 			});
 		} else {
 			res.status(403).send.json({
-				Success: false,
+				success: false,
 				Message: "Username or Password is incorrect",
 			});
 		}
 	} catch (error) {
 		console.error("Error logging in user:", error);
-		res.status(500).send({ Success: false });
+		res.status(500).send({ success: false });
 	}
 };
 
@@ -99,10 +99,10 @@ exports.getAllUsers = async (req, res) => {
 		const users = await Users.findAll({
 			attributes: { exclude: ["password", "createdAt", "updatedAt"] },
 		});
-		res.json({ Success: true, users });
+		res.json({ success: true, users });
 	} catch (error) {
 		console.error("Error fetching users:", error);
-		res.status(500).send.json({ Success: false });
+		res.status(500).send.json({ success: false });
 	}
 };
 
@@ -114,10 +114,10 @@ exports.getUser = async (req, res) => {
 			attributes: { exclude: ["password", "createdAt", "updatedAt"] },
 		});
 
-		res.json({ Success: true, user });
+		res.json({ success: true, user });
 	} catch (error) {
 		console.error("Error getting user:", error);
-		res.status(500).json({ Success: false });
+		res.status(500).json({ success: false });
 	}
 };
 
@@ -131,13 +131,13 @@ exports.deleteUser = async (req, res) => {
 		if (deletedUser) {
 			res
 				.status(200)
-				.json({ Success: true, message: "User deleted successfully" });
+				.json({ success: true, message: "User deleted successfully" });
 		} else {
-			res.status(404).json({ Success: false, message: "User not found" });
+			res.status(404).json({ success: false, message: "User not found" });
 		}
 	} catch (error) {
 		console.error("Error deleting user:", error);
-		res.status(500).json({ Success: false, message: "Internal server error" });
+		res.status(500).json({ success: false, message: "Internal server error" });
 	}
 };
 
@@ -160,16 +160,16 @@ exports.updateUser = async (req, res) => {
 		});
 
 		if (!updated) {
-			res.status(404).json({ Success: false, message: "User not found" });
+			res.status(404).json({ success: false, message: "User not found" });
 		}
 		const updatedUser = await Users.findOne({ where: { id: userId } });
 		res.status(200).json({
-			Success: true,
+			success: true,
 			message: "User updated successfully",
 			user: updatedUser,
 		});
 	} catch (error) {
 		console.error("Error updating user:", error);
-		res.status(500).json({ Success: false, message: "Internal server error" });
+		res.status(500).json({ success: false, message: "Internal server error" });
 	}
 };

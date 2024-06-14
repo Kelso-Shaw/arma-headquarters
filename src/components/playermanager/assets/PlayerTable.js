@@ -25,7 +25,7 @@ const PlayerTable = ({ players, handleOpen, handleDelete }) => {
 		setPage(0);
 	};
 
-	const paginatedPlayers = players.slice(
+	const paginatedPlayers = players?.slice(
 		page * rowsPerPage,
 		page * rowsPerPage + rowsPerPage,
 	);
@@ -41,7 +41,7 @@ const PlayerTable = ({ players, handleOpen, handleDelete }) => {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{paginatedPlayers.map((player) => (
+					{paginatedPlayers?.map((player) => (
 						<TableRow key={player.id}>
 							<TableCell>{player.username}</TableCell>
 							<TableCell align="right">{player.role}</TableCell>
@@ -63,7 +63,7 @@ const PlayerTable = ({ players, handleOpen, handleDelete }) => {
 			<TablePagination
 				rowsPerPageOptions={[5, 10, 25]}
 				component="div"
-				count={players.length}
+				count={players?.length}
 				rowsPerPage={rowsPerPage}
 				page={page}
 				onPageChange={handleChangePage}

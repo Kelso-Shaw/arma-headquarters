@@ -23,8 +23,6 @@ const playerAttributesRoutes = require("./routes/playerAttributeRoutes");
 const permissionsRoutes = require("./routes/permissionRoutes");
 const pageRoutes = require("./routes/pagesRoutes");
 
-const { sequelize } = require("./models");
-
 // Use the user routes with /api prefix
 app.use("/api/users", userRoutes);
 app.use("/api/panel", panelRoutes);

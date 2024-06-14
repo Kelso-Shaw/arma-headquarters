@@ -6,12 +6,12 @@ exports.getRanks = async (req, res) => {
 			attributes: { exclude: ["password", "createdAt", "updatedAt"] },
 			order: [["order", "ASC"]],
 		});
-		res.status(200).json({ Success: true, ranks });
+		res.status(200).json({ success: true, ranks });
 	} catch (error) {
 		console.error("Error retrieving ranks:", error);
 		res
 			.status(500)
-			.json({ Success: false, Message: "Failed to retrieve ranks" });
+			.json({ success: false, Message: "Failed to retrieve ranks" });
 	}
 };
 
@@ -20,10 +20,10 @@ exports.addRank = async (req, res) => {
 
 	try {
 		const newRank = await PlayerRanks.create({ rank, order });
-		res.status(201).json({ Success: true, newRank });
+		res.status(201).json({ success: true, newRank });
 	} catch (error) {
 		console.error("Error adding rank:", error);
-		res.status(500).json({ Success: false, Message: "Failed to add rank" });
+		res.status(500).json({ success: false, Message: "Failed to add rank" });
 	}
 };
 
@@ -35,16 +35,16 @@ exports.deleteRank = async (req, res) => {
 		if (!rank) {
 			return res
 				.status(404)
-				.json({ Success: false, Message: "Rank not found" });
+				.json({ success: false, Message: "Rank not found" });
 		}
 
 		await rank.destroy();
 		res
 			.status(200)
-			.json({ Success: true, Message: "Rank deleted successfully" });
+			.json({ success: true, Message: "Rank deleted successfully" });
 	} catch (error) {
 		console.error("Error deleting rank:", error);
-		res.status(500).json({ Success: false, Message: "Failed to delete rank" });
+		res.status(500).json({ success: false, Message: "Failed to delete rank" });
 	}
 };
 
@@ -57,15 +57,15 @@ exports.updateRank = async (req, res) => {
 		if (!existingRank) {
 			return res
 				.status(404)
-				.json({ Success: false, Message: "Rank not found" });
+				.json({ success: false, Message: "Rank not found" });
 		}
 
 		existingRank.rank = rank;
 		existingRank.order = order;
 		await existingRank.save();
-		res.status(200).json({ Success: true, updatedRank: existingRank });
+		res.status(200).json({ success: true, updatedRank: existingRank });
 	} catch (error) {
 		console.error("Error updating rank:", error);
-		res.status(500).json({ Success: false, Message: "Failed to update rank" });
+		res.status(500).json({ success: false, Message: "Failed to update rank" });
 	}
 };
