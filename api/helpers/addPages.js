@@ -23,6 +23,11 @@ const existingPages = [
 		url: "/dashboard/panel-settings",
 		category: "Admin",
 	},
+	{
+		name: "Page Manager",
+		url: "/dashboard/page-manager",
+		category: "Admin",
+	},
 	// Platoon Settings
 	{
 		name: "Player Manager",
@@ -48,23 +53,22 @@ const addPages = async () => {
 		await sequelize.sync();
 
 		for (const page of existingPages) {
-			const [newPage, created] = await Pages.findOrCreate({
-				where: { url: page.url },
-				defaults: page,
-			});
+			const existingPage = await Pages.findOne({ where: { url: page.url } });
 
-			if (created) {
-				console.log(`Page added: ${newPage.name}`);
-			} else {
-				console.log(`Page already exists: ${newPage.name}`);
+			if (existingPage) {
+				await existingPage.destroy();
+				console.log(`Page deleted: ${existingPage.name}`);
 			}
+
+			const newPage = await Pages.create(page);
+			console.log(`Page added: ${newPage.name}`);
 		}
 
 		console.log("All pages have been processed.");
 	} catch (error) {
 		console.error("Error adding pages:", error);
 	} finally {
-		sequelize.close();
+		await sequelize.close();
 	}
 };
 

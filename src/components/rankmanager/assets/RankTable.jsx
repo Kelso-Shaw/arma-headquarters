@@ -47,7 +47,7 @@ const RankTable = ({ ranks, handleDelete, handleOrderChange }) => {
 							</TableCell>
 							<TableCell align="right">
 								<IconButton onClick={() => handleDelete(rank.id)}>
-									<Delete />
+									<Delete sx={{ color: "primary.error" }} />
 								</IconButton>
 							</TableCell>
 						</TableRow>
