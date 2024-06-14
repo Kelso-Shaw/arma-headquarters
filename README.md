@@ -22,18 +22,20 @@ https://biomejs.dev/
 4. Rank manager
 5. Player User manager (access to main website, assign ranks)
 6. Player Attribute manager (create new custom attributes, like medic or pilot)
+7. Assigning attributes to players
+8. More granular permissions for Panel Users (page level)
+9. Page manager
 
 # To Do:
-1. Player Attribute assigning (Can be used to block specific roles from players without certain attributes)
-2. More granular permissions for Panel Users (page level)
-3. Profile settings (passwords, discord linking etc)
-4. ORBAT Creator
-5. Mission Maker
-6. Main Website (Fully customisable)
-7. Role Selector for Main Website
-8. Integrate discord roles/tagging for role selector
-9. Various panel settings (Things like disabling/enabling registering on both the panel and the main website)
-10. Some better branding
+1. Profile settings (passwords, discord linking etc)
+2. ORBAT Creator
+3. ORBAT Diagram Generator
+4. Mission Maker
+5. Main Website (Fully customisable)
+6. Role Selector for Main Website
+7. Integrate discord roles/tagging for role selector
+8. Various panel settings (Things like disabling/enabling registering on both the panel and the main website)
+9. Some better branding options
 
 # npm scripts
 ```npm run start-api``` 
