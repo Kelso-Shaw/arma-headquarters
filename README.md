@@ -1,4 +1,4 @@
-# To install dev:
+![image](https://github.com/Kelso-Shaw/arma-headquarters/assets/117351531/0b42086d-21b0-4199-9386-40905b2cb992)# To install dev:
 1. setup your .env using .env.example, generate an access token with ```node api/secret.js``` and paste it into the variable
 2. run npm install
 3. npm start
@@ -22,19 +22,19 @@ https://biomejs.dev/
 4. Rank manager
 5. Player User manager (access to main website, assign ranks)
 6. Player Attribute manager (create new custom attributes, like medic or pilot)
+7. Assigning attributes to players
 
 # To Do:
-1. Player Attribute assigning (Can be used to block specific roles from players without certain attributes)
-2. More granular permissions for Panel Users (page level)
-3. Profile settings (passwords, discord linking etc)
-4. ORBAT Creator
-5. ORBAT Diagram Generator
-6. Mission Maker
-7. Main Website (Fully customisable)
-8. Role Selector for Main Website
-9. Integrate discord roles/tagging for role selector
-10. Various panel settings (Things like disabling/enabling registering on both the panel and the main website)
-11. Some better branding
+1. More granular permissions for Panel Users (page level)
+2. Profile settings (passwords, discord linking etc)
+3. ORBAT Creator
+4. ORBAT Diagram Generator
+5. Mission Maker
+6. Main Website (Fully customisable)
+7. Role Selector for Main Website
+8. Integrate discord roles/tagging for role selector
+9. Various panel settings (Things like disabling/enabling registering on both the panel and the main website)
+10. Some better branding
 
 # npm scripts
 ```npm run start-api``` 
