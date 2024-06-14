@@ -16,6 +16,7 @@ import PlayerAttributes from "./components/playerattributes/PlayerAttributes";
 import PlayerManager from "./components/playermanager/PlayerManager";
 import RankManager from "./components/rankmanager/RankManager";
 import UserManager from "./components/usermanager/UserManager";
+import PageManager from "./components/pagemanager/PageManager";
 
 const App = () => {
 	const clanName = process.env.REACT_APP_CLAN_NAME;
@@ -61,6 +62,14 @@ const App = () => {
 									element={
 										<PrivateRoute pageUrl="/dashboard/panel-settings">
 											<PanelSettings />
+										</PrivateRoute>
+									}
+								/>
+								<Route
+									path="page-manager"
+									element={
+										<PrivateRoute pageUrl="/dashboard/page-manager">
+											<PageManager />
 										</PrivateRoute>
 									}
 								/>

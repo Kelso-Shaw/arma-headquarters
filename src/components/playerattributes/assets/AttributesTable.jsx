@@ -35,7 +35,7 @@ const AttributeTable = ({ attributes, handleDelete, handleOpen }) => {
 									<Edit />
 								</IconButton>
 								<IconButton onClick={() => handleDelete(a.id)}>
-									<Delete />
+									<Delete sx={{ color: "primary.error" }} />
 								</IconButton>
 							</TableCell>
 						</TableRow>

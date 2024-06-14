@@ -2,7 +2,13 @@ import { Container, Typography } from "@mui/material";
 import React from "react";
 import { AddButtonTable } from "../buttons/AddButtonTable";
 
-const Layout = ({ children, title, buttonName, buttonOnClick }) => {
+const Layout = ({
+	children,
+	title,
+	buttonName,
+	buttonOnClick,
+	hideButton = 0,
+}) => {
 	return (
 		<Container
 			sx={{
@@ -14,7 +20,11 @@ const Layout = ({ children, title, buttonName, buttonOnClick }) => {
 			<Typography variant="h4" gutterBottom>
 				{title}
 			</Typography>
-			<AddButtonTable text={buttonName} onClick={buttonOnClick} />
+			{hideButton ? (
+				""
+			) : (
+				<AddButtonTable text={buttonName} onClick={buttonOnClick} />
+			)}
 			{children}
 		</Container>
 	);

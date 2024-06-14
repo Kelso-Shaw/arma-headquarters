@@ -12,9 +12,9 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 
-const PlayerTable = ({ players, handleOpen, handleDelete }) => {
+const PageTable = ({ pages, handleOpen, handleDelete }) => {
 	const [page, setPage] = useState(0);
-	const [rowsPerPage, setRowsPerPage] = useState(5);
+	const [rowsPerPage, setRowsPerPage] = useState(10);
 
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
@@ -25,7 +25,7 @@ const PlayerTable = ({ players, handleOpen, handleDelete }) => {
 		setPage(0);
 	};
 
-	const paginatedPlayers = players?.slice(
+	const paginatedPages = pages?.slice(
 		page * rowsPerPage,
 		page * rowsPerPage + rowsPerPage,
 	);
@@ -35,25 +35,24 @@ const PlayerTable = ({ players, handleOpen, handleDelete }) => {
 			<Table>
 				<TableHead>
 					<TableRow>
-						<TableCell>Username</TableCell>
-						<TableCell align="right">Rank</TableCell>
+						<TableCell>Name</TableCell>
+						<TableCell>URL</TableCell>
+						<TableCell>Category</TableCell>
 						<TableCell align="right">Actions</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{paginatedPlayers?.map((player) => (
-						<TableRow key={player.id}>
-							<TableCell>{player.username}</TableCell>
-							<TableCell align="right">{player.role}</TableCell>
+					{paginatedPages?.map((page) => (
+						<TableRow key={page.id}>
+							<TableCell>{page.name}</TableCell>
+							<TableCell>{page.url}</TableCell>
+							<TableCell>{page.category}</TableCell>
 							<TableCell align="right">
-								<IconButton color="primary" onClick={() => handleOpen(player)}>
+								<IconButton color="primary" onClick={() => handleOpen(page)}>
 									<Edit />
 								</IconButton>
-								<IconButton
-									color="error"
-									onClick={() => handleDelete(player.id)}
-								>
-									<Delete sx={{ color: "primary.error" }} />
+								<IconButton color="error" onClick={() => handleDelete(page.id)}>
+									<Delete />
 								</IconButton>
 							</TableCell>
 						</TableRow>
@@ -61,9 +60,9 @@ const PlayerTable = ({ players, handleOpen, handleDelete }) => {
 				</TableBody>
 			</Table>
 			<TablePagination
-				rowsPerPageOptions={[5, 10, 25]}
+				rowsPerPageOptions={[10, 15, 25]}
 				component="div"
-				count={players?.length}
+				count={pages?.length}
 				rowsPerPage={rowsPerPage}
 				page={page}
 				onPageChange={handleChangePage}
@@ -73,4 +72,4 @@ const PlayerTable = ({ players, handleOpen, handleDelete }) => {
 	);
 };
 
-export default PlayerTable;
+export default PageTable;
