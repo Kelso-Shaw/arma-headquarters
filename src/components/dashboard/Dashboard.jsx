@@ -1,8 +1,8 @@
 import { Grid } from "@mui/material";
 import React from "react";
-import DashboardGrid from "./dashboard/DashboardGrid";
-import { useAuth } from "./AuthContext";
-import Layout from "./layouts/Layout";
+import DashboardGrid from "./assets/DashboardGrid";
+import { useAuth } from "../AuthContext";
+import Layout from "../layouts/Layout";
 
 const Dashboard = () => {
 	const { auth } = useAuth();
