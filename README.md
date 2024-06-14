@@ -1,4 +1,4 @@
-![image](https://github.com/Kelso-Shaw/arma-headquarters/assets/117351531/0b42086d-21b0-4199-9386-40905b2cb992)# To install dev:
+# To install dev:
 1. setup your .env using .env.example, generate an access token with ```node api/secret.js``` and paste it into the variable
 2. run npm install
 3. npm start
