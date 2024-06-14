@@ -33,7 +33,7 @@ const DashboardGrid = ({ auth }) => {
 	}
 
 	return (
-		<Grid container spacing={3}>
+		<>
 			{Object.keys(pages).map((category) => (
 				<Grid item xs={12} sm={6} md={4} key={category}>
 					<Paper
@@ -58,7 +58,7 @@ const DashboardGrid = ({ auth }) => {
 					</Paper>
 				</Grid>
 			))}
-		</Grid>
+		</>
 	);
 };
 
