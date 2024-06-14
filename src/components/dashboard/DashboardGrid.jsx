@@ -11,7 +11,10 @@ const DashboardGrid = ({ auth }) => {
 		try {
 			const pagesData = await fetchHelper(auth.token, "pages");
 			const groupedPages = pagesData.reduce((acc, page) => {
-				(acc[page.category] = acc[page.category] || []).push(page);
+				if (!acc[page.category]) {
+					acc[page.category] = [];
+				}
+				acc[page.category].push(page);
 				return acc;
 			}, {});
 			setPages(groupedPages);
@@ -30,7 +33,7 @@ const DashboardGrid = ({ auth }) => {
 	}
 
 	return (
-		<>
+		<Grid container spacing={3}>
 			{Object.keys(pages).map((category) => (
 				<Grid item xs={12} sm={6} md={4} key={category}>
 					<Paper
@@ -55,7 +58,7 @@ const DashboardGrid = ({ auth }) => {
 					</Paper>
 				</Grid>
 			))}
-		</>
+		</Grid>
 	);
 };
 
