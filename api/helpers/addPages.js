@@ -47,7 +47,7 @@ const existingPages = [
 	// TO DO
 	{
 		name: "Mission Creator",
-		url: "/dashboard/squad-builder",
+		url: "/dashboard/mission-editor",
 		category: "Mission Editor",
 	},
 ];

@@ -31,36 +31,33 @@ const DashboardGrid = ({ auth }) => {
 	if (!pages) {
 		return <div>Loading...</div>;
 	}
-
+	console.log(pages);
 	return (
 		<>
-			{Object.keys(pages).map(
-				(category) =>
-					category !== "Home" && (
-						<Grid item xs={12} sm={6} md={4} key={category}>
-							<Paper
-								sx={{
-									padding: 2,
-									display: "flex",
-									flexDirection: "column",
-								}}
+			{Object.keys(pages).map((category) => (
+				<Grid item xs={12} sm={6} md={4} key={category}>
+					<Paper
+						sx={{
+							padding: 2,
+							display: "flex",
+							flexDirection: "column",
+						}}
+					>
+						<Typography variant="h6" gutterBottom textAlign="center">
+							{category}
+						</Typography>
+						{pages[category].map((item) => (
+							<Button
+								key={item.url}
+								onClick={() => navigate(item.url)}
+								sx={{ marginBottom: 1 }}
 							>
-								<Typography variant="h6" gutterBottom textAlign="center">
-									{category}
-								</Typography>
-								{pages[category].map((item) => (
-									<Button
-										key={item.url}
-										onClick={() => navigate(item.url)}
-										sx={{ marginBottom: 1 }}
-									>
-										{item.name}
-									</Button>
-								))}
-							</Paper>
-						</Grid>
-					),
-			)}
+								{item.name}
+							</Button>
+						))}
+					</Paper>
+				</Grid>
+			))}
 		</>
 	);
 };
