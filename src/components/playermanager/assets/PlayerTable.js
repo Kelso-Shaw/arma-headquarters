@@ -46,7 +46,15 @@ const PlayerTable = ({ players, handleOpen, handleDelete }) => {
 						<TableRow key={player.id}>
 							<TableCell>{player.username}</TableCell>
 							<TableCell>
-								{player.squads.map((squads) => `${squads.name} `)}
+								{player.squads.length > 0
+									? player.squads.map((squad, index) =>
+											squad.name.length > 0 ? (
+												<span key={squad.id}>{squad.name} </span>
+											) : (
+												<span key={squad.id}>None </span>
+											),
+										)
+									: "None"}
 							</TableCell>
 							<TableCell>{player.rank}</TableCell>
 							<TableCell align="right">
