@@ -29,14 +29,15 @@ const PlayerTable = ({ players, handleOpen, handleDelete }) => {
 		page * rowsPerPage,
 		page * rowsPerPage + rowsPerPage,
 	);
-
+	console.log(paginatedPlayers);
 	return (
 		<TableContainer component={Paper} style={{ marginTop: 20 }}>
 			<Table>
 				<TableHead>
 					<TableRow>
 						<TableCell>Username</TableCell>
-						<TableCell align="right">Rank</TableCell>
+						<TableCell>Squad(s)</TableCell>
+						<TableCell>Rank</TableCell>
 						<TableCell align="right">Actions</TableCell>
 					</TableRow>
 				</TableHead>
@@ -44,7 +45,10 @@ const PlayerTable = ({ players, handleOpen, handleDelete }) => {
 					{paginatedPlayers?.map((player) => (
 						<TableRow key={player.id}>
 							<TableCell>{player.username}</TableCell>
-							<TableCell align="right">{player.rank}</TableCell>
+							<TableCell>
+								{player.squads.map((squads) => `${squads.name} `)}
+							</TableCell>
+							<TableCell>{player.rank}</TableCell>
 							<TableCell align="right">
 								<IconButton color="primary" onClick={() => handleOpen(player)}>
 									<Edit />
