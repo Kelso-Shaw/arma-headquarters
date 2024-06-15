@@ -31,7 +31,7 @@ const SquadsDialog = ({
 	handleRoleChange,
 	handleAddRole,
 	handleDeleteRole,
-	players, // Receive players prop
+	players,
 }) => (
 	<Dialog open={open} onClose={handleClose}>
 		<DialogTitle>{selectedSquad ? "Edit Squad" : "Add New Squad"}</DialogTitle>
@@ -75,11 +75,15 @@ const SquadsDialog = ({
 								<TableCell>
 									<FormControl fullWidth>
 										<Select
-											value={role.assigned}
+											value={role.assigned ?? ""}
 											onChange={(e) =>
 												handleRoleChange(index, "assigned", e.target.value)
 											}
+											displayEmpty
 										>
+											<MenuItem value="">
+												<em>None</em>
+											</MenuItem>
 											{players.map((player) => (
 												<MenuItem key={player.id} value={player.id}>
 													{player.username}

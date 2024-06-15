@@ -74,7 +74,7 @@ const SquadBuilder = () => {
 	const handleAddRole = () => {
 		setSquad({
 			...squad,
-			roles: [...squad.roles, { role: "", assigned: 0, order: 1 }],
+			roles: [...squad.roles, { role: "", assigned: null, order: 1 }],
 		});
 	};
 
