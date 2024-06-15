@@ -6,19 +6,12 @@ import { apiRequest } from "./funcs/common/apiRequest";
 const PrivateRoute = ({ children, pageUrl }) => {
 	const { auth } = useAuth();
 	const [hasPermission, setHasPermission] = useState(null);
-
 	useEffect(() => {
 		const checkPermission = async () => {
 			if (!auth.isAuthenticated) {
 				setHasPermission(false);
 				return;
 			}
-
-			if (Number.parseInt(auth.role) === 1) {
-				setHasPermission(true);
-				return;
-			}
-
 			try {
 				const response = await apiRequest(
 					"permissions/check",
@@ -40,7 +33,7 @@ const PrivateRoute = ({ children, pageUrl }) => {
 	}, [auth, pageUrl]);
 
 	if (hasPermission === null) {
-		return <div>Loading...</div>;
+		return;
 	}
 
 	if (!auth.isAuthenticated) {

@@ -2,6 +2,8 @@ import React, { useState, useCallback, useEffect } from "react";
 import { Grid, Paper, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { fetchHelper } from "../../funcs/common/fetchHelper";
+import { apiRequest } from "../../funcs/common/apiRequest";
+import PageButton from "../../buttons/PageButton";
 
 const DashboardGrid = ({ auth }) => {
 	const [pages, setPages] = useState(null);
@@ -18,7 +20,6 @@ const DashboardGrid = ({ auth }) => {
 				return acc;
 			}, {});
 			setPages(groupedPages);
-			//console.log(groupedPages);
 		} catch (error) {
 			console.error(error);
 		}
@@ -29,9 +30,27 @@ const DashboardGrid = ({ auth }) => {
 	}, [fetchPages]);
 
 	if (!pages) {
-		return <div>Loading...</div>;
+		return null;
 	}
-	console.log(pages);
+
+	const checkPermission = async (pageUrl) => {
+		try {
+			const response = await apiRequest(
+				"permissions/check",
+				"POST",
+				{
+					userId: auth.id,
+					pageUrl: pageUrl,
+				},
+				auth.token,
+			);
+			return response.success;
+		} catch (error) {
+			console.error(error);
+			return false;
+		}
+	};
+
 	return (
 		<>
 			{Object.keys(pages).map((category) => (
@@ -47,13 +66,13 @@ const DashboardGrid = ({ auth }) => {
 							{category}
 						</Typography>
 						{pages[category].map((item) => (
-							<Button
+							<PageButton
+								auth={auth}
 								key={item.url}
-								onClick={() => navigate(item.url)}
-								sx={{ marginBottom: 1 }}
-							>
-								{item.name}
-							</Button>
+								item={item}
+								checkPermission={checkPermission}
+								navigate={navigate}
+							/>
 						))}
 					</Paper>
 				</Grid>

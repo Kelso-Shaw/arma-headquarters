@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
 				otherKey: "PlayerAttributeId",
 				as: "attributes",
 			});
+			PlayerUser.hasMany(models.Squads, {
+				foreignKey: "assigned",
+				as: "squads",
+			});
 		}
 	}
 	PlayerUser.init(

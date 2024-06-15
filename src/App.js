@@ -50,27 +50,24 @@ const App = () => {
 						<Routes>
 							<Route path="/" element={<Home />} />
 							<Route path="/access-denied" element={<>Access Denied</>} />
-							<Route
-								path="/dashboard"
-								element={
-									<PrivateRoute pageUrl="/dashboard">
-										<Outlet />
-									</PrivateRoute>
-								}
-							>
+							<Route path="/dashboard" element={<Outlet />}>
 								<Route path="" element={<Dashboard />} />
 								{pages.map((page) => (
 									<Route
 										key={page.url}
-										path={page.url.replace("/dashboard/", "")}
+										path={page.url ? page.url.replace("/dashboard/", "") : ""}
 										element={
-											<PrivateRoute pageUrl={page.pageUrl}>
-												<Suspense fallback={<div>Loading...</div>}>
-													<DynamicComponentLoader
-														componentName={page.name.replace(" ", "")}
-													/>
-												</Suspense>
-											</PrivateRoute>
+											page.url ? (
+												<PrivateRoute pageUrl={page.url}>
+													<Suspense fallback={<></>}>
+														<DynamicComponentLoader
+															componentName={page.name.replace(" ", "")}
+														/>
+													</Suspense>
+												</PrivateRoute>
+											) : (
+												<div>Error: Invalid page URL</div>
+											)
 										}
 									/>
 								))}
@@ -101,7 +98,7 @@ const DynamicComponentLoader = ({ componentName }) => {
 	}, [componentName]);
 
 	if (!Component) {
-		return <div>Loading...</div>;
+		return;
 	}
 
 	return <Component />;

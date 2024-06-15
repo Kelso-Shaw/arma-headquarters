@@ -17,7 +17,7 @@ const UserManager = () => {
 
 	const [newEntity, setNewEntity] = useState({
 		username: "",
-		role: "",
+		role: 0,
 		password: null,
 	});
 
@@ -67,7 +67,7 @@ const UserManager = () => {
 		if (entity) {
 			setNewEntity({ username: entity.username, role: entity.role });
 		} else {
-			setNewEntity({ username: "", role: "", password: null });
+			setNewEntity({ username: "", role: 0, password: null });
 		}
 		setOpen(true);
 	};
@@ -81,7 +81,7 @@ const UserManager = () => {
 	const handleClose = () => {
 		setOpen(false);
 		setSelectedEntity(null);
-		setNewEntity({ username: "", role: "", password: null });
+		setNewEntity({ username: "", role: 0, password: null });
 	};
 
 	const handlePermissionClose = () => {

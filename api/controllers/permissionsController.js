@@ -52,7 +52,6 @@ exports.setPermission = async (req, res) => {
 		});
 
 		if (!created) {
-			// Permission existed, so we need to update it
 			permission.can_access = canAccess;
 			await permission.save();
 		}
@@ -67,6 +66,17 @@ exports.setPermission = async (req, res) => {
 exports.checkPermission = async (req, res) => {
 	try {
 		const { userId, pageUrl } = req.body;
+
+		const user = await Users.findOne({ where: { id: userId } });
+		if (!user) {
+			return res
+				.status(404)
+				.json({ success: false, message: "User not found" });
+		}
+
+		if (user.role === 1) {
+			return res.json({ success: true });
+		}
 
 		const page = await Pages.findOne({ where: { url: pageUrl } });
 		if (!page) {
