@@ -59,7 +59,7 @@ const App = () => {
 										element={
 											page.url ? (
 												<PrivateRoute pageUrl={page.url}>
-													<Suspense fallback={<></>}>
+													<Suspense fallback="">
 														<DynamicComponentLoader
 															componentName={page.name.replace(" ", "")}
 														/>

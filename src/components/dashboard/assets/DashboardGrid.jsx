@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Grid, Paper, Typography, Button } from "@mui/material";
+import { Grid, Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { fetchHelper } from "../../funcs/common/fetchHelper";
-import { apiRequest } from "../../funcs/common/apiRequest";
-import PageButton from "../../buttons/PageButton";
+import { fetchHelper } from "components/funcs/common/fetchHelper";
+import { apiRequest } from "components/funcs/common/apiRequest";
+import PageButton from "components/buttons/PageButton";
 
 const DashboardGrid = ({ auth }) => {
 	const [pages, setPages] = useState(null);

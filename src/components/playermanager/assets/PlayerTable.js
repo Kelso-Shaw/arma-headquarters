@@ -10,7 +10,7 @@ import {
 	TablePagination,
 	TableRow,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const PlayerTable = ({ players, handleOpen, handleDelete }) => {
 	const [page, setPage] = useState(0);
@@ -49,7 +49,7 @@ const PlayerTable = ({ players, handleOpen, handleDelete }) => {
 								{player.squads.length > 0
 									? player.squads.map((squad, index) =>
 											squad.name.length > 0 ? (
-												<span key={squad.id}>{squad.name} </span>
+												<span key={squad.id}>{squad.name}</span>
 											) : (
 												<span key={squad.id}>None </span>
 											),
