@@ -7,7 +7,6 @@ import ReactFlow, {
 	Background,
 	useNodesState,
 	useEdgesState,
-	useReactFlow,
 	getRectOfNodes,
 	getTransformForBounds,
 } from "reactflow";
@@ -24,9 +23,6 @@ import {
 } from "@mui/material";
 import { apiRequest } from "../funcs/common";
 import { toPng } from "html-to-image";
-
-import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";
 
 const initialNodes = [];
 const initialEdges = [];
@@ -86,6 +82,8 @@ const ORBATBuilder = () => {
 
 			const reactFlowBounds = event.target.getBoundingClientRect();
 			const type = event.dataTransfer.getData("application/reactflow");
+			const label = event.dataTransfer.getData("label");
+
 			const position = {
 				x: event.clientX - reactFlowBounds.left,
 				y: event.clientY - reactFlowBounds.top,
@@ -94,7 +92,7 @@ const ORBATBuilder = () => {
 				id: String(nodes.length + 1),
 				type,
 				position,
-				data: { label: type },
+				data: { label: label || type },
 			};
 
 			setNodes((nds) => nds.concat(newNode));
@@ -211,6 +209,24 @@ const ORBATBuilder = () => {
 				<Typography variant="h6" gutterBottom>
 					Drag a squad onto the chart
 				</Typography>
+				<Paper
+					key="Command"
+					variant="outlined"
+					style={{ padding: "8px", marginBottom: "8px" }}
+					onDragStart={(event) =>
+						event.dataTransfer.setData(
+							"application/reactflow",
+							"input",
+							event.dataTransfer.setData(
+								"label",
+								process.env.REACT_APP_CLAN_NAME,
+							),
+						)
+					}
+					draggable
+				>
+					{process.env.REACT_APP_CLAN_NAME}
+				</Paper>
 				{Array.isArray(squads) && squads.length > 0 ? (
 					squads.map((squad) => (
 						<Paper
