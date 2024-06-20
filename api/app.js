@@ -23,6 +23,7 @@ const playerAttributesRoutes = require("./routes/playerAttributeRoutes");
 const permissionsRoutes = require("./routes/permissionRoutes");
 const pageRoutes = require("./routes/pagesRoutes");
 const squadsRoutes = require("./routes/squadsRoutes");
+const flowRouter = require("./routes/flowRoutes");
 
 // Use the user routes with /api prefix
 app.use("/api/users", userRoutes);
@@ -33,6 +34,7 @@ app.use("/api/attributes", playerAttributesRoutes);
 app.use("/api/permissions", permissionsRoutes);
 app.use("/api/pages", pageRoutes);
 app.use("/api/squads", squadsRoutes);
+app.use("/api/flow", flowRouter);
 
 // Start the server
 app.listen(port, () => {

@@ -72,11 +72,11 @@ exports.deleteSquad = async (req, res) => {
 };
 
 exports.updateSquad = async (req, res) => {
-	const { name, roles } = req.body;
+	const { oldName, name, roles } = req.body;
 
 	try {
 		const existingSquads = await Squads.findAll({
-			where: { name },
+			where: { name: oldName },
 		});
 
 		if (existingSquads.length === 0) {
@@ -94,6 +94,7 @@ exports.updateSquad = async (req, res) => {
 			roles.map(async (role) => {
 				if (existingRolesMap[role.role]) {
 					await existingRolesMap[role.role].update({
+						name,
 						assigned: role.assigned,
 						order: role.order,
 					});
