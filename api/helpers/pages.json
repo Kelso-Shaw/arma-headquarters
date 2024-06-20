@@ -1,0 +1,56 @@
+[
+  {
+    "id": 10,
+    "name": "User Manager",
+    "url": "/dashboard/user-manager",
+    "category": "Admin"
+  },
+  {
+    "id": 11,
+    "name": "Panel Settings",
+    "url": "/dashboard/panel-settings",
+    "category": "Admin"
+  },
+  {
+    "id": 12,
+    "name": "Page Manager",
+    "url": "/dashboard/page-manager",
+    "category": "Admin"
+  },
+  {
+    "id": 13,
+    "name": "Player Manager",
+    "url": "/dashboard/player-manager",
+    "category": "Platoon Settings"
+  },
+  {
+    "id": 14,
+    "name": "Rank Manager",
+    "url": "/dashboard/rank-manager",
+    "category": "Platoon Settings"
+  },
+  {
+    "id": 15,
+    "name": "Player Attributes",
+    "url": "/dashboard/player-attributes",
+    "category": "Platoon Settings"
+  },
+  {
+    "id": 16,
+    "name": "Squad Builder",
+    "url": "/dashboard/squad-builder",
+    "category": "Platoon Settings"
+  },
+  {
+    "id": 17,
+    "name": "ORBAT Builder",
+    "url": "/dashboard/orbat-builder",
+    "category": "Platoon Settings"
+  },
+  {
+    "id": 18,
+    "name": "Mission Creator",
+    "url": "/dashboard/mission-editor",
+    "category": "Mission Editor"
+  }
+]
