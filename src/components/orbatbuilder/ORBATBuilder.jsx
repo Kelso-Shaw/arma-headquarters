@@ -1,20 +1,24 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../AuthContext";
-import Layout from "../layouts/Layout";
 import ReactFlow, {
 	addEdge,
 	applyNodeChanges,
 	applyEdgeChanges,
 	Background,
-	Controls,
-	MiniMap,
 	useNodesState,
 	useEdgesState,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { fetchHelper } from "../funcs/common/fetchHelper";
-import { Box, Paper, Typography, Menu, MenuItem, Button } from "@mui/material";
-import axios from "axios";
+import {
+	Box,
+	Paper,
+	Typography,
+	Menu,
+	MenuItem,
+	Button,
+	Container,
+} from "@mui/material";
 import { apiRequest } from "../funcs/common";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
@@ -39,10 +43,27 @@ const ORBATBuilder = () => {
 		}
 	}, [auth.token]);
 
+	const loadFlow = useCallback(async () => {
+		try {
+			const response = await apiRequest(
+				"flow/load",
+				"GET",
+				null,
+				auth.token || null,
+			);
+			const flow = response.flow;
+			setNodes(JSON.parse(flow.nodes));
+			setEdges(JSON.parse(flow.edges));
+		} catch (error) {
+			console.error(error);
+			alert("Failed to load flow");
+		}
+	}, [auth.token, setEdges, setNodes]);
+
 	useEffect(() => {
 		fetchSquads();
 		loadFlow();
-	}, [fetchSquads]);
+	}, [fetchSquads, loadFlow]);
 
 	const onConnect = useCallback(
 		(params) => setEdges((eds) => addEdge(params, eds)),
@@ -134,23 +155,6 @@ const ORBATBuilder = () => {
 		}
 	};
 
-	const loadFlow = async () => {
-		try {
-			const response = await apiRequest(
-				"flow/load",
-				"GET",
-				null,
-				auth.token || null,
-			);
-			const flow = response.flow;
-			setNodes(JSON.parse(flow.nodes));
-			setEdges(JSON.parse(flow.edges));
-		} catch (error) {
-			console.error(error);
-			alert("Failed to load flow");
-		}
-	};
-
 	const exportToPdf = async () => {
 		const reactFlowNode = document.querySelector(".react-flow");
 		if (!reactFlowNode) return;
@@ -183,7 +187,15 @@ const ORBATBuilder = () => {
 
 	return (
 		<Box display="flex">
-			<Paper elevation={3} style={{ width: "20%", padding: "16px" }}>
+			<Paper
+				elevation={3}
+				sx={{
+					width: "20%",
+					padding: "16px",
+					display: "flex",
+					flexDirection: "column",
+				}}
+			>
 				<Typography variant="h6" gutterBottom>
 					Drag a squad onto the chart
 				</Typography>
@@ -204,25 +216,29 @@ const ORBATBuilder = () => {
 				) : (
 					<Typography>No squads available</Typography>
 				)}
-				<Button
-					variant="contained"
-					color="primary"
-					style={{ marginTop: "16px" }}
-					onClick={saveFlow}
+				<Container
+					sx={{
+						marginTop: "auto",
+						display: "flex",
+						flexDirection: "row",
+					}}
 				>
-					Save Flow
-				</Button>
-				<Button
-					variant="contained"
-					color="secondary"
-					style={{ marginTop: "16px" }}
-					onClick={exportToPdf}
-				>
-					Export to PDF
-				</Button>
+					<Button variant="contained" color="primary" onClick={saveFlow}>
+						Save Flow
+					</Button>
+					<Button
+						variant="contained"
+						color="secondary"
+						onClick={exportToPdf}
+						sx={{ marginLeft: 5 }}
+					>
+						Export to PDF
+					</Button>
+				</Container>
 			</Paper>
+
 			<Box
-				style={{ flexGrow: 1, width: "90vw", height: "90vh" }}
+				style={{ flexGrow: 1, width: "80vw", height: "91vh" }}
 				onDrop={onDrop}
 				onDragOver={onDragOver}
 			>

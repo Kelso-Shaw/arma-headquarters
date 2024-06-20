@@ -2,9 +2,7 @@ import { Delete } from "@mui/icons-material";
 import { Edit } from "@mui/icons-material";
 import {
 	IconButton,
-	MenuItem,
 	Paper,
-	Select,
 	Table,
 	TableBody,
 	TableCell,
