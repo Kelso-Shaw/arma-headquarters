@@ -25,9 +25,9 @@
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
-		"start": "concurrently \"react-scripts start\" \"nodemon api/app.js\"",
+		"start": "concurrently \"react-scripts start\" \"nodemon --ignore 'api/helpers/*' api/app.js\"",
 		"start-react": "react-scripts start",
-		"start-api": "nodemon api/app.js",
+		"start-api": "nodemon --ignore 'api/helpers/*' api/app.js",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
@@ -42,17 +42,10 @@
 		"postinstall": "npm run db:migrate"
 	},
 	"eslintConfig": {
-		"extends": [
-			"react-app",
-			"react-app/jest"
-		]
+		"extends": ["react-app", "react-app/jest"]
 	},
 	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
+		"production": [">0.2%", "not dead", "not op_mini all"],
 		"development": [
 			"last 1 chrome version",
 			"last 1 firefox version",
