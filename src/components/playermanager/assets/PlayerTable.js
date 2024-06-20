@@ -49,7 +49,9 @@ const PlayerTable = ({ players, handleOpen, handleDelete }) => {
 								{player.squads.length > 0
 									? player.squads.map((squad, index) =>
 											squad.name.length > 0 ? (
-												<span key={squad.id}>{squad.name}</span>
+												<span
+													key={squad.id}
+												>{`${(index ? ", " : "") + squad.name}`}</span>
 											) : (
 												<span key={squad.id}>None </span>
 											),

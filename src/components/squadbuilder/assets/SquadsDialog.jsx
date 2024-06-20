@@ -75,13 +75,13 @@ const SquadsDialog = ({
 								<TableCell>
 									<FormControl fullWidth>
 										<Select
-											value={role.assigned ?? ""}
+											value={role.assigned ?? null}
 											onChange={(e) =>
 												handleRoleChange(index, "assigned", e.target.value)
 											}
 											displayEmpty
 										>
-											<MenuItem value="">
+											<MenuItem value={null}>
 												<em>None</em>
 											</MenuItem>
 											{players.map((player) => (
