@@ -55,8 +55,9 @@ const SquadBuilder = () => {
 	};
 
 	const handleSaveSquad = async () => {
+		const oldName = selectedSquad ? selectedSquad.name : null;
 		if (selectedSquad) {
-			await apiRequest("squads", "POST", squad, auth.token);
+			await apiRequest("squads", "POST", { oldName, ...squad }, auth.token);
 		} else {
 			await apiRequest("squads", "PUT", squad, auth.token);
 		}

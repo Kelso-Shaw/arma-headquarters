@@ -16,6 +16,8 @@ import { fetchHelper } from "../funcs/common/fetchHelper";
 import { Box, Paper, Typography, Menu, MenuItem, Button } from "@mui/material";
 import axios from "axios";
 import { apiRequest } from "../funcs/common";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 
 const initialNodes = [];
 const initialEdges = [];
@@ -149,8 +151,38 @@ const ORBATBuilder = () => {
 		}
 	};
 
+	const exportToPdf = async () => {
+		const reactFlowNode = document.querySelector(".react-flow");
+		if (!reactFlowNode) return;
+
+		const canvas = await html2canvas(reactFlowNode);
+		const imgData = canvas.toDataURL("image/png");
+
+		const pdfWidth = 297;
+		const pdfHeight = 210;
+		const imgWidth = canvas.width;
+		const imgHeight = canvas.height;
+
+		const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+
+		const pdf = new jsPDF({
+			orientation: "landscape",
+			unit: "mm",
+			format: "a4",
+		});
+		pdf.addImage(
+			imgData,
+			"PNG",
+			(pdfWidth - imgWidth * scale) / 2,
+			(pdfHeight - imgHeight * scale) / 2,
+			imgWidth * scale,
+			imgHeight * scale,
+		);
+		pdf.save("ORBAT.pdf");
+	};
+
 	return (
-		<Box display="flex" height="100%">
+		<Box display="flex">
 			<Paper elevation={3} style={{ width: "20%", padding: "16px" }}>
 				<Typography variant="h6" gutterBottom>
 					Drag a squad onto the chart
@@ -180,9 +212,17 @@ const ORBATBuilder = () => {
 				>
 					Save Flow
 				</Button>
+				<Button
+					variant="contained"
+					color="secondary"
+					style={{ marginTop: "16px" }}
+					onClick={exportToPdf}
+				>
+					Export to PDF
+				</Button>
 			</Paper>
 			<Box
-				style={{ flexGrow: 1, width: "80vw", height: "80vh" }}
+				style={{ flexGrow: 1, width: "90vw", height: "90vh" }}
 				onDrop={onDrop}
 				onDragOver={onDragOver}
 			>
@@ -194,10 +234,9 @@ const ORBATBuilder = () => {
 					onConnect={onConnect}
 					onNodeContextMenu={handleNodeContextMenu}
 					onEdgeContextMenu={handleEdgeContextMenu}
+					className="react-flow"
 				>
 					<Background />
-					<Controls />
-					<MiniMap />
 				</ReactFlow>
 			</Box>
 			<Menu
