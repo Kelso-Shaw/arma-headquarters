@@ -4,6 +4,7 @@ const {
 	PlayerUser,
 	PlayerAttributes,
 	PlayerUserAttributes,
+	Squads,
 } = require("../models");
 
 exports.login = async (req, res) => {
@@ -44,7 +45,12 @@ exports.getAllUsers = async (req, res) => {
 					through: {
 						attributes: [],
 					},
-					attributes: { exclude: ["createdAt", "updatedAt"] },
+					attributes: { exclude: ["createdAt", "updatedAt", "id"] },
+				},
+				{
+					model: Squads,
+					as: "squads",
+					attributes: ["name", "role"],
 				},
 			],
 			attributes: { exclude: ["password", "createdAt", "updatedAt"] },
@@ -54,7 +60,7 @@ exports.getAllUsers = async (req, res) => {
 		console.error("Error retrieving players:", error);
 		res
 			.status(500)
-			.json({ success: false, Message: "Failed to retrieve players" });
+			.json({ success: false, message: "Failed to retrieve players" });
 	}
 };
 
@@ -63,13 +69,36 @@ exports.getUser = async (req, res) => {
 		const id = req.params.id;
 		const player = await PlayerUser.findOne({
 			where: { id },
+			include: [
+				{
+					model: PlayerAttributes,
+					as: "attributes",
+					through: {
+						attributes: [],
+					},
+					attributes: { exclude: ["createdAt", "updatedAt"] },
+				},
+				{
+					model: Squads,
+					as: "squads",
+					attributes: ["name"],
+				},
+			],
 			attributes: { exclude: ["password", "createdAt", "updatedAt"] },
 		});
+
+		if (!player) {
+			return res
+				.status(404)
+				.json({ success: false, message: "Player not found" });
+		}
 
 		res.json({ success: true, player });
 	} catch (error) {
 		console.error("Error getting user:", error);
-		res.status(500).json({ success: false });
+		res
+			.status(500)
+			.json({ success: false, message: "Failed to retrieve user" });
 	}
 };
 

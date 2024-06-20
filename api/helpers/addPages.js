@@ -1,58 +1,19 @@
 const { sequelize, Pages } = require("../models");
-
-const existingPages = [
-	// Admin Settings
-	{
-		name: "User Manager",
-		url: "/dashboard/user-manager",
-		category: "Admin",
-	},
-	{
-		name: "Panel Settings",
-		url: "/dashboard/panel-settings",
-		category: "Admin",
-	},
-	{
-		name: "Page Manager",
-		url: "/dashboard/page-manager",
-		category: "Admin",
-	},
-	// Platoon Settings
-	{
-		name: "Player Manager",
-		url: "/dashboard/player-manager",
-		category: "Platoon Settings",
-	},
-	{
-		name: "Rank Manager",
-		url: "/dashboard/rank-manager",
-		category: "Platoon Settings",
-	},
-	{
-		name: "Player Attributes",
-		url: "/dashboard/player-attributes",
-		category: "Platoon Settings",
-	},
-	{
-		name: "Squad Builder",
-		url: "/dashboard/squad-builder",
-		category: "Platoon Settings",
-	},
-	{
-		name: "ORBAT Builder",
-		url: "/dashboard/orbat-builder",
-		category: "Platoon Settings",
-	},
-	// Mission Editor Settings
-	// TO DO
-	{
-		name: "Mission Creator",
-		url: "/dashboard/squad-builder",
-		category: "Mission Editor",
-	},
-];
+const fs = require("fs");
+const path = require("path");
 
 const addPages = async () => {
+	const filePath = path.resolve(__dirname, "pages.json");
+
+	let existingPages;
+	try {
+		const pagesjson = fs.readFileSync(filePath, "utf-8");
+		existingPages = JSON.parse(pagesjson);
+	} catch (error) {
+		console.error("Error reading or parsing pages.json file:", error);
+		process.exit(1);
+	}
+
 	try {
 		await sequelize.sync();
 

@@ -22,6 +22,7 @@ const rankRoutes = require("./routes/rankRoutes");
 const playerAttributesRoutes = require("./routes/playerAttributeRoutes");
 const permissionsRoutes = require("./routes/permissionRoutes");
 const pageRoutes = require("./routes/pagesRoutes");
+const squadsRoutes = require("./routes/squadsRoutes");
 
 // Use the user routes with /api prefix
 app.use("/api/users", userRoutes);
@@ -31,6 +32,7 @@ app.use("/api/ranks", rankRoutes);
 app.use("/api/attributes", playerAttributesRoutes);
 app.use("/api/permissions", permissionsRoutes);
 app.use("/api/pages", pageRoutes);
+app.use("/api/squads", squadsRoutes);
 
 // Start the server
 app.listen(port, () => {

@@ -1,4 +1,5 @@
 const { Pages } = require("../models");
+const exportPages = require("../helpers/exportPages");
 
 exports.getPages = async (req, res) => {
 	try {
@@ -17,7 +18,7 @@ exports.addPage = async (req, res) => {
 		const { name, url, category } = req.body;
 
 		const newPage = await Pages.create({ name, url, category });
-
+		await exportPages();
 		res.json({ success: true, page: newPage });
 	} catch (error) {
 		console.error("Error adding new page:", error);
@@ -42,6 +43,7 @@ exports.updatePage = async (req, res) => {
 		}
 
 		const updatedPage = await Pages.findOne({ where: { id } });
+		await exportPages();
 		res.json({ success: true, page: updatedPage });
 	} catch (error) {
 		console.error("Error updating page:", error);
@@ -60,7 +62,7 @@ exports.deletePage = async (req, res) => {
 				.status(404)
 				.json({ success: false, message: "Page not found" });
 		}
-
+		await exportPages();
 		res.json({ success: true, message: "Page deleted" });
 	} catch (error) {
 		console.error("Error deleting page:", error);
