@@ -7,6 +7,9 @@ import ReactFlow, {
 	Background,
 	useNodesState,
 	useEdgesState,
+	useReactFlow,
+	getRectOfNodes,
+	getTransformForBounds,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { fetchHelper } from "../funcs/common/fetchHelper";
@@ -20,6 +23,8 @@ import {
 	Container,
 } from "@mui/material";
 import { apiRequest } from "../funcs/common";
+import { toPng } from "html-to-image";
+
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 
@@ -155,35 +160,39 @@ const ORBATBuilder = () => {
 		}
 	};
 
+	function downloadImage(dataUrl) {
+		const a = document.createElement("a");
+
+		a.setAttribute("download", "reactflow.png");
+		a.setAttribute("href", dataUrl);
+		a.click();
+	}
+
 	const exportToPdf = async () => {
-		const reactFlowNode = document.querySelector(".react-flow");
-		if (!reactFlowNode) return;
-
-		const canvas = await html2canvas(reactFlowNode);
-		const imgData = canvas.toDataURL("image/png");
-
-		const pdfWidth = 297;
-		const pdfHeight = 210;
-		const imgWidth = canvas.width;
-		const imgHeight = canvas.height;
-
-		const scale = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-
-		const pdf = new jsPDF({
-			orientation: "landscape",
-			unit: "mm",
-			format: "a4",
-		});
-		pdf.addImage(
-			imgData,
-			"PNG",
-			(pdfWidth - imgWidth * scale) / 2,
-			(pdfHeight - imgHeight * scale) / 2,
-			imgWidth * scale,
-			imgHeight * scale,
+		const imageWidth = 1024;
+		const imageHeight = 768;
+		const nodesBounds = getRectOfNodes(nodes);
+		const transform = getTransformForBounds(
+			nodesBounds,
+			imageWidth,
+			imageHeight,
+			0.5,
+			2,
 		);
-		pdf.save("ORBAT.pdf");
+
+		toPng(document.querySelector(".react-flow__viewport"), {
+			width: imageWidth,
+			height: imageHeight,
+			style: {
+				backgroundColor: "primary.main",
+				width: imageWidth,
+				height: imageHeight,
+				transform: `translate(${transform[0]}px, ${transform[1]}px) scale(${transform[2]})`,
+			},
+		}).then(downloadImage);
 	};
+
+	const proOptions = { hideAttribution: true };
 
 	return (
 		<Box display="flex">
@@ -238,7 +247,7 @@ const ORBATBuilder = () => {
 						onClick={exportToPdf}
 						sx={{ marginLeft: 5, width: 100 }}
 					>
-						Export to PDF
+						SAVE PNG
 					</Button>
 				</Container>
 			</Paper>
@@ -257,6 +266,7 @@ const ORBATBuilder = () => {
 					onNodeContextMenu={handleNodeContextMenu}
 					onEdgeContextMenu={handleEdgeContextMenu}
 					className="react-flow"
+					proOptions={proOptions}
 				>
 					<Background />
 				</ReactFlow>
