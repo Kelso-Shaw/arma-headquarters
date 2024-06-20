@@ -221,16 +221,22 @@ const ORBATBuilder = () => {
 						marginTop: "auto",
 						display: "flex",
 						flexDirection: "row",
+						justifyContent: "center",
 					}}
 				>
-					<Button variant="contained" color="primary" onClick={saveFlow}>
+					<Button
+						variant="contained"
+						color="primary"
+						onClick={saveFlow}
+						sx={{ width: 100 }}
+					>
 						Save Flow
 					</Button>
 					<Button
 						variant="contained"
 						color="secondary"
 						onClick={exportToPdf}
-						sx={{ marginLeft: 5 }}
+						sx={{ marginLeft: 5, width: 100 }}
 					>
 						Export to PDF
 					</Button>
