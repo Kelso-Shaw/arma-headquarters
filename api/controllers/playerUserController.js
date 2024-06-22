@@ -22,7 +22,12 @@ exports.login = async (req, res) => {
 				{ username: player.username, rank: player.rank },
 				process.env.ACCESS_TOKEN_SECRET,
 			);
-			res.json({ success: true, accessToken, rank: player.rank });
+			res.json({
+				success: true,
+				accessToken,
+				rank: player.rank,
+				id: player.id,
+			});
 		} else {
 			res.status(403).send.json({
 				success: false,
