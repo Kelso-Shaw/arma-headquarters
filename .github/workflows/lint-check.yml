@@ -2,8 +2,9 @@ name: Lint Check
 
 on:
   pull_request:
-    branches:
-      - main
+
+permissions:
+  contents: write
 
 jobs:
   lint-check:
@@ -11,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -23,3 +24,34 @@ jobs:
 
       - name: Run lint formatter
         run: npm run lint:write
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git diff --exit-code || echo "changes=true" >> $GITHUB_ENV
+
+      - name: Stash changes if any
+        if: env.changes == 'true'
+        run: git stash
+
+      - name: Pull latest changes
+        if: env.changes == 'true'
+        run: git pull origin ${{ github.head_ref }} --rebase
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Apply stashed changes
+        if: env.changes == 'true'
+        run: git stash pop
+
+      - name: Commit changes if any
+        if: env.changes == 'true'
+        run: |
+          git config --global user.name 'Automated'
+          git config --global user.email 'actions@users.noreply.github.com'
+          git add -A
+          timestamp=$(date -u)
+          git commit -m "chore: format code automatically at ${timestamp}" || exit 0
+          git push origin HEAD:${{ github.head_ref }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
