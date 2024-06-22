@@ -41,7 +41,7 @@
 		"lint:write": "npx @biomejs/biome check --write --unsafe *",
 		"lint:check": "npx @biomejs/biome check *",
 		"preinstall": "npm run install:api",
-		"postinstall": "npm run db:migrate"
+		"postinstall": "npm run db:migrate && npm run pages:sync"
 	},
 	"eslintConfig": {
 		"extends": ["react-app", "react-app/jest"]
