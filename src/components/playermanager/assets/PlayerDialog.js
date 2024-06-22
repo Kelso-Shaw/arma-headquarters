@@ -1,17 +1,17 @@
-import React from "react";
 import {
+	Box,
+	Button,
+	Chip,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
-	Button,
-	TextField,
-	Select,
-	MenuItem,
 	InputLabel,
-	Chip,
-	Box,
+	MenuItem,
+	Select,
+	TextField,
 } from "@mui/material";
+import React from "react";
 
 const PlayerDialog = ({
 	open,
