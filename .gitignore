@@ -12,6 +12,9 @@
 # production
 /build
 
+# main public website
+arma-headquarters-main
+
 # misc
 .DS_Store
 .env
