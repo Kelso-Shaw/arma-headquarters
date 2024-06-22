@@ -12,5 +12,8 @@
 				"noStaticOnlyClass": "off"
 			}
 		}
+	},
+	"formatter": {
+		"ignore": ["arma-headquarters-main/*.js"]
 	}
 }
