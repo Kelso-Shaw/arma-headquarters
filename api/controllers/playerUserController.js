@@ -7,6 +7,46 @@ const {
 	Squads,
 } = require("../models");
 
+exports.register = async (req, res) => {
+	try {
+		const { username, password, rank, attributes } = req.body;
+		const hashedPassword = await bcrypt.hash(password, 10);
+
+		const player = await PlayerUser.create({
+			username,
+			password: hashedPassword,
+			rank,
+		});
+
+		if (attributes?.length) {
+			const newAttributes = attributes.map((attr) => ({
+				PlayerUserId: player.id,
+				PlayerAttributeId: attr,
+			}));
+			await PlayerUserAttributes.bulkCreate(newAttributes);
+		}
+
+		const newPlayer = await PlayerUser.findByPk(player.id, {
+			include: [
+				{
+					model: PlayerAttributes,
+					as: "attributes",
+					through: { attributes: [] },
+					attributes: { exclude: ["createdAt", "updatedAt", "id"] },
+				},
+			],
+			attributes: { exclude: ["password", "createdAt", "updatedAt"] },
+		});
+
+		res.status(201).json({ success: true, player: newPlayer });
+	} catch (error) {
+		console.error("Error registering player:", error);
+		res
+			.status(500)
+			.json({ success: false, message: "Failed to register player" });
+	}
+};
+
 exports.login = async (req, res) => {
 	try {
 		const { username, password } = req.body;

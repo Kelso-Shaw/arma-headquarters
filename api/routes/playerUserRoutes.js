@@ -4,6 +4,7 @@ const playerUserController = require("../controllers/playerUserController");
 const { authenticateToken } = require("../middleware/authenticateToken");
 
 router.post("/login", playerUserController.login);
+router.post("/register", playerUserController.register);
 router.get("/", authenticateToken, playerUserController.getAllUsers);
 router.get("/:id", authenticateToken, playerUserController.getUser);
 router.put("/", authenticateToken, playerUserController.addUser);
