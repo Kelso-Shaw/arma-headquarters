@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../AuthContext";
-import Layout from "../layouts/Layout";
-import { fetchHelper } from "../funcs/common/fetchHelper";
-import SquadsTable from "./assets/SquadsTable";
-import SquadsDialog from "./assets/SquadsDialog";
 import { apiRequest } from "../funcs/common";
+import { fetchHelper } from "../funcs/common/fetchHelper";
+import Layout from "../layouts/Layout";
+import SquadsDialog from "./assets/SquadsDialog";
+import SquadsTable from "./assets/SquadsTable";
 
 const SquadBuilder = () => {
 	const [squads, setSquads] = useState([]);

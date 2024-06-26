@@ -7,10 +7,10 @@ import {
 } from "react-router-dom";
 import { ThemeToggleProvider } from "./ThemeContext";
 import { AuthProvider, useAuth } from "./components/AuthContext";
-import Dashboard from "./components/dashboard/Dashboard";
 import Home from "./components/Home";
 import Nav from "./components/Nav";
 import PrivateRoute from "./components/PrivateRoute";
+import Dashboard from "./components/dashboard/Dashboard";
 import { fetchHelper } from "./components/funcs/common/fetchHelper";
 
 const App = () => {

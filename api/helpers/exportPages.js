@@ -1,6 +1,6 @@
 const { sequelize, Pages } = require("../models");
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 
 const exportPages = async () => {
 	const filePath = path.resolve(__dirname, "pages.json");

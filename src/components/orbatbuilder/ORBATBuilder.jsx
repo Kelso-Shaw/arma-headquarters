@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { useAuth } from "../AuthContext";
 import ReactFlow, {
 	addEdge,
 	applyNodeChanges,
@@ -10,19 +9,20 @@ import ReactFlow, {
 	getRectOfNodes,
 	getTransformForBounds,
 } from "reactflow";
+import { useAuth } from "../AuthContext";
 import "reactflow/dist/style.css";
-import { fetchHelper } from "../funcs/common/fetchHelper";
 import {
 	Box,
-	Paper,
-	Typography,
-	Menu,
-	MenuItem,
 	Button,
 	Container,
+	Menu,
+	MenuItem,
+	Paper,
+	Typography,
 } from "@mui/material";
-import { apiRequest } from "../funcs/common";
 import { toPng } from "html-to-image";
+import { apiRequest } from "../funcs/common";
+import { fetchHelper } from "../funcs/common/fetchHelper";
 
 const initialNodes = [];
 const initialEdges = [];
@@ -272,7 +272,7 @@ const ORBATBuilder = () => {
 			</Paper>
 
 			<Box
-				style={{ flexGrow: 1, width: "80vw", height: "91vh" }}
+				style={{ flexGrow: 1, width: "75vw", height: "85vh" }}
 				onDrop={onDrop}
 				onDragOver={onDragOver}
 			>

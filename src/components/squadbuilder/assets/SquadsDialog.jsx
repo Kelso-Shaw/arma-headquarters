@@ -1,3 +1,4 @@
+import { Delete } from "@mui/icons-material";
 import {
 	Button,
 	Dialog,
@@ -6,19 +7,18 @@ import {
 	DialogContentText,
 	DialogTitle,
 	FormControl,
-	TextField,
 	IconButton,
+	MenuItem,
 	Paper,
+	Select,
 	Table,
 	TableBody,
 	TableCell,
 	TableContainer,
 	TableHead,
 	TableRow,
-	Select,
-	MenuItem,
+	TextField,
 } from "@mui/material";
-import { Delete } from "@mui/icons-material";
 import React from "react";
 
 const SquadsDialog = ({
