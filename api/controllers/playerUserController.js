@@ -90,7 +90,7 @@ exports.getAllUsers = async (req, res) => {
 					through: {
 						attributes: [],
 					},
-					attributes: { exclude: ["createdAt", "updatedAt", "id"] },
+					attributes: { exclude: ["createdAt", "updatedAt"] },
 				},
 				{
 					model: Squads,
